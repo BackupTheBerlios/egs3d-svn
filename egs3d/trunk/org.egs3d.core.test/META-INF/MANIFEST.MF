@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Core Test
+Bundle-SymbolicName: org.egs3d.core.test
+Bundle-Version: 0.0.0.dev
+Bundle-Vendor: EGS3D
+Bundle-Localization: plugin
+Require-Bundle: org.junit,
+ org.egs3d.core
