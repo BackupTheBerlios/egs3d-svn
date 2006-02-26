@@ -23,6 +23,7 @@
 package org.egs3d.rcp.internal;
 
 
+import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
@@ -43,5 +44,15 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     @Override
     public String getInitialWindowPerspectiveId() {
         return SceneGraphConstructionPerspective.PERSPECTIVE_ID;
+    }
+
+
+    @Override
+    public void initialize(IWorkbenchConfigurer configurer) {
+        super.initialize(configurer);
+
+        // la configuration de la fenêtre, des vues et des perspectives est
+        // sauvegardée pour être restaurée au prochain redémarrage
+        configurer.setSaveAndRestore(true);
     }
 }
