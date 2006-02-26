@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCP
+Bundle-SymbolicName: org.egs3d.rcp; singleton:=true
+Bundle-Version: 0.0.0.dev
+Bundle-Vendor: EGS3D
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.egs3d.ui
+Eclipse-AutoStart: true
