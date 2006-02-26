@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: UI
+Bundle-SymbolicName: org.egs3d.ui; singleton:=true
+Bundle-Version: 0.0.0.dev
+Bundle-Vendor: EGS3D
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.egs3d.core
+Eclipse-AutoStart: true
+Export-Package: org.egs3d.ui.actions,
+ org.egs3d.ui.views
+Eclipse-BuddyPolicy: app
