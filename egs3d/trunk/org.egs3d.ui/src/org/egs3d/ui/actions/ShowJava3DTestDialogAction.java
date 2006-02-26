@@ -62,7 +62,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
- * Affiche une fenêtre de tester pour Java3D.
+ * Affiche une fenêtre pour tester Java3D.
  * 
  * @author romale
  */
