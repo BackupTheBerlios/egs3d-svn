@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	This configuration file was written by the eclipse-cs plugin configuration editor
+-->
+<!--
+Checkstyle-Configuration: EGS3D
+Description:
+
+-->
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN" "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+<module name="Checker">
+    <property name="severity" value="warning"/>
+    <module name="TreeWalker">
+        <module name="JavadocStyle"/>
+        <module name="AbstractClassName"/>
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodName"/>
+        <module name="PackageName"/>
+        <module name="ParameterName"/>
+        <module name="TypeName"/>
+        <module name="Header">
+            <property name="headerFile" value="/home/alex/projets/egs3d/egs3d/egs3d-docs/trunk/header.txt"/>
+            <property name="ignoreLines" value="2"/>
+        </module>
+        <module name="RedundantImport"/>
+        <module name="UnusedImports"/>
+        <module name="ParameterNumber"/>
+        <module name="LineLength">
+            <property name="max" value="120"/>
+        </module>
+        <module name="RedundantModifier"/>
+        <module name="EmptyBlock"/>
+        <module name="NeedBraces"/>
+        <module name="CovariantEquals">
+            <property name="severity" value="error"/>
+        </module>
+        <module name="DefaultComesLast">
+            <property name="severity" value="error"/>
+        </module>
+        <module name="DoubleCheckedLocking"/>
+        <module name="EmptyStatement"/>
+        <module name="EqualsHashCode">
+            <property name="severity" value="error"/>
+        </module>
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.lang.Boolean"/>
+        </module>
+        <module name="JUnitTestCase">
+            <property name="severity" value="error"/>
+        </module>
+        <module name="MissingSwitchDefault"/>
+        <module name="PackageDeclaration"/>
+        <module name="ParameterAssignment">
+            <property name="severity" value="error"/>
+        </module>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="StringLiteralEquality"/>
+        <module name="SuperClone"/>
+        <module name="SuperFinalize"/>
+        <module name="UnnecessaryParentheses"/>
+        <module name="UpperEll"/>
+    </module>
+    <module name="NewlineAtEndOfFile">
+        <property name="lineSeparator" value="lf"/>
+    </module>
+</module>
