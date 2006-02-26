@@ -1,5 +1,5 @@
 /**
- * $Id: BLC.java,v 1.6 2005/11/28 16:08:16 romale Exp $
+ * $Id$
  *
  * EGS3D
  * http://egs3d.berlios.de
