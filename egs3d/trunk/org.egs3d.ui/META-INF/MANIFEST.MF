@@ -12,3 +12,4 @@ Eclipse-AutoStart: true
 Export-Package: org.egs3d.ui.actions,
  org.egs3d.ui.views
 Eclipse-BuddyPolicy: app
+Bundle-Activator: org.egs3d.ui.internal.UIPlugin
