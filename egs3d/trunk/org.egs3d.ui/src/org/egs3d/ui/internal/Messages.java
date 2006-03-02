@@ -39,6 +39,6 @@ public class Messages extends NLS {
     }
     public static String Java3DTest_title;
     public static String Java3DTest_text;
-    public static String Diagnostics_name;
-    public static String Diagnostics_value;
+    public static String Diagnostic_name;
+    public static String Diagnostic_value;
 }

@@ -40,12 +40,12 @@ import org.egs3d.ui.internal.UIPlugin;
 
 
 /**
- * Diagnostiques sur le système et les bibliothèques installées.
+ * Diagnostique sur le système et les bibliothèques installées.
  * 
  * @author romale
  */
-public class DiagnosticsView extends ViewPart {
-    public static final String VIEW_ID = "org.egs3d.ui.views.diagnostics"; //$NON-NLS-1$
+public class DiagnosticView extends ViewPart {
+    public static final String VIEW_ID = "org.egs3d.ui.views.diagnostic"; //$NON-NLS-1$
     private TableViewer tableViewer;
 
 
@@ -55,10 +55,10 @@ public class DiagnosticsView extends ViewPart {
 
         final Table table = tableViewer.getTable();
         final TableColumn titleCol = new TableColumn(table, SWT.LEFT);
-        titleCol.setText(Messages.Diagnostics_name);
+        titleCol.setText(Messages.Diagnostic_name);
         titleCol.setWidth(200);
         final TableColumn valueCol = new TableColumn(table, SWT.LEFT);
-        valueCol.setText(Messages.Diagnostics_value);
+        valueCol.setText(Messages.Diagnostic_value);
         valueCol.setWidth(50);
         table.setHeaderVisible(true);
 

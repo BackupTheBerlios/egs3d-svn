@@ -15,9 +15,9 @@
             name="%SceneExplorer_name"/>
       <view
             category="org.egs3d.ui.categories.3d"
-            class="org.egs3d.ui.views.DiagnosticsView"
-            id="org.egs3d.ui.views.diagnostics"
-            name="%Diagnostics_name"/>
+            class="org.egs3d.ui.views.DiagnosticView"
+            id="org.egs3d.ui.views.diagnostic"
+            name="%Diagnostic_name"/>
       <category
             id="org.egs3d.ui.categories.3d"
             name="%Category_3D"/>
