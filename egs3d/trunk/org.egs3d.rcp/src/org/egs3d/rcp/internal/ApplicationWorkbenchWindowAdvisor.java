@@ -25,8 +25,6 @@ package org.egs3d.rcp.internal;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
