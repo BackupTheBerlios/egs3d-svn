@@ -37,12 +37,14 @@ public final class Java3DUtils {
      * Retourne <code>true</code> si Java3D est installé sur le système.
      */
     public static boolean isJava3DInstalled() {
+        final String[] classNames = { "javax.media.j3d.Bounds",
+                "javax.vecmath.Vector3f",
+                "com.sun.j3d.utils.universe.SimpleUniverse", };
         try {
-            // vérification des jars (classes)
-            Class.forName("javax.media.j3d.Bounds");
-
-            // vérification des bibliothèques
-            System.loadLibrary("j3dcore");
+            for (final String className : classNames) {
+                // tentative de chargement de la classe
+                Class.forName(className);
+            }
         } catch (Throwable e) {
             // si une erreur est levée, Java3D n'est pas installé
             return false;
