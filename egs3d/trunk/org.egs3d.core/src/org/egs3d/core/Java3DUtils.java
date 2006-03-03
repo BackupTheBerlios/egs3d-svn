@@ -43,7 +43,7 @@ public final class Java3DUtils {
 
             // vérification des bibliothèques
             System.loadLibrary("j3dcore");
-        } catch (Exception e) {
+        } catch (Throwable e) {
             // si une erreur est levée, Java3D n'est pas installé
             return false;
         }
