@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.egs3d.rcp"
+      label="org.egs3d.rcp-feature"
+      version="0.0.0.dev"
+      provider-name="EGS3D"
+      plugin="org.egs3d.rcp">
+
+   <description url="http://egs3d.berlios.de/overview">
+      Editeur Graphique de Scène 3D pour Java
+   </description>
+
+   <copyright url="http://egs3d.berlios.de/copyright">
+      Copyright (c) 2006 EGS3D team
+   </copyright>
+
+   <license url="http://egs3d.berlios.de/license">
+      This software is published under the terms of the GPL.
+   </license>
+
+   <url>
+      <update label="EGS3D updates" url="http://egs3d.berlios.de/updates/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.help"/>
+   </requires>
+
+   <plugin
+         id="org.egs3d.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.egs3d.core.resources"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.egs3d.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.egs3d.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.views"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

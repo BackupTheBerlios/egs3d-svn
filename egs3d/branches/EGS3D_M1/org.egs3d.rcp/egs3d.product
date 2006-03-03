@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.1"?>
+
+<product name="%Product_name" id="org.egs3d.rcp.egs3d" application="org.egs3d.rcp.application" useFeatures="true">
+
+   <configIni use="default"/>
+
+   <launcherArgs>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <launcher name="egs3d">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <plugins>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.jface"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.views"/>
+      <plugin id="org.eclipse.ui.workbench"/>
+      <plugin id="org.egs3d.core"/>
+      <plugin id="org.egs3d.rcp"/>
+      <plugin id="org.egs3d.ui"/>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.rcp" version="3.1.2"/>
+      <feature id="org.egs3d.rcp" version="0.0.0.dev"/>
+   </features>
+
+</product>
