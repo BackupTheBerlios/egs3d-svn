@@ -7,5 +7,6 @@ Bundle-Vendor: EGS3D
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
+ org.egs3d.core,
  org.egs3d.ui
 Eclipse-AutoStart: true
