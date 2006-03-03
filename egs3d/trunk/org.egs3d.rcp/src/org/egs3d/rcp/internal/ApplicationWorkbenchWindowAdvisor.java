@@ -23,11 +23,16 @@
 package org.egs3d.rcp.internal;
 
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.egs3d.core.Java3DUtils;
 
 
 /**
@@ -49,11 +54,32 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     @Override
     public void preWindowOpen() {
-        IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+        checkJava3D();
+
+        final IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
         configurer.setInitialSize(new Point(800, 600));
         configurer.setShowCoolBar(false);
         configurer.setShowStatusLine(false);
         configurer.setShowPerspectiveBar(true);
         configurer.setShowProgressIndicator(true);
+    }
+
+
+    /**
+     * Vérification que Java3D est installé : un message est affiché si ce n'est
+     * pas le cas, et l'application est fermée.
+     */
+    private void checkJava3D() {
+        if (!Java3DUtils.isJava3DInstalled()) {
+            final IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+            final IWorkbench workbench = configurer.getWorkbenchConfigurer()
+                    .getWorkbench();
+            MessageDialog.openInformation(workbench.getDisplay()
+                    .getActiveShell(), Messages.Erreur_titre,
+                    Messages.Erreur_noJava3D);
+
+            // fermeture de l'application
+            workbench.close();
+        }
     }
 }

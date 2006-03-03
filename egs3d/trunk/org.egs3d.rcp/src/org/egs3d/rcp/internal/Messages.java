@@ -41,4 +41,6 @@ public class Messages extends NLS {
     public static String Menu_Aide;
     public static String Menu_Fenetres;
     public static String Menu_Vues;
+    public static String Erreur_titre;
+    public static String Erreur_noJava3D;
 }
