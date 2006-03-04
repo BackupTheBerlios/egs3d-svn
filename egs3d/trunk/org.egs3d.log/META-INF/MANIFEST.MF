@@ -8,7 +8,8 @@ Bundle-Vendor: EGS3D
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ui.console
+ org.eclipse.ui.console,
+ org.eclipse.jface.text
 Eclipse-AutoStart: true
 Export-Package: org.apache.commons.logging,
  org.slf4j
