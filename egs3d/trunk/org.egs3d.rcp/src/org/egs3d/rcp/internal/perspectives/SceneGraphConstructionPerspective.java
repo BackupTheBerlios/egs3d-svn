@@ -26,6 +26,7 @@ package org.egs3d.rcp.internal.perspectives;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
+import org.eclipse.ui.console.IConsoleConstants;
 import org.egs3d.ui.views.DiagnosticView;
 import org.egs3d.ui.views.SceneGraphExplorerView;
 import org.egs3d.ui.views.SceneGraphRenderView;
@@ -61,6 +62,7 @@ public class SceneGraphConstructionPerspective implements IPerspectiveFactory {
         final IFolderLayout bottom = layout.createFolder("bottom",
                 IPageLayout.BOTTOM, 0.7f, IPageLayout.ID_EDITOR_AREA);
         bottom.addPlaceholder(IPageLayout.ID_PROP_SHEET);
+        bottom.addPlaceholder(IConsoleConstants.ID_CONSOLE_VIEW);
         bottom.addView(DiagnosticView.VIEW_ID);
 
         layout.addPlaceholder(SceneGraphRenderView.VIEW_ID, IPageLayout.RIGHT,
