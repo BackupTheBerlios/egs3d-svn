@@ -3,12 +3,19 @@
 
 <product name="%Product_name" id="org.egs3d.rcp.egs3d" application="org.egs3d.rcp.application" useFeatures="true">
 
+   <aboutInfo>
+      <text>
+         %Product_name
+      </text>
+   </aboutInfo>
+
    <configIni use="default"/>
 
    <launcherArgs>
    </launcherArgs>
 
    <windowImages/>
+
 
    <launcher name="egs3d">
       <solaris/>
