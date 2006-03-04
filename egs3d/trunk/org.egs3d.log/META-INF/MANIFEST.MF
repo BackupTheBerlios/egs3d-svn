@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Log
+Bundle-SymbolicName: org.egs3d.log; singleton:=true
+Bundle-Version: 0.0.0.dev
+Bundle-Activator: org.egs3d.log.LogPlugin
+Bundle-Vendor: EGS3D
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.console
+Eclipse-AutoStart: true
+Export-Package: org.apache.commons.logging,
+ org.slf4j

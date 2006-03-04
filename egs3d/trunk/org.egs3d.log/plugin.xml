@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            class="org.egs3d.log.internal.LogConsoleFactory"
+            label="%LogConsole_title"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consolePageParticipants">
+      <consolePageParticipant
+            class="org.egs3d.log.internal.LogConsolePageParticipant"
+            id="org.egs3d.log.logConsolePageParticipant">
+         <enablement>
+            <instanceof value="org.egs3d.log.internal.LogConsole"/>
+         </enablement>
+      </consolePageParticipant>
+   </extension>
+
+</plugin>
