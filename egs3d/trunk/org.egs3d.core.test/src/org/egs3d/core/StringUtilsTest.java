@@ -26,6 +26,9 @@ package org.egs3d.core;
 import junit.framework.TestCase;
 
 
+/**
+ * @author romale
+ */
 public class StringUtilsTest extends TestCase {
     public void testTrimToNull() {
         assertNull(StringUtils.trimToNull(""));
