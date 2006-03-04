@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtilsTest.java 16 2006-02-26 16:18:44Z romale $
+ * $Id$
  *
  * EGS3D
  * http://egs3d.berlios.de
