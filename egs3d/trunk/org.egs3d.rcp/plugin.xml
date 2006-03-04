@@ -28,7 +28,11 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.egs3d.rcp.application"
-            name="%Product_name"/>
+            name="%Product_name">
+         <property
+               name="aboutText"
+               value="%Product_name"/>
+      </product>
    </extension>
 
 </plugin>
