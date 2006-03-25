@@ -31,12 +31,17 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.egs3d.core.Java3DUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * @author romale
  */
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
+
     public ApplicationWorkbenchWindowAdvisor(
             IWorkbenchWindowConfigurer configurer) {
         super(configurer);
@@ -60,6 +65,20 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowStatusLine(false);
         configurer.setShowPerspectiveBar(true);
         configurer.setShowProgressIndicator(true);
+    }
+
+
+    @Override
+    public void postWindowOpen() {
+        log.info("Application démarrée");
+    }
+
+
+    @Override
+    public boolean preWindowShellClose() {
+        log.info("Fermeture de l'application");
+
+        return super.preWindowShellClose();
     }
 
 
