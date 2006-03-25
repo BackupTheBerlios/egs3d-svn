@@ -31,7 +31,6 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.TransformGroup;
-import javax.media.j3d.VirtualUniverse;
 
 import org.egs3d.core.resources.ISceneGraphReader;
 
@@ -48,7 +47,7 @@ public class MockSceneGraphReader implements ISceneGraphReader {
     /**
      * Renvoie un arbre scénique contenant un cube tournant sur lui-même.
      */
-    public VirtualUniverse read(File file) throws IOException {
+    public SimpleUniverse read(File file) throws IOException {
         final SimpleUniverse su = new SimpleUniverse();
 
         final TransformGroup cubeTG = new TransformGroup();

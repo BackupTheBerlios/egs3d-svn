@@ -26,9 +26,10 @@ package org.egs3d.core.resources.internal;
 import java.io.File;
 import java.io.IOException;
 
-import javax.media.j3d.VirtualUniverse;
-
 import org.egs3d.core.resources.ISceneGraphReader;
+
+import com.sun.j3d.utils.scenegraph.io.SceneGraphFileReader;
+import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
@@ -37,8 +38,15 @@ import org.egs3d.core.resources.ISceneGraphReader;
  * @author romale
  */
 public class SceneGraphReader implements ISceneGraphReader {
-    public VirtualUniverse read(File file) throws IOException {
-        // TODO implémentation
-        throw new UnsupportedOperationException();
+    public SimpleUniverse read(File file) throws IOException {
+        final SceneGraphFileReader reader = new SceneGraphFileReader(file);
+        try {
+            return reader.readUniverse(true);
+        } finally {
+            try {
+                reader.close();
+            } catch (Exception ignore) {
+            }
+        }
     }
 }

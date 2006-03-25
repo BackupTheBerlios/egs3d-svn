@@ -26,9 +26,10 @@ package org.egs3d.core.resources.internal;
 import java.io.File;
 import java.io.IOException;
 
-import javax.media.j3d.VirtualUniverse;
 
 import org.egs3d.core.resources.ISceneGraphWriter;
+
+import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
@@ -40,7 +41,7 @@ public class MockSceneGraphWriter implements ISceneGraphWriter {
     /**
      * Cette méthode ne fait rien.
      */
-    public void write(File file, VirtualUniverse universe) throws IOException {
+    public void write(File file, SimpleUniverse universe) throws IOException {
         // rien à faire !
     }
 }

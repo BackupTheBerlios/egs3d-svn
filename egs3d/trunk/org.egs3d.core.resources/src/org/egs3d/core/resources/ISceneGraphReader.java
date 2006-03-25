@@ -26,7 +26,7 @@ package org.egs3d.core.resources;
 import java.io.File;
 import java.io.IOException;
 
-import javax.media.j3d.VirtualUniverse;
+import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
@@ -38,5 +38,5 @@ public interface ISceneGraphReader {
     /**
      * Lit un arbre scénique à partir d'un fichier.
      */
-    VirtualUniverse read(File file) throws IOException;
+    SimpleUniverse read(File file) throws IOException;
 }

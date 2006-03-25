@@ -26,7 +26,7 @@ package org.egs3d.core.resources;
 import java.io.File;
 import java.io.IOException;
 
-import javax.media.j3d.VirtualUniverse;
+import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
@@ -38,5 +38,5 @@ public interface ISceneGraphWriter {
     /**
      * Enregistre un arbre scénique dans un fichier.
      */
-    void write(File file, VirtualUniverse universe) throws IOException;
+    void write(File file, SimpleUniverse universe) throws IOException;
 }

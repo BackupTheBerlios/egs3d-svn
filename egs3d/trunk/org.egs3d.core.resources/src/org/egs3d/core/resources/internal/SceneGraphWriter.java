@@ -26,17 +26,35 @@ package org.egs3d.core.resources.internal;
 import java.io.File;
 import java.io.IOException;
 
-import javax.media.j3d.VirtualUniverse;
-
 import org.egs3d.core.resources.ISceneGraphWriter;
+
+import com.sun.j3d.utils.scenegraph.io.SceneGraphFileWriter;
+import com.sun.j3d.utils.scenegraph.io.UnsupportedUniverseException;
+import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
+ * Implémentation de l'enregistreur d'arbre scénique.
+ * 
  * @author romale
  */
 public class SceneGraphWriter implements ISceneGraphWriter {
-    public void write(File file, VirtualUniverse universe) throws IOException {
-        // TODO implémentation
-        throw new UnsupportedOperationException();
+    public void write(File file, SimpleUniverse universe) throws IOException {
+        SceneGraphFileWriter writer = null;
+        try {
+            writer = new SceneGraphFileWriter(file, universe, true, "EGS3D",
+                    null);
+        } catch (UnsupportedUniverseException e) {
+            final IOException exc = new IOException("Unsupported universe");
+            exc.initCause(e);
+            throw exc;
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (Exception ignore) {
+                }
+            }
+        }
     }
 }
