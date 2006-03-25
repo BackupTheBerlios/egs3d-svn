@@ -62,7 +62,8 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
- * Affiche une fenêtre pour tester Java3D.
+ * Affiche une fenêtre pour tester Java3D. Cette fenêtre est affichée dans le
+ * menu de la vue "Diagnostique" (la petite flèche vers le bas à droite).
  * 
  * @author romale
  */
