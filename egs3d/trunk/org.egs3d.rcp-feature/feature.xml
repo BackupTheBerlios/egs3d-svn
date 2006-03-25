@@ -30,6 +30,7 @@
       <import plugin="org.eclipse.swt"/>
       <import plugin="org.eclipse.jface"/>
       <import plugin="org.eclipse.core.commands"/>
+      <import plugin="org.eclipse.core.resources"/>
    </requires>
 
    <plugin
@@ -97,6 +98,34 @@
 
    <plugin
          id="org.eclipse.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.resources"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ant.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.variables"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.runtime.compatibility"
          download-size="0"
          install-size="0"
          version="0.0.0"
