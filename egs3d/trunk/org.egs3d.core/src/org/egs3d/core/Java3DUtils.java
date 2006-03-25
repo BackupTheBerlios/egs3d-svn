@@ -23,12 +23,20 @@
 package org.egs3d.core;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 /**
  * Méthodes utilitaires pour Java3D.
  * 
  * @author romale
  */
 public final class Java3DUtils {
+    private static final Logger log = LoggerFactory
+            .getLogger(Java3DUtils.class);
+
+
     private Java3DUtils() {
     }
 
@@ -47,6 +55,7 @@ public final class Java3DUtils {
             }
         } catch (Throwable e) {
             // si une erreur est levée, Java3D n'est pas installé
+            log.error("Java3D n'est pas installé", e);
             return false;
         }
         return true;
