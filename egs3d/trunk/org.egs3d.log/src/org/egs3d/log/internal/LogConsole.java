@@ -36,6 +36,8 @@ public class LogConsole extends MessageConsole {
 
     public LogConsole(final String name, final ImageDescriptor imageDescriptor) {
         super(name, imageDescriptor);
+        setTabWidth(4);
+        setType(CONSOLE_TYPE);
     }
 
 
