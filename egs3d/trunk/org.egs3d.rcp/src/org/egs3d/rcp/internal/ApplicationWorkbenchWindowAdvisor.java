@@ -65,7 +65,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     /**
      * Vérification que Java3D est installé : un message est affiché si ce n'est
-     * pas le cas, et l'application est fermée.
+     * pas le cas.
      */
     private void checkJava3D() {
         if (!Java3DUtils.isJava3DInstalled()) {
@@ -76,8 +76,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                     .getActiveShell(), Messages.Erreur_titre,
                     Messages.Erreur_noJava3D);
 
-            // fermeture de l'application
-            workbench.close();
+            // l'application n'est pas fermée : on préfère laisser le soin à
+            // l'utilisateur de le faire
+            // TODO ajouter une alerte graphique (icône dans la barre d'état ?)
         }
     }
 }
