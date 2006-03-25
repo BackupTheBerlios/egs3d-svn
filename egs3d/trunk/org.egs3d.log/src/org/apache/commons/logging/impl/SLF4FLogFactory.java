@@ -100,6 +100,7 @@ public class SLF4FLogFactory extends LogFactory {
    * attributes. If there are no such attributes, a zero length array is
    * returned.
    */
+  @SuppressWarnings("unchecked")
   public String[] getAttributeNames() {
 
     Vector names = new Vector();
@@ -145,6 +146,7 @@ public class SLF4FLogFactory extends LogFactory {
    * @exception LogConfigurationException
    *              if a suitable <code>Log</code> instance cannot be returned
    */
+  @SuppressWarnings("unchecked")
   public Log getInstance(String name) throws LogConfigurationException {
 
     Log instance = (Log) loggerMap.get(name);
@@ -190,6 +192,7 @@ public class SLF4FLogFactory extends LogFactory {
    *          Value of the attribute to set, or <code>null</code> to remove
    *          any setting for this attribute
    */
+  @SuppressWarnings("unchecked")
   public void setAttribute(String name, Object value) {
 
     if (value == null) {

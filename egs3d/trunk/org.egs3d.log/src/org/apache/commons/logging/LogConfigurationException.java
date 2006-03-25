@@ -28,6 +28,7 @@ package org.apache.commons.logging;
  * @author Craig R. McClanahan
  */
 
+@SuppressWarnings("serial")
 public class LogConfigurationException extends RuntimeException {
 
 

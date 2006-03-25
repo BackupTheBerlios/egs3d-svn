@@ -69,6 +69,7 @@ public class BasicMarker implements Marker {
         return name;
     }
 
+    @SuppressWarnings("unchecked")
     public synchronized void add(Marker child) {
         if (child == null) {
             throw new NullPointerException("Null children cannot be added to a Marker.");

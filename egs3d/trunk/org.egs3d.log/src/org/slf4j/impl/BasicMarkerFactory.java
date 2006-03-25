@@ -71,6 +71,7 @@ public class BasicMarkerFactory implements IMarkerFactory {
      * @param name the name of the marker to be created
      * @return a Marker instance
      */
+    @SuppressWarnings("unchecked")
     public synchronized Marker getMarker(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Marker name cannot be null");
