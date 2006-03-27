@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author romale
  */
-public class Project implements IProjectNature {
+public class ProjectNature implements IProjectNature {
     public static final String PROJECT_NATURE_ID = "org.egs3d.core.project";
     private final Logger log = LoggerFactory.getLogger(getClass());
     private IProject project;

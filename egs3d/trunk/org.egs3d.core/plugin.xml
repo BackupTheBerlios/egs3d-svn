@@ -6,7 +6,7 @@
          name="Projet"
          point="org.eclipse.core.resources.natures">
       <runtime>
-         <run class="org.egs3d.core.Project"/>
+         <run class="org.egs3d.core.ProjectNature"/>
       </runtime>
    </extension>
 
