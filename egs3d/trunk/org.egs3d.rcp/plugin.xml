@@ -12,26 +12,14 @@
       </application>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            name="%SceneGraphConstruction_name"
-            class="org.egs3d.rcp.internal.perspectives.SceneGraphConstructionPerspective"
-            id="org.egs3d.rcp.perspectives.sceneGraphConstruction">
-      </perspective>
-      <perspective
-            class="org.egs3d.rcp.internal.perspectives.SceneGraphRenderPerspective"
-            id="org.egs3d.rcp.perspectives.sceneGraphRender"
-            name="%SceneGraphRender_name"/>
-   </extension>
-   <extension
          id="egs3d"
          point="org.eclipse.core.runtime.products">
       <product
             application="org.egs3d.rcp.application"
-            name="%Product_name">
+            name="%Product">
          <property
                name="aboutText"
-               value="%Product_name"/>
+               value="%Product"/>
       </product>
    </extension>
 
