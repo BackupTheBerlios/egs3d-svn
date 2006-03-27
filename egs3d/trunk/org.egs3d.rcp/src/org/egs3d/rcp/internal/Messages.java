@@ -37,10 +37,10 @@ public class Messages extends NLS {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
     }
-    public static String Menu_Fichier;
-    public static String Menu_Aide;
-    public static String Menu_Fenetres;
-    public static String Menu_Vues;
-    public static String Erreur_titre;
-    public static String Erreur_noJava3D;
+    public static String M_File;
+    public static String M_Help;
+    public static String M_Windows;
+    public static String M_Views;
+    public static String Error;
+    public static String Error_noJava3D;
 }

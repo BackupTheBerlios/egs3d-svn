@@ -27,7 +27,7 @@ import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
-import org.egs3d.rcp.internal.perspectives.SceneGraphConstructionPerspective;
+import org.egs3d.ui.perspectives.SceneGraphConstructionPerspective;
 
 
 /**

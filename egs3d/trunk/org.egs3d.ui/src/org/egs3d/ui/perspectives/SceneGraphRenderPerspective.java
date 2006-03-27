@@ -20,12 +20,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.egs3d.rcp.internal.perspectives;
+package org.egs3d.ui.perspectives;
 
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
-import org.egs3d.ui.views.SceneGraphRenderView;
 
 
 /**
@@ -34,32 +33,11 @@ import org.egs3d.ui.views.SceneGraphRenderView;
  * @author romale
  */
 public class SceneGraphRenderPerspective implements IPerspectiveFactory {
-    public static final String PERSPECTIVE_ID = "org.egs3d.rcp.perspectives.sceneGraphRender";
+    public static final String PERSPECTIVE_ID = "org.egs3d.ui.perspectives.sceneGraphRender";
 
 
     public void createInitialLayout(IPageLayout layout) {
-        doLayout(layout);
-        doShortcuts(layout);
-    }
-
-
-    /**
-     * Mise en place des vues.
-     */
-    private void doLayout(IPageLayout layout) {
-        layout.setEditorAreaVisible(false);
-        layout.addView(SceneGraphRenderView.VIEW_ID, IPageLayout.TOP, 1,
-                IPageLayout.ID_EDITOR_AREA);
-        layout.getViewLayout(SceneGraphRenderView.VIEW_ID).setCloseable(false);
-    }
-
-
-    /**
-     * Mise en place des raccourcis.
-     */
-    private void doShortcuts(IPageLayout layout) {
-        layout.addPerspectiveShortcut(PERSPECTIVE_ID);
-        layout
-                .addPerspectiveShortcut(SceneGraphConstructionPerspective.PERSPECTIVE_ID);
+        // la configuration de la perspective est réalisée dans un point
+        // d'extension
     }
 }

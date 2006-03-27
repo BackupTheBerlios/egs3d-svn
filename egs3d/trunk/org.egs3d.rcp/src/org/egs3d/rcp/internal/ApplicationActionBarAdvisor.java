@@ -83,7 +83,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 
     private MenuManager createFileMenu() {
-        final MenuManager menu = new MenuManager(Messages.Menu_Fichier,
+        final MenuManager menu = new MenuManager(Messages.M_File,
                 IWorkbenchActionConstants.M_FILE);
         menu.add(exitAction);
 
@@ -92,12 +92,12 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 
     private MenuManager createWindowMenu() {
-        final MenuManager menu = new MenuManager(Messages.Menu_Fenetres,
+        final MenuManager menu = new MenuManager(Messages.M_Windows,
                 IWorkbenchActionConstants.M_WINDOW);
 
         // code inspiré de la classe WorkbenchActionBuilder du plugin
         // org.eclipse.ui.ide
-        MenuManager showViewMenuMgr = new MenuManager(Messages.Menu_Vues,
+        MenuManager showViewMenuMgr = new MenuManager(Messages.M_Views,
                 "showView"); //$NON-NLS-2$
         IContributionItem showViewMenu = ContributionItemFactory.VIEWS_SHORTLIST
                 .create(window);
@@ -112,7 +112,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 
     private MenuManager createHelpMenu() {
-        final MenuManager menu = new MenuManager(Messages.Menu_Aide);
+        final MenuManager menu = new MenuManager(Messages.M_Help);
         menu.add(aboutAction);
 
         return menu;

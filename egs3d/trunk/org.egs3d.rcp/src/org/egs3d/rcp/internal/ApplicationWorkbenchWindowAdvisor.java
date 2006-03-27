@@ -92,8 +92,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
             final IWorkbench workbench = configurer.getWorkbenchConfigurer()
                     .getWorkbench();
             MessageDialog.openInformation(workbench.getDisplay()
-                    .getActiveShell(), Messages.Erreur_titre,
-                    Messages.Erreur_noJava3D);
+                    .getActiveShell(), Messages.Error,
+                    Messages.Error_noJava3D);
 
             // l'application n'est pas fermée : on préfère laisser le soin à
             // l'utilisateur de le faire
