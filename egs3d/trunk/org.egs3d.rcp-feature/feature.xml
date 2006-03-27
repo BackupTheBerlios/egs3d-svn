@@ -7,7 +7,7 @@
       plugin="org.egs3d.rcp">
 
    <description url="http://egs3d.berlios.de/overview">
-      Editeur Graphique de Scène 3D pour Java
+      Editeur Graphique de Sc\u00e8ne 3D pour Java
    </description>
 
    <copyright url="http://egs3d.berlios.de/copyright">
@@ -56,13 +56,6 @@
 
    <plugin
          id="org.egs3d.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ui.views"
          download-size="0"
          install-size="0"
          version="0.0.0"

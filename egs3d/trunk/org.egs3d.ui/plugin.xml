@@ -7,20 +7,85 @@
             category="org.egs3d.ui.categories.3d"
             class="org.egs3d.ui.views.SceneGraphRenderView"
             id="org.egs3d.ui.views.sceneGraphRender"
-            name="%SceneRender_name"/>
+            name="%SceneRender"/>
       <view
             category="org.egs3d.ui.categories.3d"
             class="org.egs3d.ui.views.SceneGraphExplorerView"
             id="org.egs3d.ui.views.sceneGraphExplorer"
-            name="%SceneExplorer_name"/>
+            name="%SceneExplorer"/>
       <view
             category="org.egs3d.ui.categories.3d"
             class="org.egs3d.ui.views.DiagnosticView"
             id="org.egs3d.ui.views.diagnostic"
-            name="%Diagnostic_name"/>
+            name="%Diagnostic"/>
       <category
             id="org.egs3d.ui.categories.3d"
             name="%Category_3D"/>
+      <view
+            category="org.egs3d.ui.categories.3d"
+            class="org.egs3d.ui.views.PreviewView"
+            id="org.egs3d.ui.views.preview"
+            name="%Preview"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.egs3d.ui.perspectives.SceneGraphConstructionPerspective"
+            id="org.egs3d.ui.perspectives.sceneGraphConstruction"
+            name="%SceneGraphConstruction">
+      </perspective>
+      <perspective
+            class="org.egs3d.ui.perspectives.SceneGraphRenderPerspective"
+            id="org.egs3d.ui.perspectives.sceneGraphRender"
+            name="%SceneGraphRender"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.egs3d.ui.perspectives.sceneGraphConstruction">
+         <viewShortcut id="org.egs3d.ui.views.sceneGraphExplorer"/>
+         <viewShortcut id="org.egs3d.ui.views.sceneGraphRender"/>
+         <viewShortcut id="org.egs3d.ui.views.diagnostic"/>
+         <viewShortcut id="org.egs3d.ui.views.preview"/>
+         <perspectiveShortcut id="org.egs3d.ui.perspectives.sceneGraphConstruction"/>
+         <perspectiveShortcut id="org.egs3d.ui.perspectives.sceneGraphRender"/>
+         <view
+               id="org.egs3d.ui.views.sceneGraphExplorer"
+               ratio="0.3"
+               relationship="left"
+               relative="org.eclipse.ui.editorss"/>
+         <view
+               id="org.egs3d.ui.views.sceneGraphRender"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.editorss"
+               visible="false"/>
+         <view
+               id="org.egs3d.ui.views.preview"
+               ratio="0.5"
+               relationship="bottom"
+               relative="org.egs3d.ui.views.sceneGraphExplorer"/>
+         <view
+               id="org.eclipse.ui.console.ConsoleView"
+               ratio="0.6"
+               relationship="bottom"
+               relative="org.eclipse.ui.editorss"
+               />
+         <view
+               id="org.egs3d.ui.views.diagnostic"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.egs3d.ui.perspectives.sceneGraphRender">
+         <view
+               closeable="false"
+               id="org.egs3d.ui.views.sceneGraphRender"
+               moveable="false"
+               ratio="1"
+               relationship="stack"
+               relative="org.eclipse.ui.editorss"
+               showTitle="false"
+               standalone="true"/>
+      </perspectiveExtension>
    </extension>
 
 </plugin>
