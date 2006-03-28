@@ -87,5 +87,55 @@
                standalone="true"/>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.egs3d.ui.actionSets.default"
+            label="Actions par défaut"
+            visible="true">
+         <menu
+               id="org.egs3d.ui.menus.help"
+               label="%Help">
+            <separator name="about"/>
+         </menu>
+         <menu
+               id="org.egs3d.ui.menus.file"
+               label="%File">
+            <separator name="newProject"/>
+            <separator name="close"/>
+            <separator name="quit"/>
+         </menu>
+         <action
+               class="org.egs3d.ui.actions.NewProjectAction"
+               id="org.egs3d.ui.actions.newProject"
+               label="%New_Project"
+               menubarPath="org.egs3d.ui.menus.file/newProject"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.CloseAllAction"
+               id="org.egs3d.ui.actions.closeAll"
+               label="%Close_All"
+               menubarPath="org.egs3d.ui.menus.file/close"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.CloseAction"
+               id="org.egs3d.ui.actions.close"
+               label="%Close"
+               menubarPath="org.egs3d.ui.menus.file/close"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.QuitAction"
+               id="org.egs3d.ui.actions.quit"
+               label="%Quit"
+               menubarPath="org.egs3d.ui.menus.file/quit"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.AboutAction"
+               id="org.egs3d.ui.actions.about"
+               label="%About"
+               menubarPath="org.egs3d.ui.menus.help/about"
+               style="push"/>
+      </actionSet>
+   </extension>
 
 </plugin>
