@@ -26,8 +26,6 @@ package org.egs3d.rcp.internal;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.application.ActionBarAdvisor;
-import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.egs3d.core.Java3DUtils;
@@ -42,16 +40,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
 
-    public ApplicationWorkbenchWindowAdvisor(
-            IWorkbenchWindowConfigurer configurer) {
+    public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         super(configurer);
-    }
-
-
-    @Override
-    public ActionBarAdvisor createActionBarAdvisor(
-            IActionBarConfigurer configurer) {
-        return new ApplicationActionBarAdvisor(configurer);
     }
 
 
@@ -91,9 +81,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
             final IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
             final IWorkbench workbench = configurer.getWorkbenchConfigurer()
                     .getWorkbench();
-            MessageDialog.openInformation(workbench.getDisplay()
-                    .getActiveShell(), Messages.Error,
-                    Messages.Error_noJava3D);
+            MessageDialog.openInformation(workbench.getDisplay().getActiveShell(),
+                    Messages.Error, Messages.Error_noJava3D);
 
             // l'application n'est pas fermée : on préfère laisser le soin à
             // l'utilisateur de le faire
