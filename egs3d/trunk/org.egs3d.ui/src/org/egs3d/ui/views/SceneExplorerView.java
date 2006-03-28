@@ -34,8 +34,8 @@ import org.eclipse.ui.part.ViewPart;
  * 
  * @author romale
  */
-public class SceneGraphExplorerView extends ViewPart {
-    public static final String VIEW_ID = "org.egs3d.ui.views.sceneGraphExplorer"; //$NON-NLS-1$
+public class SceneExplorerView extends ViewPart {
+    public static final String VIEW_ID = "org.egs3d.ui.views.sceneExplorer"; //$NON-NLS-1$
     private TreeViewer treeViewer;
 
 

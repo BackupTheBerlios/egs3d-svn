@@ -27,7 +27,7 @@ import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
-import org.egs3d.ui.perspectives.SceneGraphConstructionPerspective;
+import org.egs3d.ui.perspectives.SceneConstructionPerspective;
 
 
 /**
@@ -43,7 +43,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
     @Override
     public String getInitialWindowPerspectiveId() {
-        return SceneGraphConstructionPerspective.PERSPECTIVE_ID;
+        return SceneConstructionPerspective.PERSPECTIVE_ID;
     }
 
 

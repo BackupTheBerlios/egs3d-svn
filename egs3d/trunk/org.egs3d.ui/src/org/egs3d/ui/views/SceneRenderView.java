@@ -48,8 +48,8 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
  * 
  * @author romale
  */
-public class SceneGraphRenderView extends ViewPart {
-    public static final String VIEW_ID = "org.egs3d.ui.views.sceneGraphRender"; //$NON-NLS-1$
+public class SceneRenderView extends ViewPart {
+    public static final String VIEW_ID = "org.egs3d.ui.views.sceneRender"; //$NON-NLS-1$
     private Composite awtComponent;
     private Canvas3D canvas3D;
 

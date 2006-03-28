@@ -32,8 +32,8 @@ import org.eclipse.ui.IPerspectiveFactory;
  * 
  * @author romale
  */
-public class SceneGraphConstructionPerspective implements IPerspectiveFactory {
-    public static final String PERSPECTIVE_ID = "org.egs3d.ui.perspectives.sceneGraphConstruction";
+public class SceneConstructionPerspective implements IPerspectiveFactory {
+    public static final String PERSPECTIVE_ID = "org.egs3d.ui.perspectives.sceneConstruction";
 
 
     public void createInitialLayout(IPageLayout layout) {

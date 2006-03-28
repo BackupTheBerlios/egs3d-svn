@@ -19,7 +19,7 @@
             name="%Product">
          <property
                name="aboutText"
-               value="%Product"/>
+               value="%About_text"/>
       </product>
    </extension>
 

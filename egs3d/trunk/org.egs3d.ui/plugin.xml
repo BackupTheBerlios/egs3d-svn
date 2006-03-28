@@ -5,19 +5,19 @@
          point="org.eclipse.ui.views">
       <view
             category="org.egs3d.ui.categories.3d"
-            class="org.egs3d.ui.views.SceneGraphRenderView"
-            id="org.egs3d.ui.views.sceneGraphRender"
-            name="%SceneRender"/>
+            class="org.egs3d.ui.views.SceneRenderView"
+            id="org.egs3d.ui.views.sceneRender"
+            name="%View_SceneRender"/>
       <view
             category="org.egs3d.ui.categories.3d"
-            class="org.egs3d.ui.views.SceneGraphExplorerView"
-            id="org.egs3d.ui.views.sceneGraphExplorer"
-            name="%SceneExplorer"/>
+            class="org.egs3d.ui.views.SceneExplorerView"
+            id="org.egs3d.ui.views.sceneExplorer"
+            name="%View_SceneExplorer"/>
       <view
             category="org.egs3d.ui.categories.3d"
             class="org.egs3d.ui.views.DiagnosticView"
             id="org.egs3d.ui.views.diagnostic"
-            name="%Diagnostic"/>
+            name="%View_Diagnostic"/>
       <category
             id="org.egs3d.ui.categories.3d"
             name="%Category_3D"/>
@@ -25,36 +25,36 @@
             category="org.egs3d.ui.categories.3d"
             class="org.egs3d.ui.views.PreviewView"
             id="org.egs3d.ui.views.preview"
-            name="%Preview"/>
+            name="%View_Preview"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="org.egs3d.ui.perspectives.SceneGraphConstructionPerspective"
-            id="org.egs3d.ui.perspectives.sceneGraphConstruction"
-            name="%SceneGraphConstruction">
+            class="org.egs3d.ui.perspectives.SceneConstructionPerspective"
+            id="org.egs3d.ui.perspectives.sceneConstruction"
+            name="%Perspective_SceneConstruction">
       </perspective>
       <perspective
-            class="org.egs3d.ui.perspectives.SceneGraphRenderPerspective"
-            id="org.egs3d.ui.perspectives.sceneGraphRender"
-            name="%SceneGraphRender"/>
+            class="org.egs3d.ui.perspectives.SceneRenderPerspective"
+            id="org.egs3d.ui.perspectives.sceneRender"
+            name="%Perspective_SceneRender"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension targetID="org.egs3d.ui.perspectives.sceneGraphConstruction">
-         <viewShortcut id="org.egs3d.ui.views.sceneGraphExplorer"/>
-         <viewShortcut id="org.egs3d.ui.views.sceneGraphRender"/>
+      <perspectiveExtension targetID="org.egs3d.ui.perspectives.sceneConstruction">
+         <viewShortcut id="org.egs3d.ui.views.sceneExplorer"/>
+         <viewShortcut id="org.egs3d.ui.views.sceneRender"/>
          <viewShortcut id="org.egs3d.ui.views.diagnostic"/>
          <viewShortcut id="org.egs3d.ui.views.preview"/>
-         <perspectiveShortcut id="org.egs3d.ui.perspectives.sceneGraphConstruction"/>
-         <perspectiveShortcut id="org.egs3d.ui.perspectives.sceneGraphRender"/>
+         <perspectiveShortcut id="org.egs3d.ui.perspectives.sceneConstruction"/>
+         <perspectiveShortcut id="org.egs3d.ui.perspectives.sceneRender"/>
          <view
-               id="org.egs3d.ui.views.sceneGraphExplorer"
+               id="org.egs3d.ui.views.sceneExplorer"
                ratio="0.3"
                relationship="left"
                relative="org.eclipse.ui.editorss"/>
          <view
-               id="org.egs3d.ui.views.sceneGraphRender"
+               id="org.egs3d.ui.views.sceneRender"
                ratio="0.5"
                relationship="right"
                relative="org.eclipse.ui.editorss"
@@ -63,7 +63,7 @@
                id="org.egs3d.ui.views.preview"
                ratio="0.5"
                relationship="bottom"
-               relative="org.egs3d.ui.views.sceneGraphExplorer"/>
+               relative="org.egs3d.ui.views.sceneExplorer"/>
          <view
                id="org.eclipse.ui.console.ConsoleView"
                ratio="0.6"
@@ -75,10 +75,10 @@
                relationship="stack"
                relative="org.eclipse.ui.console.ConsoleView"/>
       </perspectiveExtension>
-      <perspectiveExtension targetID="org.egs3d.ui.perspectives.sceneGraphRender">
+      <perspectiveExtension targetID="org.egs3d.ui.perspectives.sceneRender">
          <view
                closeable="false"
-               id="org.egs3d.ui.views.sceneGraphRender"
+               id="org.egs3d.ui.views.sceneRender"
                moveable="false"
                ratio="1"
                relationship="stack"
@@ -95,12 +95,12 @@
             visible="true">
          <menu
                id="org.egs3d.ui.menus.help"
-               label="%Help">
+               label="%Menu_Help">
             <separator name="about"/>
          </menu>
          <menu
                id="org.egs3d.ui.menus.file"
-               label="%File">
+               label="%Menu_File">
             <separator name="newProject"/>
             <separator name="close"/>
             <separator name="quit"/>
@@ -108,31 +108,31 @@
          <action
                class="org.egs3d.ui.actions.NewProjectAction"
                id="org.egs3d.ui.actions.newProject"
-               label="%New_Project"
+               label="%Action_NewProject"
                menubarPath="org.egs3d.ui.menus.file/newProject"
                style="push"/>
          <action
                class="org.egs3d.ui.actions.CloseAllAction"
                id="org.egs3d.ui.actions.closeAll"
-               label="%Close_All"
+               label="%Action_CloseAll"
                menubarPath="org.egs3d.ui.menus.file/close"
                style="push"/>
          <action
                class="org.egs3d.ui.actions.CloseAction"
                id="org.egs3d.ui.actions.close"
-               label="%Close"
+               label="%Action_Close"
                menubarPath="org.egs3d.ui.menus.file/close"
                style="push"/>
          <action
                class="org.egs3d.ui.actions.QuitAction"
                id="org.egs3d.ui.actions.quit"
-               label="%Quit"
+               label="%Action_Quit"
                menubarPath="org.egs3d.ui.menus.file/quit"
                style="push"/>
          <action
                class="org.egs3d.ui.actions.AboutAction"
                id="org.egs3d.ui.actions.about"
-               label="%About"
+               label="%Action_About"
                menubarPath="org.egs3d.ui.menus.help/about"
                style="push"/>
       </actionSet>
