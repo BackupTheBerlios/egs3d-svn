@@ -7,7 +7,8 @@ Bundle-Vendor: EGS3D
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.egs3d.core
+ org.egs3d.core,
+ org.egs3d.log
 Eclipse-AutoStart: true
 Export-Package: org.egs3d.ui.actions,
  org.egs3d.ui.perspectives,
