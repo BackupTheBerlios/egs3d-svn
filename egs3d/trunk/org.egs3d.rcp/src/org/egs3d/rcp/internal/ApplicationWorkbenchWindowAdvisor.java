@@ -55,18 +55,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowStatusLine(false);
         configurer.setShowPerspectiveBar(true);
         configurer.setShowProgressIndicator(true);
-    }
 
-
-    @Override
-    public void postWindowOpen() {
-        log.info("Application démarrée");
+        log.info("Ouverture de la fenêtre principale");
     }
 
 
     @Override
     public boolean preWindowShellClose() {
-        log.info("Fermeture de l'application");
+        log.info("Fermeture de la fenêtre principale");
 
         return super.preWindowShellClose();
     }
