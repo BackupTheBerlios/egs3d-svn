@@ -53,7 +53,7 @@ public class QuitAction implements IWorkbenchWindowActionDelegate {
 
 
     public void run(IAction action) {
-        log.debug("Fermeture de l'application");
+        log.debug("Fermeture de l'application"); //$NON-NLS-1$
         ActionFactory.QUIT.create(window).run();
     }
 

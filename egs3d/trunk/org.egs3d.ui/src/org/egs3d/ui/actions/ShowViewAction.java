@@ -54,14 +54,14 @@ public class ShowViewAction implements IWorkbenchWindowActionDelegate {
 
 
     public void run(IAction action) {
-        log.debug("Ouverture de la fenêtre d'ouverture de vue");
+        log.debug("Ouverture de la fenêtre d'ouverture de vue"); //$NON-NLS-1$
         try {
             final ICommandService cs = (ICommandService) PlatformUI.getWorkbench()
                     .getAdapter(ICommandService.class);
-            cs.getCommand("org.eclipse.ui.views.showView").execute(
+            cs.getCommand("org.eclipse.ui.views.showView").execute( //$NON-NLS-1$
                     new ExecutionEvent(Collections.EMPTY_MAP, null, null));
         } catch (Exception e) {
-            log.error("Erreur lors de l'ouverture de la fenêtre d'ouverture de vue", e);
+            log.error("Erreur lors de l'ouverture de la fenêtre d'ouverture de vue", e); //$NON-NLS-1$
         }
     }
 

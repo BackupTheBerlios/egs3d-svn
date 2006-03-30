@@ -54,7 +54,7 @@ public class AboutAction implements IWorkbenchWindowActionDelegate {
 
 
     public void run(IAction action) {
-        log.debug("Ouverture de la fenêtre 'A propos'");
+        log.debug("Ouverture de la fenêtre 'A propos'"); //$NON-NLS-1$
         ActionFactory.ABOUT.create(window).run();
     }
 

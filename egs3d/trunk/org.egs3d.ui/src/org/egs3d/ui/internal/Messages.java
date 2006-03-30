@@ -41,4 +41,8 @@ public class Messages extends NLS {
     public static String Java3DTest_text;
     public static String Diagnostic_name;
     public static String Diagnostic_value;
+    public static String NewProjectWizard_windowTitle;
+    public static String NewProjectWizard_title;
+    public static String NewProjectWizard_description;
+    public static String NewProjectWizard_projectName;
 }

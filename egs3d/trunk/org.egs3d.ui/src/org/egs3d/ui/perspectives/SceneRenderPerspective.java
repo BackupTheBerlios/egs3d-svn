@@ -33,7 +33,7 @@ import org.eclipse.ui.IPerspectiveFactory;
  * @author romale
  */
 public class SceneRenderPerspective implements IPerspectiveFactory {
-    public static final String PERSPECTIVE_ID = "org.egs3d.ui.perspectives.sceneRender";
+    public static final String PERSPECTIVE_ID = "org.egs3d.ui.perspectives.sceneRender"; //$NON-NLS-1$
 
 
     public void createInitialLayout(IPageLayout layout) {

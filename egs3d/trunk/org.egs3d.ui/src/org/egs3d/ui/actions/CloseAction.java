@@ -54,7 +54,7 @@ public class CloseAction implements IWorkbenchWindowActionDelegate {
 
 
     public void run(IAction action) {
-        log.debug("Fermeture de l'éditeur actuellement ouvert");
+        log.debug("Fermeture de l'éditeur actuellement ouvert"); //$NON-NLS-1$
         ActionFactory.CLOSE.create(window).run();
     }
 
