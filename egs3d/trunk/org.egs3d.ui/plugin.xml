@@ -36,6 +36,7 @@
       </perspective>
       <perspective
             class="org.egs3d.ui.perspectives.SceneRenderPerspective"
+            fixed="true"
             id="org.egs3d.ui.perspectives.sceneRender"
             name="%Perspective_SceneRender"/>
    </extension>
@@ -84,7 +85,8 @@
                relationship="stack"
                relative="org.eclipse.ui.editorss"
                showTitle="false"
-               standalone="true"/>
+               standalone="true"
+               visible="true"/>
       </perspectiveExtension>
    </extension>
    <extension
