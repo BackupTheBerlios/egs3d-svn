@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.ui,
 Eclipse-AutoStart: true
 Export-Package: org.egs3d.ui.actions,
  org.egs3d.ui.perspectives,
- org.egs3d.ui.views
+ org.egs3d.ui.views,
+ org.egs3d.ui.wizards
 Eclipse-BuddyPolicy: app
 Bundle-Activator: org.egs3d.ui.internal.UIPlugin

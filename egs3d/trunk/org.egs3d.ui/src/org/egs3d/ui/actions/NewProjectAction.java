@@ -27,8 +27,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.egs3d.ui.wizards.NewProjectWizard;
 
 
 /**
@@ -38,18 +41,34 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
  */
 public class NewProjectAction implements IWorkbenchWindowActionDelegate {
     private final Log log = LogFactory.getLog(getClass());
+    private IWorkbenchWindow window;
 
 
     public void dispose() {
+        window = null;
     }
 
 
     public void init(IWorkbenchWindow window) {
+        this.window = window;
     }
 
 
     public void run(IAction action) {
-        log.debug("Ouverture de la fenêtre de création d'un projet");
+        log.debug("Ouverture de la fenêtre de création d'un projet"); //$NON-NLS-1$
+
+        final NewProjectWizard wizard = new NewProjectWizard();
+        final WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
+        dialog.setBlockOnOpen(true);
+
+        if (Window.OK != dialog.open()) {
+            // action annulée
+            return;
+        }
+
+        log.info("Création du projet : " + wizard.getProjectName()); //$NON-NLS-1$
+
+        // TODO créer le projet dans l'espace de travail
     }
 
 
