@@ -51,4 +51,7 @@ public class Messages extends NLS {
     public static String NewProjectWizard_createProjectElsewhere;
     public static String NewProjectWizard_path;
     public static String NewProjectWizard_browse;
+    public static String Error_openProject;
+    public static String NewProjectWizard_chooseDirectory;
+    public static String Error_projectNameExists;
 }

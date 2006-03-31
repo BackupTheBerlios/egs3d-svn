@@ -23,6 +23,8 @@
 package org.egs3d.ui.wizards;
 
 
+import java.text.MessageFormat;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IProject;
@@ -153,6 +155,11 @@ public class NewProjectWizard extends Wizard {
                     checkNameField(nameField);
                 }
             });
+            pathField.addModifyListener(new ModifyListener() {
+                public void modifyText(ModifyEvent e) {
+                    projectPath = pathField.getText();
+                }
+            });
             createInWorkspaceOption
                     .addSelectionListener(new SelectionAdapter() {
                         @Override
@@ -171,6 +178,7 @@ public class NewProjectWizard extends Wizard {
                     browseDirButton.setEnabled(true);
 
                     browseDirButton.setFocus();
+                    checkNameField(nameField);
                 }
             });
             browseDirButton.addSelectionListener(new SelectionAdapter() {
@@ -178,6 +186,8 @@ public class NewProjectWizard extends Wizard {
                 public void widgetSelected(SelectionEvent e) {
                     final DirectoryDialog dialog = new DirectoryDialog(
                             getShell());
+                    dialog
+                            .setMessage(Messages.NewProjectWizard_chooseDirectory);
                     final String path = StringUtils.trimToNull(dialog.open());
                     if (path != null) {
                         // mise à jour du champ "Dossier"
@@ -216,8 +226,8 @@ public class NewProjectWizard extends Wizard {
                     .getRoot().getProjects();
             for (final IProject project : currentProjects) {
                 if (projectName.equals(project.getName())) {
-                    final String msg = "Un projet existe avec le même nom : "
-                            + projectName;
+                    final String msg = MessageFormat.format(
+                            Messages.Error_projectNameExists, projectName);
                     log.info(msg);
                     setErrorMessage(msg);
 

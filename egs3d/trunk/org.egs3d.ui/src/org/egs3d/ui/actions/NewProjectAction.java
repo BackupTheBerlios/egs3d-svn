@@ -23,16 +23,21 @@
 package org.egs3d.ui.actions;
 
 
+import java.text.MessageFormat;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.egs3d.ui.internal.Messages;
@@ -74,14 +79,39 @@ public class NewProjectAction implements IWorkbenchWindowActionDelegate {
         final String projectName = wizard.getProjectName();
         log.info("Création du projet : " + projectName); //$NON-NLS-1$
 
-        // création du projet dans l'espace de travail
+        final IPath projectPath = new Path(wizard.getProjectPath());
+
+        // création du projet
         final IProject project = ResourcesPlugin.getWorkspace().getRoot()
                 .getProject(projectName);
         try {
-            project.create(null);
+            final IProjectDescription desc = ResourcesPlugin.getWorkspace()
+                    .newProjectDescription(projectName);
+            desc.setLocation(projectPath);
+            project.create(desc, null);
         } catch (CoreException e) {
-            throw new IllegalStateException(NLS.bind(
-                    Messages.Error_createProject, projectName), e);
+            log.error("Erreur à la création du projet : " + projectName, e); //$NON-NLS-1$
+            final String msg = MessageFormat.format(
+                    Messages.Error_createProject, projectName);
+            ErrorDialog.openError(window.getShell(), null, msg, e.getStatus());
+        }
+
+        if (!project.exists()) {
+            // si le projet n'existe pas à ce stade, c'est qu'il y a eu une
+            // erreur : inutile de continuer donc...
+            return;
+        }
+
+        log.info("Ouverture du projet : " + projectName);
+
+        // ouverture du projet
+        try {
+            project.open(null);
+        } catch (CoreException e) {
+            log.error("Erreur à l'ouverture du projet : " + projectName, e); //$NON-NLS-1$
+            final String msg = MessageFormat.format(Messages.Error_openProject,
+                    projectName);
+            ErrorDialog.openError(window.getShell(), null, msg, e.getStatus());
         }
     }
 
