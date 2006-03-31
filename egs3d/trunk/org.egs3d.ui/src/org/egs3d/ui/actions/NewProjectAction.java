@@ -25,12 +25,17 @@ package org.egs3d.ui.actions;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.egs3d.ui.internal.Messages;
 import org.egs3d.ui.wizards.NewProjectWizard;
 
 
@@ -66,9 +71,18 @@ public class NewProjectAction implements IWorkbenchWindowActionDelegate {
             return;
         }
 
-        log.info("Création du projet : " + wizard.getProjectName()); //$NON-NLS-1$
+        final String projectName = wizard.getProjectName();
+        log.info("Création du projet : " + projectName); //$NON-NLS-1$
 
-        // TODO créer le projet dans l'espace de travail
+        // création du projet dans l'espace de travail
+        final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+                .getProject(projectName);
+        try {
+            project.create(null);
+        } catch (CoreException e) {
+            throw new IllegalStateException(NLS.bind(
+                    Messages.Error_createProject, projectName), e);
+        }
     }
 
 
