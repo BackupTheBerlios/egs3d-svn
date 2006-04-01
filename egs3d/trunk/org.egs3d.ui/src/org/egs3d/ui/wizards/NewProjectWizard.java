@@ -169,6 +169,7 @@ public class NewProjectWizard extends Wizard {
 
                             // le dossier est réinitialisé
                             pathField.setText(getWorkspacePath());
+                            projectPath = null;
                         }
                     });
             createElsewhereOption.addSelectionListener(new SelectionAdapter() {
