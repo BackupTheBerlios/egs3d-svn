@@ -79,16 +79,19 @@ public class NewProjectAction implements IWorkbenchWindowActionDelegate {
         final String projectName = wizard.getProjectName();
         log.info("Création du projet : " + projectName); //$NON-NLS-1$
 
-        final IPath projectPath = new Path(wizard.getProjectPath());
-
         // création du projet
         final IProject project = ResourcesPlugin.getWorkspace().getRoot()
                 .getProject(projectName);
         try {
-            final IProjectDescription desc = ResourcesPlugin.getWorkspace()
-                    .newProjectDescription(projectName);
-            desc.setLocation(projectPath);
-            project.create(desc, null);
+            if (wizard.getProjectPath() != null) {
+                final IPath projectPath = new Path(wizard.getProjectPath());
+                final IProjectDescription desc = ResourcesPlugin.getWorkspace()
+                        .newProjectDescription(projectName);
+                desc.setLocation(projectPath);
+                project.create(desc, null);
+            } else {
+                project.create(null);
+            }
         } catch (CoreException e) {
             log.error("Erreur à la création du projet : " + projectName, e); //$NON-NLS-1$
             final String msg = MessageFormat.format(
