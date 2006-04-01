@@ -23,15 +23,20 @@
 package org.egs3d.ui.internal;
 
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Plugin;
-import org.eclipse.core.runtime.Status;
+import java.net.URL;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 
-public class UIPlugin extends Plugin {
+public class UIPlugin extends AbstractUIPlugin {
     public static final String PLUGIN_ID = "org.egs3d.ui"; //$NON-NLS-1$
     private static UIPlugin instance;
+    private final Log log = LogFactory.getLog(getClass());
 
 
     public UIPlugin() {
@@ -58,7 +63,19 @@ public class UIPlugin extends Plugin {
     }
 
 
-    public void logError(String msg, Throwable e) {
-        getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, msg, e));
+    public Image getImage(ImageType type) {
+        Image img = getImageRegistry().get(type.name());
+        if (img == null) {
+            final URL url = getBundle().getEntry(type.path());
+            if (url == null) {
+                log.warn("Image non trouvée : " + type.path()); //$NON-NLS-1$
+                return null;
+            }
+            final ImageDescriptor desc = ImageDescriptor.createFromURL(url);
+            getImageRegistry().put(type.name(), desc);
+            img = getImageRegistry().get(type.name());
+        }
+
+        return img;
     }
 }

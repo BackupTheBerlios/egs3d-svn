@@ -23,14 +23,19 @@
 package org.egs3d.ui.views;
 
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 
 /**
- * Explorateur de scène 3D.
+ * Explorateur de scène 3D. L'implémentation de cette vue et des objets
+ * {@link SceneExplorerContentProvider} et {@link SceneExplorerLabelProvider}
+ * est inspirée de l'article : <a
+ * href="http://www.eclipse.org/articles/treeviewer-cg/TreeViewerArticle.htm">http://www.eclipse.org/articles/treeviewer-cg/TreeViewerArticle.htm</a>.
  * 
  * @author romale
  */
@@ -41,8 +46,20 @@ public class SceneExplorerView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
-        treeViewer = new TreeViewer(parent);
+        treeViewer = new TreeViewer(parent, SWT.MULTI | SWT.BORDER);
         parent.setLayout(new FillLayout());
+
+        // permet d'accélérer l'organisation interne de l'arbre
+        treeViewer.setUseHashlookup(true);
+
+        // configuration
+        treeViewer.setLabelProvider(new SceneExplorerLabelProvider());
+        treeViewer.setContentProvider(new SceneExplorerContentProvider());
+
+        // connexion avec l'espace de travail
+        // (doit être fait APRES avoir affecté un ILabelProvider et un
+        // IContentProvider au TreeViewer)
+        treeViewer.setInput(ResourcesPlugin.getWorkspace().getRoot());
     }
 
 
