@@ -54,7 +54,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowCoolBar(true);
         configurer.setShowStatusLine(false);
         configurer.setShowPerspectiveBar(true);
-        configurer.setShowProgressIndicator(true);
+        configurer.setShowProgressIndicator(false);
 
         log.info("Ouverture de la fenêtre principale");
     }
