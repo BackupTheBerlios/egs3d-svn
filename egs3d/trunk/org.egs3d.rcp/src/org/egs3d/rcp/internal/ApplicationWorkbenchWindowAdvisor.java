@@ -56,13 +56,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowPerspectiveBar(true);
         configurer.setShowProgressIndicator(false);
 
-        log.info("Ouverture de la fenêtre principale");
+        log.info("Ouverture de la fenêtre principale"); //$NON-NLS-1$
     }
 
 
     @Override
     public boolean preWindowShellClose() {
-        log.info("Fermeture de la fenêtre principale");
+        log.info("Fermeture de la fenêtre principale"); //$NON-NLS-1$
 
         return super.preWindowShellClose();
     }
