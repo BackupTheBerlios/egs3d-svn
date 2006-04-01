@@ -114,10 +114,12 @@
          </menu>
          <action
                class="org.egs3d.ui.actions.NewProjectAction"
+               icon="icons/etool16/new_wiz.gif"
                id="org.egs3d.ui.actions.newProject"
                label="%Action_NewProject"
                menubarPath="org.egs3d.ui.menus.file/newProject"
-               style="push"/>
+               style="push"
+               toolbarPath="org.egs3d.ui.menus.file/newProject"/>
          <action
                class="org.egs3d.ui.actions.CloseAllAction"
                id="org.egs3d.ui.actions.closeAll"
