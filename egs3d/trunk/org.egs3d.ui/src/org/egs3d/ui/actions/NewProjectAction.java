@@ -105,7 +105,7 @@ public class NewProjectAction implements IWorkbenchWindowActionDelegate {
             return;
         }
 
-        log.info("Ouverture du projet : " + projectName);
+        log.info("Ouverture du projet : " + projectName); //$NON-NLS-1$
 
         // ouverture du projet
         try {

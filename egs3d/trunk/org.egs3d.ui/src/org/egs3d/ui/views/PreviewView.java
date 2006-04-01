@@ -23,22 +23,42 @@
 package org.egs3d.ui.views;
 
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
+import org.egs3d.ui.internal.Messages;
 
 
 /**
- * Vue d'apercu.
+ * Vue d'aperçu.
  * 
  * @author romale
  */
 public class PreviewView extends ViewPart {
+    private Label noPreviewLabel;
+
+
     @Override
     public void createPartControl(Composite parent) {
+        noPreviewLabel = new Label(parent, SWT.NONE);
+        noPreviewLabel.setText(Messages.PreviewView_noPreview);
+        parent.setLayout(new FillLayout());
     }
 
 
     @Override
     public void setFocus() {
+    }
+
+
+    @Override
+    public void dispose() {
+        if (noPreviewLabel != null) {
+            noPreviewLabel.dispose();
+            noPreviewLabel = null;
+        }
+        super.dispose();
     }
 }

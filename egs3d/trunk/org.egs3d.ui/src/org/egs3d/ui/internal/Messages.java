@@ -39,8 +39,8 @@ public class Messages extends NLS {
     }
     public static String Java3DTest_title;
     public static String Java3DTest_text;
-    public static String Diagnostic_name;
-    public static String Diagnostic_value;
+    public static String DiagnosticView_name;
+    public static String DiagnosticView_value;
     public static String NewProjectWizard_windowTitle;
     public static String NewProjectWizard_title;
     public static String NewProjectWizard_description;
@@ -54,4 +54,5 @@ public class Messages extends NLS {
     public static String Error_openProject;
     public static String NewProjectWizard_chooseDirectory;
     public static String Error_projectNameExists;
+    public static String PreviewView_noPreview;
 }

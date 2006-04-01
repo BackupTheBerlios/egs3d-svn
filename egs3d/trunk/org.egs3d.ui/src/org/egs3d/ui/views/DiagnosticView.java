@@ -23,6 +23,8 @@
 package org.egs3d.ui.views;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -36,7 +38,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 import org.egs3d.ui.actions.ShowJava3DTestDialogAction;
 import org.egs3d.ui.internal.Messages;
-import org.egs3d.ui.internal.UIPlugin;
 
 
 /**
@@ -46,6 +47,7 @@ import org.egs3d.ui.internal.UIPlugin;
  */
 public class DiagnosticView extends ViewPart {
     public static final String VIEW_ID = "org.egs3d.ui.views.diagnostic"; //$NON-NLS-1$
+    private final Log log = LogFactory.getLog(getClass());
     private TableViewer tableViewer;
 
 
@@ -55,17 +57,16 @@ public class DiagnosticView extends ViewPart {
 
         final Table table = tableViewer.getTable();
         final TableColumn titleCol = new TableColumn(table, SWT.LEFT);
-        titleCol.setText(Messages.Diagnostic_name);
+        titleCol.setText(Messages.DiagnosticView_name);
         titleCol.setWidth(200);
         final TableColumn valueCol = new TableColumn(table, SWT.LEFT);
-        valueCol.setText(Messages.Diagnostic_value);
+        valueCol.setText(Messages.DiagnosticView_value);
         valueCol.setWidth(50);
         table.setHeaderVisible(true);
 
         tableViewer.setLabelProvider(new PackageInfoLabelProvider());
 
-        final Object[] data = new Object[] {
-                new PackageInfo("java.lang.String"), //$NON-NLS-1$
+        final Object[] data = new Object[] { new PackageInfo("java.lang.String"), //$NON-NLS-1$
                 new PackageInfo("javax.media.j3d.BranchGroup"), }; //$NON-NLS-1$
         tableViewer.setContentProvider(new ArrayContentProvider());
         tableViewer.setInput(data);
@@ -121,9 +122,8 @@ public class DiagnosticView extends ViewPart {
                 final String unknownValue = "?"; //$NON-NLS-1$
                 name = version = title = unknownValue;
 
-                UIPlugin.getDefault().logError(
-                        "Impossible de récupérer les informations sur la classe " //$NON-NLS-1$
-                                + className, e);
+                log.error("Impossible de récupérer les informations sur la classe " //$NON-NLS-1$
+                        + className, e);
             }
         }
 
