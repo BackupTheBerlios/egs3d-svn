@@ -55,4 +55,6 @@ public class Messages extends NLS {
     public static String NewProjectWizard_chooseDirectory;
     public static String Error_projectNameExists;
     public static String PreviewView_noPreview;
+    public static String DeleteResourceAction_confirm;
+    public static String DeleteResourceAction_title;
 }

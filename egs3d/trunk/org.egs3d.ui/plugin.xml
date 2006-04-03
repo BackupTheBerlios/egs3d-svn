@@ -106,6 +106,11 @@
             <separator name="views"/>
          </menu>
          <menu
+               id="org.egs3d.ui.menus.edit"
+               label="%Menu_Edit">
+            <separator name="delete"/>
+         </menu>
+         <menu
                id="org.egs3d.ui.menus.file"
                label="%Menu_File">
             <separator name="newProject"/>
@@ -150,6 +155,14 @@
                label="%Action_ShowViewMenu"
                menubarPath="org.egs3d.ui.menus.window/views"
                style="push"/>
+         <action
+               class="org.egs3d.ui.actions.DeleteResourceAction"
+               id="org.egs3d.ui.actions.delete"
+               label="%Action_Delete"
+               menubarPath="org.egs3d.ui.menus.edit/delete"
+               style="push">
+            <selection class="org.eclipse.core.resources.IResource"/>
+         </action>
       </actionSet>
    </extension>
 
