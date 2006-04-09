@@ -23,20 +23,42 @@
 package org.egs3d.core.resources;
 
 
-import java.io.File;
-import java.io.IOException;
-
-import com.sun.j3d.utils.universe.SimpleUniverse;
-
-
 /**
- * Enregistrement d'arbre scénique.
+ * Conteneur pour {@link IModel}.
  * 
  * @author romale
  */
-public interface ISceneGraphWriter {
+public interface IModelContainer extends Iterable<IModel> {
     /**
-     * Enregistre un arbre scénique dans un fichier.
+     * Retourne l'instance {@link IScene} associée à ce conteneur.
      */
-    void write(File file, SimpleUniverse universe) throws IOException;
+    IScene getScene();
+
+
+    /**
+     * Ajoute un objet {@link IModel}.
+     */
+    void add(IModel model);
+
+
+    /**
+     * Enlève un objet {@link IModel}.
+     */
+    void remove(IModel model);
+
+
+    /**
+     * Retourne le nombre d'éléments {@link IModel} contenus.
+     * 
+     * @return
+     */
+    int getSize();
+
+
+    /**
+     * Retourne un objet {@link IModel} à l'indice <code>i</code>.
+     * 
+     * @throws IndexOutOfBoundsException si l'indice est incorrect
+     */
+    IModel getModel(int i);
 }

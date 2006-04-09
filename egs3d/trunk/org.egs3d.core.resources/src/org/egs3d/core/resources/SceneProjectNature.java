@@ -1,5 +1,5 @@
 /**
- * $Id$
+ * $Id: ProjectNature.java 66 2006-03-27 22:50:03Z romale $
  *
  * EGS3D
  * http://egs3d.berlios.de
@@ -23,20 +23,36 @@
 package org.egs3d.core.resources;
 
 
-import java.io.File;
-import java.io.IOException;
-
-import com.sun.j3d.utils.universe.SimpleUniverse;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectNature;
+import org.eclipse.core.runtime.CoreException;
 
 
 /**
- * Lecture d'arbre scénique.
+ * Nature d'un projet EGS3D. Utilisé dans la plateforme Eclipse pour identifier
+ * un projet de type EGS3D.
  * 
  * @author romale
  */
-public interface ISceneGraphReader {
-    /**
-     * Lit un arbre scénique à partir d'un fichier.
-     */
-    SimpleUniverse read(File file) throws IOException;
+public class SceneProjectNature implements IProjectNature {
+    public static final String PROJECT_NATURE_ID = "org.egs3d.core.resources.sceneProjectNature";
+    private IProject project;
+
+
+    public void configure() throws CoreException {
+    }
+
+
+    public void deconfigure() throws CoreException {
+    }
+
+
+    public IProject getProject() {
+        return project;
+    }
+
+
+    public void setProject(IProject project) {
+        this.project = project;
+    }
 }

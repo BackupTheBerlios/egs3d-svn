@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Core Resources Test
+Bundle-SymbolicName: org.egs3d.core.resources.test
+Bundle-Version: 0.0.0.dev
+Bundle-Localization: plugin
+Bundle-Vendor: EGS3D
+Eclipse-BuddyPolicy: app
+Require-Bundle: org.junit,
+ org.egs3d.core.resources

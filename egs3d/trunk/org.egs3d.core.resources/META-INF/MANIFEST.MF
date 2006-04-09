@@ -1,10 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Resources
-Bundle-SymbolicName: org.egs3d.core.resources
+Bundle-SymbolicName: org.egs3d.core.resources; singleton:=true
 Bundle-Version: 0.0.0.dev
 Bundle-Vendor: EGS3D
 Bundle-Localization: plugin
-Require-Bundle: org.egs3d.core
-Export-Package: org.egs3d.core.resources
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources
+Export-Package: org.egs3d.core.resources;x-friends:="org.egs3d.core.resources.test"
 Eclipse-BuddyPolicy: app
+Bundle-Activator: org.egs3d.core.resources.ResourcesPlugin

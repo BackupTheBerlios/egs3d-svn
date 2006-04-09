@@ -26,7 +26,11 @@ package org.egs3d.core.resources.internal;
 import java.io.File;
 import java.io.IOException;
 
-import org.egs3d.core.resources.ISceneGraphWriter;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Canvas3D;
+
+import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ISceneWriter;
 
 import com.sun.j3d.utils.scenegraph.io.SceneGraphFileWriter;
 import com.sun.j3d.utils.scenegraph.io.UnsupportedUniverseException;
@@ -38,12 +42,16 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
  * 
  * @author romale
  */
-public class SceneGraphWriter implements ISceneGraphWriter {
-    public void write(File file, SimpleUniverse universe) throws IOException {
+public class SceneWriter implements ISceneWriter {
+    public void write(File file, IScene scene) throws IOException {
         SceneGraphFileWriter writer = null;
         try {
-            writer = new SceneGraphFileWriter(file, universe, true, "EGS3D",
-                    null);
+            final SimpleUniverse su = new SimpleUniverse(new Canvas3D(SimpleUniverse
+                    .getPreferredConfiguration()));
+            for (final BranchGroup bg : scene.getBranchGroupContainer()) {
+                su.addBranchGraph(bg);
+            }
+            writer = new SceneGraphFileWriter(file, su, true, "EGS3D", null);
         } catch (UnsupportedUniverseException e) {
             final IOException exc = new IOException("Unsupported universe");
             exc.initCause(e);

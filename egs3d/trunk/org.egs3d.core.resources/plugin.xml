@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="org.egs3d.core.resources.sceneProjectNature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="org.egs3d.core.resources.SceneProjectNature"/>
+      </runtime>
+      <content-type id="egs"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.contentTypes">
+      <content-type
+            id="egs"
+            name="EGS3D"
+            priority="normal"/>
+   </extension>
+
+</plugin>

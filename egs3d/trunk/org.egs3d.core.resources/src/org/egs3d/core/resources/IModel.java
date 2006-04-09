@@ -20,28 +20,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.egs3d.core.resources.internal;
+package org.egs3d.core.resources;
 
 
-import java.io.File;
-import java.io.IOException;
-
-
-import org.egs3d.core.resources.ISceneGraphWriter;
-
-import com.sun.j3d.utils.universe.SimpleUniverse;
+import java.io.InputStream;
 
 
 /**
- * Enregistrement d'arbre scénique de test.
+ * Modèle 3D.
  * 
  * @author romale
  */
-public class MockSceneGraphWriter implements ISceneGraphWriter {
+public interface IModel {
     /**
-     * Cette méthode ne fait rien.
+     * Retourne le nom du modèle.
      */
-    public void write(File file, SimpleUniverse universe) throws IOException {
-        // rien à faire !
-    }
+    String getName();
+
+
+    /**
+     * Retourne un flux vers le modèle.
+     */
+    InputStream getInputStream();
 }

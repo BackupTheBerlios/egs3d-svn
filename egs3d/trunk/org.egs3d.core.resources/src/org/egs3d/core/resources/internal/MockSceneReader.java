@@ -32,10 +32,11 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.TransformGroup;
 
-import org.egs3d.core.resources.ISceneGraphReader;
+import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ISceneReader;
+import org.egs3d.core.resources.ResourcesPlugin;
 
 import com.sun.j3d.utils.geometry.ColorCube;
-import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
@@ -43,26 +44,26 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
  * 
  * @author romale
  */
-public class MockSceneGraphReader implements ISceneGraphReader {
+public class MockSceneReader implements ISceneReader {
     /**
      * Renvoie un arbre scénique contenant un cube tournant sur lui-même.
      */
-    public SimpleUniverse read(File file) throws IOException {
-        final SimpleUniverse su = new SimpleUniverse();
-
+    public IScene read(File file) throws IOException {
         final TransformGroup cubeTG = new TransformGroup();
         cubeTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        final RotationInterpolator cubeRI = new RotationInterpolator(new Alpha(
-                -1, 3000), cubeTG);
+        final RotationInterpolator cubeRI = new RotationInterpolator(new Alpha(-1, 3000),
+                cubeTG);
         cubeRI.setSchedulingBounds(new BoundingSphere());
         cubeTG.addChild(new ColorCube(0.2));
         cubeTG.addChild(cubeRI);
 
         final BranchGroup root = new BranchGroup();
         root.addChild(cubeTG);
+        root.compile();
 
-        su.addBranchGraph(root);
+        final IScene scene = ResourcesPlugin.createScene();
+        scene.getBranchGroupContainer().add(root);
 
-        return su;
+        return scene;
     }
 }

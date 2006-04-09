@@ -20,33 +20,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.egs3d.core.resources.internal;
+package org.egs3d.core.resources;
 
 
-import java.io.File;
-import java.io.IOException;
-
-import org.egs3d.core.resources.ISceneGraphReader;
-
-import com.sun.j3d.utils.scenegraph.io.SceneGraphFileReader;
-import com.sun.j3d.utils.universe.SimpleUniverse;
+import java.io.InputStream;
 
 
 /**
- * Implémentation du lecteur d'arbre scénique.
+ * Texture.
  * 
  * @author romale
  */
-public class SceneGraphReader implements ISceneGraphReader {
-    public SimpleUniverse read(File file) throws IOException {
-        final SceneGraphFileReader reader = new SceneGraphFileReader(file);
-        try {
-            return reader.readUniverse(true);
-        } finally {
-            try {
-                reader.close();
-            } catch (Exception ignore) {
-            }
-        }
-    }
+public interface ITexture {
+    /**
+     * Retourne le nom de la texture.
+     */
+    String getName();
+
+
+    /**
+     * Retourne un flux vers la texture.
+     */
+    InputStream getInputStream();
 }
