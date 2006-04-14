@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2006-03-29" view-index="0" gantt-divider-location="330" resource-divider-location="301" version="1.12">
+<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2006-04-20" view-index="0" gantt-divider-location="330" resource-divider-location="301" version="1.12">
 <view zooming-state="default:2"/>
 <!-- -->
 <calendars>
@@ -52,18 +52,18 @@
                     </task>
                     <task id="11" name="Explorateur de scène" color="#8cb6ce" meeting="false" start="2006-04-10" duration="15" complete="0" priority="1" expand="true">
                     </task>
-                    <task id="20" name="Modification d'un noeud" color="#8cb6ce" meeting="false" start="2006-04-10" duration="10" complete="0" priority="1" expand="true">
+                    <task id="20" name="Modification d'un noeud" color="#8cb6ce" meeting="false" start="2006-04-17" duration="10" complete="0" priority="1" expand="true">
                     </task>
-                    <task id="13" name="Rendu de scène" color="#8cb6ce" meeting="false" start="2006-05-01" duration="2" complete="0" priority="1" expand="true">
+                    <task id="13" name="Rendu de scène" color="#8cb6ce" meeting="false" start="2006-05-08" duration="2" complete="0" priority="1" expand="true">
                     </task>
-                    <task id="14" name="Affichage du code généré" color="#8cb6ce" meeting="false" start="2006-05-03" duration="3" complete="0" priority="1" expand="true">
+                    <task id="14" name="Affichage du code généré" color="#8cb6ce" meeting="false" start="2006-05-10" duration="3" complete="0" priority="1" expand="true">
                     </task>
-                    <task id="18" name="Finalisation" color="#8cb6ce" meeting="false" start="2006-05-08" duration="10" complete="0" priority="1" expand="true">
+                    <task id="18" name="Finalisation" color="#8cb6ce" meeting="false" start="2006-05-15" duration="5" complete="0" priority="1" expand="true">
                     </task>
                 </task>
                 <task id="9" name="Iimportation&#47;exportation de scène" color="#8cb6ce" meeting="false" start="2006-04-03" duration="5" complete="0" priority="1" expand="true">
                 </task>
-                <task id="10" name="Génération de code à partir d'une scène" color="#8cb6ce" meeting="false" start="2006-04-24" duration="10" complete="0" priority="1" expand="true">
+                <task id="10" name="Génération de code à partir d'une scène" color="#8cb6ce" meeting="false" start="2006-05-01" duration="10" complete="0" priority="1" expand="true">
                 </task>
             </task>
             <task id="19" name="Tests d'intégration" color="#8cb6ce" meeting="false" start="2006-05-22" duration="5" complete="0" priority="1" expand="true">
