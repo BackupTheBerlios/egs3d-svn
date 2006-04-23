@@ -61,7 +61,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         // l'élément sélectionné dans l'explorateur de scène est récupéré à
         // travers l'interface ISelectionListener
         getSite().getWorkbenchWindow().getSelectionService()
-                .addSelectionListener(this);
+                .addSelectionListener(SceneExplorerView.VIEW_ID, this);
 
         showNoPreview();
     }
@@ -77,7 +77,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     public void dispose() {
         if (pageBook != null) {
             getSite().getWorkbenchWindow().getSelectionService()
-                    .removeSelectionListener(this);
+                    .removeSelectionListener(SceneExplorerView.VIEW_ID, this);
 
             pageBook.dispose();
             pageBook = null;
