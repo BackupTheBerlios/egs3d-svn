@@ -42,7 +42,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.egs3d.core.StringUtils;
@@ -98,55 +97,31 @@ public class NewProjectWizard extends Wizard {
 
         public void createControl(Composite parent) {
             final Composite comp = new Composite(parent, SWT.NONE);
-            comp.setLayout(new GridLayout(2, false));
+            comp.setLayout(new GridLayout(3, false));
             parent.setLayout(new FillLayout());
 
             final Label nameLabel = new Label(comp, SWT.NONE);
             nameLabel.setText(Messages.NewProjectWizard_projectName);
 
             final Text nameField = new Text(comp, SWT.BORDER);
-            nameField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-                    false));
+            GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            gd.horizontalSpan = 2;
+            nameField.setLayoutData(gd);
 
-            final Group pathGroup = new Group(comp, SWT.NONE);
-            pathGroup.setText(Messages.NewProjectWizard_contents);
-            pathGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-                    true, 2, 1));
-            pathGroup.setLayout(new GridLayout(3, false));
-
-            final Button createInWorkspaceOption = new Button(pathGroup,
-                    SWT.RADIO);
-            createInWorkspaceOption
-                    .setText(Messages.NewProjectWizard_createProjectInWorkspace);
-            // par défaut, le projet est créé dans l'espace de travail
-            createInWorkspaceOption.setSelection(true);
-            createInWorkspaceOption.setLayoutData(new GridData(SWT.FILL,
-                    SWT.CENTER, true, false, 3, 1));
-
-            final Button createElsewhereOption = new Button(pathGroup,
-                    SWT.RADIO);
-            createElsewhereOption
-                    .setText(Messages.NewProjectWizard_createProjectElsewhere);
-            createElsewhereOption.setLayoutData(new GridData(SWT.FILL,
-                    SWT.CENTER, true, false, 3, 1));
-
-            final Label pathLabel = new Label(pathGroup, SWT.NONE);
+            final Label pathLabel = new Label(comp, SWT.NONE);
             pathLabel.setText(Messages.NewProjectWizard_path);
-            pathLabel.setLayoutData(new GridData());
 
-            final Text pathField = new Text(pathGroup, SWT.BORDER);
+            final Text pathField = new Text(comp, SWT.BORDER);
             pathField.setText(getWorkspacePath());
             pathField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
                     false));
             // le champ n'est pas éditable : il faut utiliser le sélecteur de
             // dossier à l'aide du bouton "Parcourir..."
             pathField.setEditable(false);
-            pathField.setEnabled(false);
 
-            final Button browseDirButton = new Button(pathGroup, SWT.NONE);
+            final Button browseDirButton = new Button(comp, SWT.NONE);
             browseDirButton.setText(Messages.NewProjectWizard_browse);
             // bouton désactivé par défaut
-            browseDirButton.setEnabled(false);
             browseDirButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
                     false, false));
 
@@ -158,28 +133,6 @@ public class NewProjectWizard extends Wizard {
             pathField.addModifyListener(new ModifyListener() {
                 public void modifyText(ModifyEvent e) {
                     projectPath = pathField.getText();
-                }
-            });
-            createInWorkspaceOption
-                    .addSelectionListener(new SelectionAdapter() {
-                        @Override
-                        public void widgetSelected(SelectionEvent e) {
-                            pathField.setEnabled(false);
-                            browseDirButton.setEnabled(false);
-
-                            // le dossier est réinitialisé
-                            pathField.setText(getWorkspacePath());
-                            projectPath = null;
-                        }
-                    });
-            createElsewhereOption.addSelectionListener(new SelectionAdapter() {
-                @Override
-                public void widgetSelected(SelectionEvent e) {
-                    pathField.setEnabled(true);
-                    browseDirButton.setEnabled(true);
-
-                    browseDirButton.setFocus();
-                    checkNameField(nameField);
                 }
             });
             browseDirButton.addSelectionListener(new SelectionAdapter() {
