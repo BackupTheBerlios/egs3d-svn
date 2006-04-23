@@ -157,6 +157,7 @@
                style="push"/>
          <action
                class="org.egs3d.ui.actions.DeleteResourceAction"
+               enablesFor="+"
                id="org.egs3d.ui.actions.delete"
                label="%Action_Delete"
                menubarPath="org.egs3d.ui.menus.edit/delete"
