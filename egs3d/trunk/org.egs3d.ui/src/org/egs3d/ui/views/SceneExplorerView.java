@@ -60,7 +60,8 @@ public class SceneExplorerView extends ViewPart {
         // (doit être fait APRES avoir affecté un ILabelProvider et un
         // IContentProvider au TreeViewer)
         treeViewer.setInput(ResourcesPlugin.getWorkspace().getRoot());
-        
+
+        // enregistrement auprès de l'espace de travail de l'élément sélectionné
         getSite().setSelectionProvider(treeViewer);
     }
 
@@ -74,6 +75,8 @@ public class SceneExplorerView extends ViewPart {
     @Override
     public void dispose() {
         if (treeViewer != null) {
+            getSite().setSelectionProvider(null);
+
             treeViewer.getControl().dispose();
             treeViewer = null;
         }
