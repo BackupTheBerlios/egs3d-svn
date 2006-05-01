@@ -7,6 +7,6 @@ Bundle-Vendor: EGS3D
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources
-Export-Package: org.egs3d.core.resources;x-friends:="org.egs3d.core.resources.test"
+Export-Package: org.egs3d.core.resources
 Eclipse-BuddyPolicy: app
 Bundle-Activator: org.egs3d.core.resources.ResourcesPlugin
