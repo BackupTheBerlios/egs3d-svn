@@ -1,5 +1,5 @@
 /**
- * $Id: SceneExplorerView.java 98 2006-04-23 16:25:38Z romale $
+ * $Id$
  *
  * EGS3D
  * http://egs3d.berlios.de
