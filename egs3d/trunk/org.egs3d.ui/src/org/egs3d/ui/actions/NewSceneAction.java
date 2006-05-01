@@ -23,12 +23,24 @@
 package org.egs3d.ui.actions;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ResourcesPlugin;
+import org.egs3d.core.resources.SceneConstants;
+import org.egs3d.ui.wizards.NewSceneWizard;
 
 
 /**
@@ -38,18 +50,53 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
  */
 public class NewSceneAction implements IWorkbenchWindowActionDelegate {
     private final Log log = LogFactory.getLog(getClass());
+    private IWorkbenchWindow window;
 
 
     public void dispose() {
+        window = null;
     }
 
 
     public void init(IWorkbenchWindow window) {
+        this.window = window;
     }
 
 
     public void run(IAction action) {
-        log.info("Création d'une nouvelle scène");
+        log.debug("Ouverture de la fenêtre de création d'une scène"); //$NON-NLS-1$
+
+        final NewSceneWizard wizard = new NewSceneWizard();
+        final WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
+        dialog.setBlockOnOpen(true);
+
+        if (Window.OK != dialog.open()) {
+            return;
+        }
+
+        final IProject project = wizard.getProject();
+        final String fileName = wizard.getFileName();
+        final IFile file = project.getFile(fileName);
+        final String path = file.getLocation().toOSString();
+        log.info("Création d'une scène dans le projet " + project.getName() + " : " //$NON-NLS-1$ //$NON-NLS-2$
+                + path);
+
+        final IScene scene = ResourcesPlugin.createScene(project);
+        scene.setName(fileName);
+
+        try {
+            final File tempFile = File.createTempFile("scene-", //$NON-NLS-1$
+                    "." + SceneConstants.SCENE_FILE_EXTENSION); //$NON-NLS-1$
+            tempFile.deleteOnExit();
+
+            ResourcesPlugin.createSceneWriter().write(tempFile, scene);
+            final InputStream input = new FileInputStream(tempFile);
+            file.create(input, true, null);
+
+            tempFile.delete();
+        } catch (Exception e) {
+            log.warn("Erreur durant la création du fichier : " + path, e); //$NON-NLS-1$
+        }
     }
 
 

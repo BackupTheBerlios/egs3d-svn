@@ -23,6 +23,7 @@
 package org.egs3d.ui.views;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -39,6 +41,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.egs3d.core.resources.IBranchGroupContainer;
+import org.egs3d.core.resources.IModelContainer;
+import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ITextureContainer;
+import org.egs3d.core.resources.ResourcesPlugin;
+import org.egs3d.core.resources.SceneConstants;
 
 
 /**
@@ -64,6 +72,31 @@ public class SceneExplorerContentProvider implements ITreeContentProvider,
                 log.warn("Erreur dans getChildren(" + parent + ")", e); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
+        if (parent instanceof IFile) {
+            final IFile file = (IFile) parent;
+            if (SceneConstants.SCENE_FILE_EXTENSION.equals(file.getFileExtension())) {
+                try {
+                    final IScene scene = ResourcesPlugin.createSceneReader().read(
+                            file.getLocation().toFile());
+                    return new Object[] { scene.getBranchGroupContainer(),
+                            scene.getModelContainer(), scene.getTextureContainer() };
+                } catch (IOException e) {
+                    log.warn("Erreur dans getChildren(" + parent + ")", e); //$NON-NLS-1$ //$NON-NLS-2$
+                }
+            }
+        }
+        if (parent instanceof IBranchGroupContainer) {
+            final IBranchGroupContainer container = (IBranchGroupContainer) parent;
+            return container.toArray();
+        }
+        if (parent instanceof IModelContainer) {
+            final IModelContainer container = (IModelContainer) parent;
+            return container.toArray();
+        }
+        if (parent instanceof ITextureContainer) {
+            final ITextureContainer container = (ITextureContainer) parent;
+            return container.toArray();
+        }
         return EMPTY_ARRAY;
     }
 
@@ -85,6 +118,22 @@ public class SceneExplorerContentProvider implements ITreeContentProvider,
             } catch (CoreException exc) {
                 log.warn("Erreur dans hasChildren(" + e + ")", exc); //$NON-NLS-1$ //$NON-NLS-2$
             }
+        }
+        if (e instanceof IFile) {
+            final IFile file = (IFile) e;
+            return SceneConstants.SCENE_FILE_EXTENSION.equals(file.getFileExtension());
+        }
+        if (e instanceof IBranchGroupContainer) {
+            final IBranchGroupContainer container = (IBranchGroupContainer) e;
+            return container.getSize() > 0;
+        }
+        if (e instanceof IModelContainer) {
+            final IModelContainer container = (IModelContainer) e;
+            return container.getSize() > 0;
+        }
+        if (e instanceof ITextureContainer) {
+            final ITextureContainer container = (ITextureContainer) e;
+            return container.getSize() > 0;
         }
 
         return false;

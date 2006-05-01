@@ -29,7 +29,11 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.egs3d.core.resources.IBranchGroupContainer;
+import org.egs3d.core.resources.IModelContainer;
+import org.egs3d.core.resources.ITextureContainer;
 import org.egs3d.ui.internal.ImageType;
+import org.egs3d.ui.internal.Messages;
 import org.egs3d.ui.internal.UIPlugin;
 
 
@@ -51,6 +55,19 @@ public class SceneExplorerLabelProvider extends LabelProvider {
         if (e instanceof IFolder) {
             return UIPlugin.getDefault().getImage(ImageType.FOLDER);
         }
+        if (e instanceof IBranchGroupContainer) {
+            // TODO image pour IBranchGroupContainer
+            return UIPlugin.getDefault().getImage(ImageType.FOLDER);
+        }
+        if (e instanceof IModelContainer) {
+            // TODO image pour IModelContainer
+            return UIPlugin.getDefault().getImage(ImageType.FOLDER);
+        }
+        if (e instanceof ITextureContainer) {
+            // TODO image pour ITextureContainer
+            return UIPlugin.getDefault().getImage(ImageType.FOLDER);
+        }
+        // image par défaut
         return UIPlugin.getDefault().getImage(ImageType.FILE);
     }
 
@@ -60,6 +77,15 @@ public class SceneExplorerLabelProvider extends LabelProvider {
         if (e instanceof IResource) {
             final IResource resource = (IResource) e;
             return resource.getName();
+        }
+        if (e instanceof IBranchGroupContainer) {
+            return Messages.Scene_Nodes;
+        }
+        if (e instanceof IModelContainer) {
+            return Messages.Scene_Models;
+        }
+        if (e instanceof ITextureContainer) {
+            return Messages.Scene_Textures;
         }
         // texte par défaut
         return e.toString();

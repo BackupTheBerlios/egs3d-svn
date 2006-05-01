@@ -57,4 +57,13 @@ public class Messages extends NLS {
     public static String PreviewView_noPreview;
     public static String DeleteResourceAction_confirm;
     public static String DeleteResourceAction_title;
+    public static String Scene_Nodes;
+    public static String Scene_Models;
+    public static String Scene_Textures;
+    public static String NewSceneWizard_windowTitle;
+    public static String NewSceneWizard_title;
+    public static String NewSceneWizard_description;
+    public static String NewSceneWizard_Project;
+    public static String NewSceneWizard_FileName;
+    public static String Error_sceneNameExists;
 }
