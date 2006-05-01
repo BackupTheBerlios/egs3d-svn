@@ -113,8 +113,8 @@ public class SceneRenderView extends ViewPart {
         final TransformGroup cubeTG = new TransformGroup();
         cubeTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 
-        final RotationInterpolator cubeRI = new RotationInterpolator(new Alpha(
-                -1, 3000), cubeTG);
+        final RotationInterpolator cubeRI = new RotationInterpolator(new Alpha(-1, 3000),
+                cubeTG);
         cubeRI.setSchedulingBounds(new BoundingSphere());
         cubeTG.addChild(cubeRI);
         cubeTG.addChild(new ColorCube(0.2));
