@@ -23,6 +23,7 @@
 package org.egs3d.core.resources.internal;
 
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -79,5 +80,10 @@ public class TextureContainer implements ITextureContainer {
 
     public ITexture[] toArray() {
         return textures.toArray(new ITexture[textures.size()]);
+    }
+
+
+    public ITexture create(String name, URL url) {
+        return new Texture(name, url);
     }
 }

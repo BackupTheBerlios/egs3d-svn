@@ -23,7 +23,9 @@
 package org.egs3d.core.resources;
 
 
-import java.io.InputStream;
+import javax.media.j3d.BranchGroup;
+
+import com.sun.j3d.loaders.Loader;
 
 
 /**
@@ -39,7 +41,19 @@ public interface IModel {
 
 
     /**
-     * Retourne un flux vers le modèle.
+     * Retourne le modèle sous la forme d'un noeud.
      */
-    InputStream getInputStream();
+    BranchGroup getBranchGroup();
+
+
+    /**
+     * Retourne le modèle sous la forme de données binaires.
+     */
+    byte[] getBinaryData();
+
+
+    /**
+     * Retourne le nom de la classe utilisée pour charger le modèle.
+     */
+    Class<? extends Loader> getLoaderClass();
 }

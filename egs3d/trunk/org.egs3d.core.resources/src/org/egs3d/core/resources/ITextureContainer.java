@@ -23,6 +23,9 @@
 package org.egs3d.core.resources;
 
 
+import java.net.URL;
+
+
 /**
  * Conteneur pour {@link ITexture}.
  * 
@@ -67,4 +70,10 @@ public interface ITextureContainer extends Iterable<ITexture> {
      * Retourne un tableau avec les éléments contenus.
      */
     ITexture[] toArray();
+
+
+    /**
+     * Crée une texture à partir d'une URL.
+     */
+    ITexture create(String name, URL url);
 }

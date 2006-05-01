@@ -22,6 +22,10 @@
 
 package org.egs3d.core.resources;
 
+import java.net.URL;
+
+import com.sun.j3d.loaders.Loader;
+
 
 /**
  * Conteneur pour {@link IModel}.
@@ -67,4 +71,10 @@ public interface IModelContainer extends Iterable<IModel> {
      * Retourne un tableau avec les éléments contenus.
      */
     IModel[] toArray();
+    
+    
+    /**
+     * Crée un modèle à partir d'une URL.
+     */
+    IModel create(String name, Class<? extends Loader> loaderClass, URL url);
 }

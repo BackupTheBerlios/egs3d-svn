@@ -23,6 +23,7 @@
 package org.egs3d.core.resources.internal;
 
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,8 @@ import java.util.List;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.IModelContainer;
 import org.egs3d.core.resources.IScene;
+
+import com.sun.j3d.loaders.Loader;
 
 
 /**
@@ -79,5 +82,10 @@ public class ModelContainer implements IModelContainer {
 
     public IModel[] toArray() {
         return models.toArray(new IModel[models.size()]);
+    }
+
+
+    public IModel create(String name, Class<? extends Loader> loaderClass, URL url) {
+        return new Model(name, loaderClass, url);
     }
 }

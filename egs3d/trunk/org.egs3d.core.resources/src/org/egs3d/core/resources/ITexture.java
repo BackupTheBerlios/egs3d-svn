@@ -23,7 +23,7 @@
 package org.egs3d.core.resources;
 
 
-import java.io.InputStream;
+import java.awt.image.BufferedImage;
 
 
 /**
@@ -39,7 +39,7 @@ public interface ITexture {
 
 
     /**
-     * Retourne un flux vers la texture.
+     * Retourne la texture sous la forme d'une image.
      */
-    InputStream getInputStream();
+    BufferedImage getImage();
 }
