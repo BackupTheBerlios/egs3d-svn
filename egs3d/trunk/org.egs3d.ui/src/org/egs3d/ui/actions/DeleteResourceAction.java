@@ -79,7 +79,8 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
         if (resourcesToDelete.isEmpty()) {
             return;
         }
-        if (!MessageDialog.openQuestion(window.getShell(), Messages.DeleteResourceAction_title,
+        if (!MessageDialog.openQuestion(window.getShell(),
+                Messages.DeleteResourceAction_title,
                 Messages.DeleteResourceAction_confirm)) {
             return;
         }

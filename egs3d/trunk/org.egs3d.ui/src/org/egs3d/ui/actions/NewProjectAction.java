@@ -80,8 +80,8 @@ public class NewProjectAction implements IWorkbenchWindowActionDelegate {
         log.info("Création du projet : " + projectName); //$NON-NLS-1$
 
         // création du projet
-        final IProject project = ResourcesPlugin.getWorkspace().getRoot()
-                .getProject(projectName);
+        final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
+                projectName);
         try {
             if (wizard.getProjectPath() != null) {
                 final IPath projectPath = new Path(wizard.getProjectPath());
@@ -94,8 +94,8 @@ public class NewProjectAction implements IWorkbenchWindowActionDelegate {
             }
         } catch (CoreException e) {
             log.error("Erreur à la création du projet : " + projectName, e); //$NON-NLS-1$
-            final String msg = MessageFormat.format(
-                    Messages.Error_createProject, projectName);
+            final String msg = MessageFormat.format(Messages.Error_createProject,
+                    projectName);
             ErrorDialog.openError(window.getShell(), null, msg, e.getStatus());
         }
 

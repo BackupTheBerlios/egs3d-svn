@@ -60,8 +60,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
         // l'élément sélectionné dans l'explorateur de scène est récupéré à
         // travers l'interface ISelectionListener
-        getSite().getWorkbenchWindow().getSelectionService()
-                .addSelectionListener(SceneExplorerView.VIEW_ID, this);
+        getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(
+                SceneExplorerView.VIEW_ID, this);
 
         showNoPreview();
     }
@@ -76,8 +76,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     @Override
     public void dispose() {
         if (pageBook != null) {
-            getSite().getWorkbenchWindow().getSelectionService()
-                    .removeSelectionListener(SceneExplorerView.VIEW_ID, this);
+            getSite().getWorkbenchWindow().getSelectionService().removeSelectionListener(
+                    SceneExplorerView.VIEW_ID, this);
 
             pageBook.dispose();
             pageBook = null;
@@ -101,7 +101,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         final IStructuredSelection isl = (IStructuredSelection) selection;
         final Object selectedObj = isl.getFirstElement();
         // TODO implémentation de l'aperçu
-        log.debug("Elément sélectionné : " + selectedObj);
+        log.debug("Elément sélectionné : " + selectedObj); //$NON-NLS-1$
 
         // pas d'aperçu pour l'élément sélectionné
         showNoPreview();

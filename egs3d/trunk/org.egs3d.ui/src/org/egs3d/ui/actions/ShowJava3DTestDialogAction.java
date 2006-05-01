@@ -160,15 +160,14 @@ public class ShowJava3DTestDialogAction extends Action {
             // création d'un cube avec une translation
             final Transform3D cubeTranslate = new Transform3D();
             cubeTranslate.setTranslation(new Vector3f(0, -0.2f, 0));
-            final TransformGroup cubeTranslateTG = new TransformGroup(
-                    cubeTranslate);
+            final TransformGroup cubeTranslateTG = new TransformGroup(cubeTranslate);
             cubeTranslateTG.addChild(new ColorCube(0.1));
 
             // ajout d'une rotation sur le cube
             final TransformGroup cubeTG = new TransformGroup();
             cubeTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-            final RotationInterpolator cubeRI = new RotationInterpolator(
-                    new Alpha(-1, 4000), cubeTG);
+            final RotationInterpolator cubeRI = new RotationInterpolator(new Alpha(-1,
+                    4000), cubeTG);
             cubeRI.setSchedulingBounds(sceneBounds);
             cubeTG.addChild(cubeRI);
             cubeTG.addChild(cubeTranslateTG);
@@ -179,8 +178,8 @@ public class ShowJava3DTestDialogAction extends Action {
                     Messages.Java3DTest_text);
             textGeom.setAlignment(Text3D.ALIGN_CENTER);
             final Appearance textAppearance = new Appearance();
-            textAppearance.setColoringAttributes(new ColoringAttributes(1f,
-                    0.3f, 0.1f, ColoringAttributes.FASTEST));
+            textAppearance.setColoringAttributes(new ColoringAttributes(1f, 0.3f, 0.1f,
+                    ColoringAttributes.FASTEST));
 
             // création de l'objet 3D lié au texte
             final Shape3D textShape = new Shape3D(textGeom, textAppearance);
