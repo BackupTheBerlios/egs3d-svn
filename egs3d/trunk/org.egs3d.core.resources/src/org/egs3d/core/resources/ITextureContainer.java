@@ -61,4 +61,10 @@ public interface ITextureContainer extends Iterable<ITexture> {
      * @throws IndexOutOfBoundsException si l'indice est incorrect
      */
     ITexture getTexture(int i);
+
+
+    /**
+     * Retourne un tableau avec les éléments contenus.
+     */
+    ITexture[] toArray();
 }

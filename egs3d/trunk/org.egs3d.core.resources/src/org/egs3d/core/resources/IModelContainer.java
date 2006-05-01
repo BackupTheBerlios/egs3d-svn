@@ -61,4 +61,10 @@ public interface IModelContainer extends Iterable<IModel> {
      * @throws IndexOutOfBoundsException si l'indice est incorrect
      */
     IModel getModel(int i);
+
+
+    /**
+     * Retourne un tableau avec les éléments contenus.
+     */
+    IModel[] toArray();
 }

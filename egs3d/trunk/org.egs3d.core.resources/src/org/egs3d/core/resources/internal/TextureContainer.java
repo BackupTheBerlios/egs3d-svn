@@ -75,4 +75,9 @@ public class TextureContainer implements ITextureContainer {
     public Iterator<ITexture> iterator() {
         return textures.iterator();
     }
+
+
+    public ITexture[] toArray() {
+        return textures.toArray(new ITexture[textures.size()]);
+    }
 }

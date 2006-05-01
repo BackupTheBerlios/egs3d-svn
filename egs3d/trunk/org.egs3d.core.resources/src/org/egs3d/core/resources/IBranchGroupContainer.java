@@ -62,4 +62,10 @@ public interface IBranchGroupContainer extends Iterable<BranchGroup> {
      * @throws IndexOutOfBoundsException si l'indice est incorrect
      */
     BranchGroup getBranchGroup(int i);
+
+
+    /**
+     * Retourne un tableau avec les éléments contenus.
+     */
+    BranchGroup[] toArray();
 }

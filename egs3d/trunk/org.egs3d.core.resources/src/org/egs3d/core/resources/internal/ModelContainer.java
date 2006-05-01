@@ -75,4 +75,9 @@ public class ModelContainer implements IModelContainer {
     public Iterator<IModel> iterator() {
         return models.iterator();
     }
+
+
+    public IModel[] toArray() {
+        return models.toArray(new IModel[models.size()]);
+    }
 }

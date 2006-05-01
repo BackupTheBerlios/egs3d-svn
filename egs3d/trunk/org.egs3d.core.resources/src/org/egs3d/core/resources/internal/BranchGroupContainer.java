@@ -77,4 +77,9 @@ public class BranchGroupContainer implements IBranchGroupContainer {
     public BranchGroup getBranchGroup(int i) {
         return branchGroups.get(i);
     }
+
+
+    public BranchGroup[] toArray() {
+        return branchGroups.toArray(new BranchGroup[branchGroups.size()]);
+    }
 }
