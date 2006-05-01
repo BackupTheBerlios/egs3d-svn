@@ -113,8 +113,7 @@ public class NewProjectWizard extends Wizard {
 
             final Text pathField = new Text(comp, SWT.BORDER);
             pathField.setText(getWorkspacePath());
-            pathField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-                    false));
+            pathField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
             // le champ n'est pas éditable : il faut utiliser le sélecteur de
             // dossier à l'aide du bouton "Parcourir..."
             pathField.setEditable(false);
@@ -122,8 +121,8 @@ public class NewProjectWizard extends Wizard {
             final Button browseDirButton = new Button(comp, SWT.NONE);
             browseDirButton.setText(Messages.NewProjectWizard_browse);
             // bouton désactivé par défaut
-            browseDirButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
-                    false, false));
+            browseDirButton
+                    .setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
             nameField.addModifyListener(new ModifyListener() {
                 public void modifyText(ModifyEvent e) {
@@ -132,16 +131,14 @@ public class NewProjectWizard extends Wizard {
             });
             pathField.addModifyListener(new ModifyListener() {
                 public void modifyText(ModifyEvent e) {
-                    projectPath = pathField.getText();
+                    projectPath = StringUtils.trimToNull(pathField.getText());
                 }
             });
             browseDirButton.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    final DirectoryDialog dialog = new DirectoryDialog(
-                            getShell());
-                    dialog
-                            .setMessage(Messages.NewProjectWizard_chooseDirectory);
+                    final DirectoryDialog dialog = new DirectoryDialog(getShell());
+                    dialog.setMessage(Messages.NewProjectWizard_chooseDirectory);
                     final String path = StringUtils.trimToNull(dialog.open());
                     if (path != null) {
                         // mise à jour du champ "Dossier"
@@ -176,8 +173,8 @@ public class NewProjectWizard extends Wizard {
 
             // on vérifie qu'il n'y a aucun autre projet avec un nom
             // similaire
-            final IProject[] currentProjects = ResourcesPlugin.getWorkspace()
-                    .getRoot().getProjects();
+            final IProject[] currentProjects = ResourcesPlugin.getWorkspace().getRoot()
+                    .getProjects();
             for (final IProject project : currentProjects) {
                 if (projectName.equals(project.getName())) {
                     final String msg = MessageFormat.format(
@@ -193,7 +190,6 @@ public class NewProjectWizard extends Wizard {
 
 
     private String getWorkspacePath() {
-        return ResourcesPlugin.getWorkspace().getRoot().getLocation()
-                .toOSString();
+        return ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
     }
 }
