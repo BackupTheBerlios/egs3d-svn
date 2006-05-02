@@ -27,7 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.net.URL;
+import java.io.InputStream;
 
 import javax.media.j3d.BranchGroup;
 
@@ -49,13 +49,13 @@ public class Model implements IModel {
 
 
     public Model(final String name, final Class<? extends Loader> loaderClass,
-            final URL url) {
+            final InputStream input) {
         this.name = name;
         this.loaderClass = loaderClass;
 
         try {
             final ByteArrayOutputStream buf = new ByteArrayOutputStream();
-            IOUtils.copy(url.openStream(), buf);
+            IOUtils.copy(input, buf);
             binaryData = buf.toByteArray();
         } catch (Exception e) {
             throw new IllegalStateException("Erreur durant le chargement du modèle", e);

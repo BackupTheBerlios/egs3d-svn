@@ -66,14 +66,18 @@ public class SceneWriter implements ISceneWriter {
         ZipOutputStream zipOutput = null;
         try {
             zipOutput = new ZipOutputStream(new FileOutputStream(file));
+            final UncloseableOutputStream proxyOutput = new UncloseableOutputStream(
+                    zipOutput);
 
             // écriture du descripteur
             zipOutput.putNextEntry(new ZipEntry(SceneIOConstants.DESCRIPTOR_NAME));
-            writeDescriptor(zipOutput, scene);
+            writeDescriptor(proxyOutput, scene);
+            proxyOutput.flush();
 
             // écriture de la scène
             zipOutput.putNextEntry(new ZipEntry(SceneIOConstants.SCENE_NAME));
-            writeScene(zipOutput, scene);
+            writeScene(proxyOutput, scene);
+            proxyOutput.flush();
 
             // écriture des modèles
             for (final IModel model : scene.getModelContainer()) {
@@ -81,29 +85,24 @@ public class SceneWriter implements ISceneWriter {
                         + model.getName()));
                 zipOutput.write(model.getBinaryData());
             }
+            zipOutput.flush();
 
             // écriture des textures
             for (final ITexture texture : scene.getTextureContainer()) {
                 zipOutput.putNextEntry(new ZipEntry(SceneIOConstants.TEXTURES_NAME
-                        + texture.getName()));
+                        + texture.getName() + ".png"));
                 // les images sont écrites au format PNG pour conserver la même
                 // qualité au fur et à mesure des enregistrements
-                ImageIO.write(texture.getImage(), "PNG", zipOutput);
+                ImageIO.write(texture.getImage(), "PNG", proxyOutput);
             }
-
-            zipOutput.flush();
+            proxyOutput.flush();
         } catch (Exception e) {
             final IOException exc = new IOException(
                     "Erreur durant l'enregistrement de la scène : " + scene.getName());
             exc.initCause(e);
             throw exc;
         } finally {
-            if (zipOutput != null) {
-                try {
-                    zipOutput.close();
-                } catch (IOException ignore) {
-                }
-            }
+            IOUtils.close(zipOutput);
         }
     }
 
@@ -167,6 +166,7 @@ public class SceneWriter implements ISceneWriter {
             for (final ITexture texture : textureContainer) {
                 final Element textureElem = doc.createElement("texture");
                 textureElem.setAttribute("name", texture.getName());
+                textureElem.setAttribute("file", texture.getName() + ".png");
                 texturesElem.appendChild(textureElem);
             }
 

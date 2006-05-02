@@ -23,7 +23,7 @@
 package org.egs3d.core.resources.internal;
 
 
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -85,7 +85,8 @@ public class ModelContainer implements IModelContainer {
     }
 
 
-    public IModel create(String name, Class<? extends Loader> loaderClass, URL url) {
-        return new Model(name, loaderClass, url);
+    public IModel create(String name, Class<? extends Loader> loaderClass,
+            InputStream input) {
+        return new Model(name, loaderClass, input);
     }
 }

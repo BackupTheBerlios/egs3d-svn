@@ -23,7 +23,7 @@
 package org.egs3d.core.resources;
 
 
-import java.net.URL;
+import java.io.InputStream;
 
 
 /**
@@ -73,7 +73,7 @@ public interface ITextureContainer extends Iterable<ITexture> {
 
 
     /**
-     * Crée une texture à partir d'une URL.
+     * Crée une texture à partir d'un flux.
      */
-    ITexture create(String name, URL url);
+    ITexture create(String name, InputStream input);
 }

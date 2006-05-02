@@ -25,7 +25,7 @@ package org.egs3d.core.resources.internal;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -42,14 +42,14 @@ public class Texture implements ITexture {
     private final BufferedImage data;
 
 
-    public Texture(final String name, final URL url) {
+    public Texture(final String name, final InputStream input) {
         this.name = name;
 
         try {
-            data = ImageIO.read(url);
+            data = ImageIO.read(input);
         } catch (IOException e) {
-            throw new IllegalStateException(
-                    "Erreur durant le chargement de la texture : " + url, e);
+            throw new IllegalStateException("Erreur durant le chargement de la texture",
+                    e);
         }
     }
 
