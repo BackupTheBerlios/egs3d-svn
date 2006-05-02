@@ -62,5 +62,4 @@ public class Texture implements ITexture {
     public BufferedImage getImage() {
         return data;
     }
-
 }
