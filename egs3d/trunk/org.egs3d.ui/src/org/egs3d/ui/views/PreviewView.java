@@ -28,6 +28,9 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -35,7 +38,9 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
+import org.egs3d.core.resources.ITexture;
 import org.egs3d.ui.internal.Messages;
+import org.egs3d.ui.internal.SWTUtils;
 
 
 /**
@@ -47,16 +52,18 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     private final Log log = LogFactory.getLog(getClass());
     private Label noPreviewLabel;
     private PageBook pageBook;
+    private CLabel imageLabel;
 
 
     @Override
     public void createPartControl(Composite parent) {
-        pageBook = new PageBook(parent, SWT.NONE);
-        pageBook.setLayout(new FillLayout());
         parent.setLayout(new FillLayout());
+        pageBook = new PageBook(parent, SWT.NONE);
 
         noPreviewLabel = new Label(pageBook, SWT.NONE);
         noPreviewLabel.setText(Messages.PreviewView_noPreview);
+
+        imageLabel = new CLabel(pageBook, SWT.CENTER | SWT.H_SCROLL | SWT.V_SCROLL);
 
         // l'élément sélectionné dans l'explorateur de scène est récupéré à
         // travers l'interface ISelectionListener
@@ -91,7 +98,29 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     }
 
 
+    private void showTexture(ITexture texture) {
+        if (texture.getImage() == null) {
+            showNoPreview();
+            return;
+        }
+
+        final ImageData imageData = SWTUtils.convertToSWT(texture.getImage());
+        final Image image = new Image(getSite().getWorkbenchWindow().getShell()
+                .getDisplay(), imageData);
+        imageLabel.setImage(image);
+
+        pageBook.showPage(imageLabel);
+    }
+
+
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+        if (imageLabel.getImage() != null) {
+            // libération des ressources occupées par l'image
+            final Image image = imageLabel.getImage();
+            imageLabel.setImage(null);
+            image.dispose();
+        }
+
         if (this == part || selection.isEmpty()
                 || !(selection instanceof IStructuredSelection)) {
             showNoPreview();
@@ -100,10 +129,16 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
         final IStructuredSelection isl = (IStructuredSelection) selection;
         final Object selectedObj = isl.getFirstElement();
-        // TODO implémentation de l'aperçu
+        if (selectedObj == null) {
+            return;
+        }
         log.debug("Elément sélectionné : " + selectedObj); //$NON-NLS-1$
 
-        // pas d'aperçu pour l'élément sélectionné
-        showNoPreview();
+        if (selectedObj instanceof ITexture) {
+            showTexture((ITexture) selectedObj);
+        } else {
+            // pas d'aperçu pour l'élément sélectionné
+            showNoPreview();
+        }
     }
 }
