@@ -187,7 +187,7 @@ public class SceneReader implements ISceneReader {
                     + file);
             if (textureEntry != null) {
                 final ITexture texture = container.create(name, zipFile
-                        .getInputStream(descEntry));
+                        .getInputStream(textureEntry));
                 container.add(texture);
             }
         }
