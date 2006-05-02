@@ -30,7 +30,9 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.egs3d.core.resources.IBranchGroupContainer;
+import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.IModelContainer;
+import org.egs3d.core.resources.ITexture;
 import org.egs3d.core.resources.ITextureContainer;
 import org.egs3d.ui.internal.ImageType;
 import org.egs3d.ui.internal.Messages;
@@ -86,6 +88,12 @@ public class SceneExplorerLabelProvider extends LabelProvider {
         }
         if (e instanceof ITextureContainer) {
             return Messages.Scene_Textures;
+        }
+        if(e instanceof IModel) {
+            return ((IModel) e).getName();
+        }
+        if(e instanceof ITexture) {
+            return ((ITexture) e).getName();
         }
         // texte par défaut
         return e.toString();
