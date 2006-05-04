@@ -38,28 +38,24 @@ import org.egs3d.core.resources.ITextureContainer;
  * 
  * @author romale
  */
-public class TextureContainer implements ITextureContainer {
-    private final IScene scene;
+public class TextureContainer extends AbstractSceneObject implements ITextureContainer {
     private final List<ITexture> textures = new ArrayList<ITexture>(1);
 
 
     public TextureContainer(final IScene scene) {
-        this.scene = scene;
-    }
-
-
-    public IScene getScene() {
-        return scene;
+        super(scene);
     }
 
 
     public void add(ITexture texture) {
         textures.add(texture);
+        refreshProject();
     }
 
 
     public void remove(ITexture texture) {
         textures.remove(texture);
+        refreshProject();
     }
 
 

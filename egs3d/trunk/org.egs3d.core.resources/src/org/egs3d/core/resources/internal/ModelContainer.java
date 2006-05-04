@@ -40,28 +40,24 @@ import com.sun.j3d.loaders.Loader;
  * 
  * @author romale
  */
-public class ModelContainer implements IModelContainer {
-    private final IScene scene;
+public class ModelContainer extends AbstractSceneObject implements IModelContainer {
     private final List<IModel> models = new ArrayList<IModel>(1);
 
 
     public ModelContainer(final IScene scene) {
-        this.scene = scene;
-    }
-
-
-    public IScene getScene() {
-        return scene;
+        super(scene);
     }
 
 
     public void add(IModel model) {
         models.add(model);
+        refreshProject();
     }
 
 
     public void remove(IModel model) {
         models.remove(model);
+        refreshProject();
     }
 
 

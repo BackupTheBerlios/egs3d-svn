@@ -39,18 +39,13 @@ import org.egs3d.core.resources.IScene;
  * 
  * @author romale
  */
-public class BranchGroupContainer implements IBranchGroupContainer {
-    private final IScene scene;
+public class BranchGroupContainer extends AbstractSceneObject implements
+        IBranchGroupContainer {
     private final List<BranchGroup> branchGroups = new ArrayList<BranchGroup>(1);
 
 
     public BranchGroupContainer(final IScene scene) {
-        this.scene = scene;
-    }
-
-
-    public IScene getScene() {
-        return scene;
+        super(scene);
     }
 
 
@@ -61,11 +56,13 @@ public class BranchGroupContainer implements IBranchGroupContainer {
 
     public void add(BranchGroup branchGroup) {
         branchGroups.add(branchGroup);
+        refreshProject();
     }
 
 
     public void remove(BranchGroup branchGroup) {
         branchGroups.remove(branchGroup);
+        refreshProject();
     }
 
 
