@@ -115,6 +115,7 @@
                label="%Menu_File">
             <separator name="fileNew"/>
             <separator name="close"/>
+            <separator name="import"/>
             <separator name="quit"/>
          </menu>
          <menu
@@ -145,7 +146,7 @@
                menubarPath="org.egs3d.ui.menus.file/close"
                style="push"/>
          <action
-               class="org.egs3d.ui.actions.CloseAction"
+               class="org.egs3d.ui.actions.ImportAction"
                id="org.egs3d.ui.actions.close"
                label="%Action_Close"
                menubarPath="org.egs3d.ui.menus.file/close"
@@ -177,6 +178,12 @@
                style="push">
             <selection class="org.eclipse.core.resources.IResource"/>
          </action>
+         <action
+               class="org.egs3d.ui.actions.ImportAction"
+               id="org.egs3d.ui.actions.import"
+               label="%Action_Import"
+               menubarPath="org.egs3d.ui.menus.file/import"
+               style="push"/>
       </actionSet>
    </extension>
 
