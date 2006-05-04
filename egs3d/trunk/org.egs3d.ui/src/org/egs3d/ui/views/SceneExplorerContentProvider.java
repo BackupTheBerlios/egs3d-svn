@@ -23,7 +23,6 @@
 package org.egs3d.ui.views;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -76,11 +75,18 @@ public class SceneExplorerContentProvider implements ITreeContentProvider,
             final IFile file = (IFile) parent;
             if (SceneConstants.SCENE_FILE_EXTENSION.equals(file.getFileExtension())) {
                 try {
-                    final IScene scene = ResourcesPlugin.createSceneReader().read(
-                            file.getLocation().toFile());
+                    IScene scene = (IScene) file
+                            .getSessionProperty(SceneConstants.SCENE_SESSION_RESOURCE_NAME);
+                    if (scene == null) {
+                        scene = ResourcesPlugin.createSceneReader().read(
+                                file.getLocation().toFile());
+                        scene.setProject(file.getProject());
+                        file.setSessionProperty(
+                                SceneConstants.SCENE_SESSION_RESOURCE_NAME, scene);
+                    }
                     return new Object[] { scene.getBranchGroupContainer(),
                             scene.getModelContainer(), scene.getTextureContainer() };
-                } catch (IOException e) {
+                } catch (Exception e) {
                     log.warn("Erreur dans getChildren(" + parent + ")", e); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }

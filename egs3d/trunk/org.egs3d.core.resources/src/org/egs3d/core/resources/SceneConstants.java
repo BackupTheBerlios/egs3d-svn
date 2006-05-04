@@ -23,6 +23,9 @@
 package org.egs3d.core.resources;
 
 
+import org.eclipse.core.runtime.QualifiedName;
+
+
 /**
  * Constantes concernant des scène 3D.
  * 
@@ -33,6 +36,9 @@ public final class SceneConstants {
      * Extension de fichier pour une scène.
      */
     public static final String SCENE_FILE_EXTENSION = "egs";
+
+    public static final QualifiedName SCENE_SESSION_RESOURCE_NAME = new QualifiedName(
+            "egs3d", "scene");
 
 
     private SceneConstants() {
