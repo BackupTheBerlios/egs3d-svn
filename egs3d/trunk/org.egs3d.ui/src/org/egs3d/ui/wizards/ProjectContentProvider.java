@@ -28,12 +28,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.egs3d.core.resources.SceneConstants;
 
 
 /**
@@ -45,13 +47,24 @@ import org.eclipse.jface.viewers.Viewer;
 public class ProjectContentProvider implements ITreeContentProvider {
     private static final Object[] EMPTY_ARRAY = new Object[0];
     private final Log log = LogFactory.getLog(getClass());
+    private final boolean includeScenes;
+
+
+    public ProjectContentProvider(final boolean includeScenes) {
+        this.includeScenes = includeScenes;
+    }
+
+
+    public ProjectContentProvider() {
+        this(false);
+    }
 
 
     public Object[] getChildren(Object parent) {
-        if (parent instanceof IWorkspaceRoot) {
-            final IWorkspaceRoot root = (IWorkspaceRoot) parent;
+        if (parent instanceof IContainer) {
+            final IContainer container = (IContainer) parent;
             try {
-                return filterResources(root.members());
+                return filterResources(container.members());
             } catch (CoreException exc) {
                 log.warn("Erreur dans getChildren(" + parent + ")", exc); //$NON-NLS-1$ //$NON-NLS-2$
             }
@@ -66,10 +79,10 @@ public class ProjectContentProvider implements ITreeContentProvider {
 
 
     public boolean hasChildren(Object e) {
-        if (e instanceof IWorkspaceRoot) {
-            final IWorkspaceRoot root = (IWorkspaceRoot) e;
+        if (e instanceof IContainer) {
+            final IContainer container = (IContainer) e;
             try {
-                return filterResources(root.members()).length > 0;
+                return filterResources(container.members()).length > 0;
             } catch (CoreException exc) {
                 log.warn("Erreur dans hasChildren(" + e + ")", exc); //$NON-NLS-1$ //$NON-NLS-2$
             }
@@ -102,6 +115,13 @@ public class ProjectContentProvider implements ITreeContentProvider {
                 final IProject project = (IProject) obj;
                 if (project.isOpen()) {
                     filteredObjects.add(project);
+                }
+            } else if (obj instanceof IResource) {
+                final IResource rsc = (IResource) obj;
+                if (includeScenes
+                        && SceneConstants.SCENE_FILE_EXTENSION.equals(rsc
+                                .getFileExtension())) {
+                    filteredObjects.add(rsc);
                 }
             }
         }
