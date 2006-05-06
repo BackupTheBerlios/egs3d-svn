@@ -26,11 +26,6 @@ package org.egs3d.ui.wizards;
 import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -45,7 +40,6 @@ import org.eclipse.swt.widgets.Text;
 import org.egs3d.core.StringUtils;
 import org.egs3d.core.resources.SceneConstants;
 import org.egs3d.ui.internal.Messages;
-import org.egs3d.ui.views.SceneExplorerLabelProvider;
 
 
 /**

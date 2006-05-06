@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.egs3d.ui.views;
+package org.egs3d.ui.util;
 
 
 import org.eclipse.core.resources.IFolder;
@@ -37,6 +37,7 @@ import org.egs3d.core.resources.ITextureContainer;
 import org.egs3d.ui.internal.ImageType;
 import org.egs3d.ui.internal.Messages;
 import org.egs3d.ui.internal.UIPlugin;
+import org.egs3d.ui.views.SceneExplorerView;
 
 
 /**
@@ -45,7 +46,7 @@ import org.egs3d.ui.internal.UIPlugin;
  * 
  * @author romale
  */
-public class SceneExplorerLabelProvider extends LabelProvider {
+public class SceneLabelProvider extends LabelProvider {
     @Override
     public Image getImage(Object e) {
         if (e instanceof IProject) {

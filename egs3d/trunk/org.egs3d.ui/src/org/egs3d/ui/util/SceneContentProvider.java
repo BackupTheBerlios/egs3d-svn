@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.egs3d.ui.views;
+package org.egs3d.ui.util;
 
 
 import java.util.ArrayList;
@@ -46,6 +46,7 @@ import org.egs3d.core.resources.IScene;
 import org.egs3d.core.resources.ITextureContainer;
 import org.egs3d.core.resources.ResourcesPlugin;
 import org.egs3d.core.resources.SceneConstants;
+import org.egs3d.ui.views.SceneExplorerView;
 
 
 /**
@@ -54,7 +55,7 @@ import org.egs3d.core.resources.SceneConstants;
  * 
  * @author romale
  */
-public class SceneExplorerContentProvider implements ITreeContentProvider,
+public class SceneContentProvider implements ITreeContentProvider,
         IResourceChangeListener {
     private static final Object[] EMPTY_ARRAY = new Object[0];
     private final Log log = LogFactory.getLog(getClass());
@@ -73,22 +74,14 @@ public class SceneExplorerContentProvider implements ITreeContentProvider,
         }
         if (parent instanceof IFile) {
             final IFile file = (IFile) parent;
-            if (SceneConstants.SCENE_FILE_EXTENSION.equals(file.getFileExtension())) {
-                try {
-                    IScene scene = (IScene) file
-                            .getSessionProperty(SceneConstants.SCENE_SESSION_RESOURCE_NAME);
-                    if (scene == null) {
-                        scene = ResourcesPlugin.createSceneReader().read(
-                                file.getLocation().toFile());
-                        scene.setProject(file.getProject());
-                        file.setSessionProperty(
-                                SceneConstants.SCENE_SESSION_RESOURCE_NAME, scene);
-                    }
+            try {
+                final IScene scene = ResourcesPlugin.getScene(file);
+                if (scene != null) {
                     return new Object[] { scene.getBranchGroupContainer(),
                             scene.getModelContainer(), scene.getTextureContainer() };
-                } catch (Exception e) {
-                    log.warn("Erreur dans getChildren(" + parent + ")", e); //$NON-NLS-1$ //$NON-NLS-2$
                 }
+            } catch (Exception e) {
+                log.warn("Erreur dans getChildren(" + parent + ")", e); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         if (parent instanceof IBranchGroupContainer) {

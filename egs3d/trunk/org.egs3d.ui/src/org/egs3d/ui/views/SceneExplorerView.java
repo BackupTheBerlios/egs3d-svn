@@ -29,11 +29,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.egs3d.ui.util.SceneContentProvider;
+import org.egs3d.ui.util.SceneLabelProvider;
 
 
 /**
  * Explorateur de scène 3D. L'implémentation de cette vue et des objets
- * {@link SceneExplorerContentProvider} et {@link SceneExplorerLabelProvider}
+ * {@link SceneContentProvider} et {@link SceneLabelProvider}
  * est inspirée de l'article : <a
  * href="http://www.eclipse.org/articles/treeviewer-cg/TreeViewerArticle.htm">http://www.eclipse.org/articles/treeviewer-cg/TreeViewerArticle.htm</a>.
  * 
@@ -53,8 +55,8 @@ public class SceneExplorerView extends ViewPart {
         treeViewer.setUseHashlookup(true);
 
         // configuration
-        treeViewer.setLabelProvider(new SceneExplorerLabelProvider());
-        treeViewer.setContentProvider(new SceneExplorerContentProvider());
+        treeViewer.setLabelProvider(new SceneLabelProvider());
+        treeViewer.setContentProvider(new SceneContentProvider());
 
         // connexion avec l'espace de travail
         // (doit être fait APRES avoir affecté un ILabelProvider et un
