@@ -28,8 +28,12 @@ import java.net.URL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ResourcesPlugin;
+import org.egs3d.ui.views.SceneExplorerView;
 import org.osgi.framework.BundleContext;
 
 
@@ -77,5 +81,21 @@ public class UIPlugin extends AbstractUIPlugin {
         }
 
         return img;
+    }
+
+
+	/**
+	 * Retourne la scène sélectionnée dans l'explorateur de scène,
+     * <code>null</code>.
+	 */
+    public IScene getSelectedScene() {
+        final IStructuredSelection sel = (IStructuredSelection) getWorkbench()
+                .getActiveWorkbenchWindow().getSelectionService().getSelection(
+                        SceneExplorerView.VIEW_ID);
+        if (sel == null || sel.isEmpty()) {
+            return null;
+        }
+
+        return ResourcesPlugin.getScene(sel.getFirstElement());
     }
 }
