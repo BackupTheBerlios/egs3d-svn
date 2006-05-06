@@ -25,6 +25,8 @@ package org.egs3d.ui.wizards;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -153,6 +155,14 @@ public class ImportWizard extends Wizard {
                         log.info("Type de ressource à importer : " + importType.name());
                     }
                     validate();
+                }
+            });
+            table.addDoubleClickListener(new IDoubleClickListener() {
+                public void doubleClick(DoubleClickEvent event) {
+                    validate();
+                    if (isPageComplete()) {
+                        getContainer().showPage(getNextPage());
+                    }
                 }
             });
 
