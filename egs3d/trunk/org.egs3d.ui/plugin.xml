@@ -115,6 +115,7 @@
                label="%Menu_File">
             <separator name="fileNew"/>
             <separator name="close"/>
+            <separator name="save"/>
             <separator name="import"/>
             <separator name="quit"/>
          </menu>
@@ -153,23 +154,26 @@
                menubarPath="org.egs3d.ui.menus.file/close"
                style="push"/>
          <action
-               class="org.egs3d.ui.actions.ImportAction"
-               id="org.egs3d.ui.actions.close"
-               label="%Action_Close"
-               menubarPath="org.egs3d.ui.menus.file/close"
-               style="push"/>
-         <action
                class="org.egs3d.ui.actions.QuitAction"
                id="org.egs3d.ui.actions.quit"
                label="%Action_Quit"
                menubarPath="org.egs3d.ui.menus.file/quit"
                style="push"/>
          <action
-               class="org.egs3d.ui.actions.AboutAction"
-               id="org.egs3d.ui.actions.about"
-               label="%Action_About"
-               menubarPath="org.egs3d.ui.menus.help/about"
-               style="push"/>
+               class="org.egs3d.ui.actions.SaveAction"
+               icon="icons/etool16/save_edit.gif"
+               id="org.egs3d.ui.actions.save"
+               label="%Action_Save"
+               menubarPath="org.egs3d.ui.menus.file/save"
+               style="push"
+               toolbarPath="org.egs3d.ui.menus.file/save">
+            <enablement>
+               <or>
+                  <objectClass name="org.eclipse.core.resources.IResource"/>
+                  <objectClass name="org.egs3d.core.resources.ISceneObject"/>
+               </or>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.ShowViewAction"
                id="org.egs3d.ui.actions.showView"
@@ -203,6 +207,18 @@
                </and>
             </enablement>
          </action>
+         <action
+               class="org.egs3d.ui.actions.ImportAction"
+               id="org.egs3d.ui.actions.close"
+               label="%Action_Close"
+               menubarPath="org.egs3d.ui.menus.file/close"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.SaveAction"
+               id="org.egs3d.ui.actions.save"
+               label="%Action_Save"
+               menubarPath="org.egs3d.ui.menus.file/quit"
+               style="push"/>
       </actionSet>
    </extension>
 
