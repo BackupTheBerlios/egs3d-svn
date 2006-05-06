@@ -23,6 +23,7 @@
 package org.egs3d.core.resources.internal;
 
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.egs3d.core.resources.IBranchGroupContainer;
 import org.egs3d.core.resources.IModelContainer;
@@ -41,6 +42,7 @@ public class Scene implements IScene {
     private final IModelContainer modelContainer = new ModelContainer(this);
     private final ITextureContainer textureContainer = new TextureContainer(this);
     private IProject project;
+    private IFile file;
     private String name;
 
 
@@ -86,5 +88,15 @@ public class Scene implements IScene {
 
     public ITextureContainer getTextureContainer() {
         return textureContainer;
+    }
+
+
+    public IFile getFile() {
+        return file;
+    }
+
+
+    public void setFile(IFile file) {
+        this.file = file;
     }
 }

@@ -23,6 +23,7 @@
 package org.egs3d.core.resources;
 
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 
 
@@ -47,6 +48,18 @@ public interface IScene {
      * Enregistre la scène auprès d'une instance {@link IProject}.
      */
     void setProject(IProject project);
+
+
+    /**
+     * Retourne l'instance {@link IFile} associée à la scène.
+     */
+    IFile getFile();
+
+
+    /**
+     * Enregistre l'instance {@link IFile} associée à la scène.
+     */
+    void setFile(IFile file);
 
 
     /**

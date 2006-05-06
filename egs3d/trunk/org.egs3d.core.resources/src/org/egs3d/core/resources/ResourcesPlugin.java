@@ -106,6 +106,7 @@ public class ResourcesPlugin extends Plugin {
             final File javaFile = file.getLocation().toFile();
             scene = createSceneReader().read(javaFile);
             scene.setProject(file.getProject());
+            scene.setFile(file);
             file.setSessionProperty(SceneConstants.SCENE_SESSION_RESOURCE_NAME, scene);
         }
 
