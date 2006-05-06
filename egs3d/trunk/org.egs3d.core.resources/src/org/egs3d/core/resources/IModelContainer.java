@@ -33,7 +33,7 @@ import com.sun.j3d.loaders.Loader;
  * 
  * @author romale
  */
-public interface IModelContainer extends Iterable<IModel> {
+public interface IModelContainer extends Iterable<IModel>, ISceneObject {
     /**
      * Retourne l'instance {@link IScene} associée à ce conteneur.
      */

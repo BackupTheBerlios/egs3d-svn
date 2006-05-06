@@ -31,7 +31,7 @@ import javax.media.j3d.BranchGroup;
  * 
  * @author romale
  */
-public interface IBranchGroupContainer extends Iterable<BranchGroup> {
+public interface IBranchGroupContainer extends Iterable<BranchGroup>, ISceneObject {
     /**
      * Retourne l'instance {@link IScene} associée à ce conteneur.
      */

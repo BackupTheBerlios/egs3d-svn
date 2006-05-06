@@ -25,6 +25,7 @@ package org.egs3d.core.resources.internal;
 
 import org.eclipse.core.resources.IProject;
 import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ISceneObject;
 
 
 /**
@@ -33,7 +34,7 @@ import org.egs3d.core.resources.IScene;
  * 
  * @author romale
  */
-public abstract class AbstractSceneObject {
+public abstract class AbstractSceneObject implements ISceneObject {
     private final IScene scene;
 
 

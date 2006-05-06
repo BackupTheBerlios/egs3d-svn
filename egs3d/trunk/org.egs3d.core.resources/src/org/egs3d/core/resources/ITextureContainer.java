@@ -31,7 +31,7 @@ import java.io.InputStream;
  * 
  * @author romale
  */
-public interface ITextureContainer extends Iterable<ITexture> {
+public interface ITextureContainer extends Iterable<ITexture>, ISceneObject {
     /**
      * Retourne l'instance {@link IScene} associée à ce conteneur.
      */
