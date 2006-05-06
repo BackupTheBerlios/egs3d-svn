@@ -23,6 +23,8 @@
 package org.egs3d.ui.views;
 
 
+import java.lang.ref.WeakReference;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.viewers.ISelection;
@@ -53,6 +55,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     private Label noPreviewLabel;
     private PageBook pageBook;
     private CLabel imageLabel;
+    private WeakReference<Object> selectionRef;
 
 
     @Override
@@ -114,13 +117,6 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
 
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-        if (imageLabel.getImage() != null) {
-            // libération des ressources occupées par l'image
-            final Image image = imageLabel.getImage();
-            imageLabel.setImage(null);
-            image.dispose();
-        }
-
         if (this == part || selection.isEmpty()
                 || !(selection instanceof IStructuredSelection)) {
             showNoPreview();
@@ -134,11 +130,25 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         }
         log.debug("Elément sélectionné : " + selectedObj); //$NON-NLS-1$
 
+        if (selectionRef != null && selectedObj.equals(selectionRef.get())) {
+            log.debug("Pas de changement dans la sélection");
+            return;
+        }
+
+        if (imageLabel.getImage() != null) {
+            // libération des ressources occupées par l'image
+            final Image image = imageLabel.getImage();
+            imageLabel.setImage(null);
+            image.dispose();
+        }
+
         if (selectedObj instanceof ITexture) {
             showTexture((ITexture) selectedObj);
         } else {
             // pas d'aperçu pour l'élément sélectionné
             showNoPreview();
         }
+
+        selectionRef = new WeakReference<Object>(selectedObj);
     }
 }
