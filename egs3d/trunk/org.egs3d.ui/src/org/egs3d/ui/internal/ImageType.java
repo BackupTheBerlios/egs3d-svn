@@ -30,7 +30,10 @@ package org.egs3d.ui.internal;
  */
 public enum ImageType {
     OPENED_PROJECT("prj_obj.gif"), CLOSED_PROJECT("cprj_obj.gif"), FILE("file_obj.gif"), FOLDER( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            "fldr_obj.gif"); //$NON-NLS-1$
+            "fldr_obj.gif"), BRANCHGROUP("bgrp_obj.gif"), TRANSFORMGROUP("tgrp_obj.gif"),
+            TEXTURE("txtr_obj.gif"), MODELE("mdl_obj.gif"), LOCALE("lcl_obj.gif"),
+            SHAPE("shp_obj.gif"), LIGHT("lgt_obj.gif"), BACKGROUND("bgd_obj.gif"),
+            ; //$NON-NLS-1$
 
     private static final String PREFIX_PATH = "/icons/obj16/"; //$NON-NLS-1$
     private final String path;
