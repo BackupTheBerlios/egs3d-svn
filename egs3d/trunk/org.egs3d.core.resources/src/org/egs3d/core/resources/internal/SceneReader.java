@@ -152,7 +152,7 @@ public class SceneReader implements ISceneReader {
                 } catch (ClassNotFoundException e) {
                     continue;
                 }
-                final IModel model = container.create(name, FileUtils.getExtension(name),
+                final IModel model = container.create(name, FileUtils.getExtension(file),
                         loaderClass, zipFile.getInputStream(modelEntry));
                 container.add(model);
             }
