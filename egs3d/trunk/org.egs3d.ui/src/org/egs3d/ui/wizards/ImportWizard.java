@@ -71,6 +71,9 @@ public class ImportWizard extends Wizard {
 
     private final Log log = LogFactory.getLog(getClass());
 
+    private static final Class<?>[] LOADERS_CLASSES = { ObjectFile.class,
+            Lw3dLoader.class };
+
     private ImportType importType;
     private Class<? extends Loader> modelLoaderClass;
     private String resourceName;
@@ -235,6 +238,7 @@ public class ImportWizard extends Wizard {
         }
 
 
+        @SuppressWarnings("unchecked")
         public void createControl(Composite parent) {
             final Composite comp = new Composite(parent, SWT.NONE);
             comp.setLayout(new GridLayout(3, false));
@@ -291,8 +295,10 @@ public class ImportWizard extends Wizard {
             loaderCombo = new Combo(comp, SWT.NONE);
             loaderCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,
                     1));
-            loaderCombo.add(ObjectFile.class.getName());
-            loaderCombo.add(Lw3dLoader.class.getName());
+
+            for (final Class clazz : LOADERS_CLASSES) {
+                loaderCombo.add(clazz.getName());
+            }
             loaderCombo.addSelectionListener(new SelectionListener() {
                 public void widgetDefaultSelected(SelectionEvent e) {
                     widgetSelected(e);
@@ -324,6 +330,7 @@ public class ImportWizard extends Wizard {
                     validate();
                 }
             });
+            modelLoaderClass = (Class<? extends Loader>) LOADERS_CLASSES[0];
             loaderCombo.select(0);
 
             validate();

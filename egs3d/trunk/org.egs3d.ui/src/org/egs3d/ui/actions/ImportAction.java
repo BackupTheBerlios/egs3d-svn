@@ -35,6 +35,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.egs3d.core.FileUtils;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.IScene;
 import org.egs3d.core.resources.ITexture;
@@ -95,7 +96,8 @@ public class ImportAction implements IWorkbenchWindowActionDelegate {
                 scene.getTextureContainer().add(texture);
             } else if (type.equals(ImportWizard.ImportType.MODEL)) {
                 final IModel model = scene.getModelContainer().create(resourceName,
-                        modelLoaderClass, new FileInputStream(file));
+                        FileUtils.getExtension(file.getName()), modelLoaderClass,
+                        new FileInputStream(file));
                 scene.getModelContainer().add(model);
             }
         } catch (FileNotFoundException e) {

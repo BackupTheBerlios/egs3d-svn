@@ -35,6 +35,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
+import org.egs3d.core.FileUtils;
 import org.egs3d.core.resources.IBranchGroupContainer;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.IModelContainer;
@@ -134,7 +135,7 @@ public class SceneReader implements ISceneReader {
             final Element elem = (Element) nodeList.item(i);
             final String name = elem.getAttribute("name");
             final String file = elem.getAttribute("file");
-            final String loaderClassName = elem.getAttribute("loaderClass");
+            final String loaderClassName = elem.getAttribute("loader");
 
             if (name.length() == 0 || file.length() == 0 || loaderClassName.length() == 0) {
                 // pas d'attribut "name" ou "file" ou "loaderClass"
@@ -151,8 +152,8 @@ public class SceneReader implements ISceneReader {
                 } catch (ClassNotFoundException e) {
                     continue;
                 }
-                final IModel model = container.create(name, loaderClass, zipFile
-                        .getInputStream(modelEntry));
+                final IModel model = container.create(name, FileUtils.getExtension(name),
+                        loaderClass, zipFile.getInputStream(modelEntry));
                 container.add(model);
             }
         }

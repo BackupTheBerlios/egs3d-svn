@@ -82,7 +82,7 @@ public class SceneWriter implements ISceneWriter {
             // écriture des modèles
             for (final IModel model : scene.getModelContainer()) {
                 zipOutput.putNextEntry(new ZipEntry(SceneIOConstants.MODELS_NAME
-                        + model.getName()));
+                        + model.getName() + "." + model.getExtension()));
                 zipOutput.write(model.getBinaryData());
             }
             zipOutput.flush();
@@ -152,6 +152,8 @@ public class SceneWriter implements ISceneWriter {
             for (final IModel model : modelContainer) {
                 final Element modelElem = doc.createElement("model");
                 modelElem.setAttribute("name", model.getName());
+                modelElem.setAttribute("file", model.getName() + "."
+                        + model.getExtension());
                 modelElem.setAttribute("loader", model.getLoaderClass().getName());
                 modelsElem.appendChild(modelElem);
             }
