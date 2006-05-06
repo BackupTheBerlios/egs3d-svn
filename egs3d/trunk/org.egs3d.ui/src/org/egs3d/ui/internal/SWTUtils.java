@@ -24,8 +24,8 @@ package org.egs3d.ui.internal;
 
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 import javax.imageio.ImageIO;
 
@@ -49,12 +49,15 @@ public final class SWTUtils {
         // TODO implémenter un algorithme plus rapide pour la conversion
         // (ne plus passer par ImageIO !)
 
-        final ByteArrayOutputStream buf = new ByteArrayOutputStream();
         try {
-            ImageIO.write(bufferedImage, "PNG", buf);
+            final File tempFile = File.createTempFile("image-", ".png");
+            tempFile.deleteOnExit();
+
+            ImageIO.write(bufferedImage, "PNG", tempFile);
+
+            return new ImageData(new FileInputStream(tempFile));
         } catch (Exception e) {
             throw new IllegalStateException("Erreur lors de la conversion de l'image", e);
         }
-        return new ImageData(new ByteArrayInputStream(buf.toByteArray()));
     }
 }
