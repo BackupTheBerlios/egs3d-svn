@@ -81,8 +81,8 @@ public class ModelContainer extends AbstractSceneObject implements IModelContain
     }
 
 
-    public IModel create(String name, Class<? extends Loader> loaderClass,
-            InputStream input) {
-        return new Model(name, loaderClass, input);
+    public IModel create(String name, String extension,
+            Class<? extends Loader> loaderClass, InputStream input) {
+        return new Model(getScene(), name, extension, loaderClass, input);
     }
 }

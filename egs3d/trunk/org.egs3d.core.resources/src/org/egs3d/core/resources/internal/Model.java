@@ -32,6 +32,7 @@ import java.io.InputStream;
 import javax.media.j3d.BranchGroup;
 
 import org.egs3d.core.resources.IModel;
+import org.egs3d.core.resources.IScene;
 
 import com.sun.j3d.loaders.Loader;
 
@@ -41,16 +42,19 @@ import com.sun.j3d.loaders.Loader;
  * 
  * @author romale
  */
-public class Model implements IModel {
+public class Model extends AbstractSceneObject implements IModel {
     private final String name;
     private final Class<? extends Loader> loaderClass;
+    private final String extension;
     private BranchGroup data;
     private final byte[] binaryData;
 
 
-    public Model(final String name, final Class<? extends Loader> loaderClass,
-            final InputStream input) {
+    public Model(final IScene scene, final String name, final String extension,
+            final Class<? extends Loader> loaderClass, final InputStream input) {
+        super(scene);
         this.name = name;
+        this.extension = extension;
         this.loaderClass = loaderClass;
 
         try {
@@ -65,6 +69,11 @@ public class Model implements IModel {
 
     public String getName() {
         return name;
+    }
+
+
+    public String getExtension() {
+        return extension;
     }
 
 

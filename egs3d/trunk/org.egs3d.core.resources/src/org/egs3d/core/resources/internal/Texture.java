@@ -29,6 +29,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.egs3d.core.resources.IScene;
 import org.egs3d.core.resources.ITexture;
 
 
@@ -37,12 +38,13 @@ import org.egs3d.core.resources.ITexture;
  * 
  * @author romale
  */
-public class Texture implements ITexture {
+public class Texture extends AbstractSceneObject implements ITexture {
     private final String name;
     private final BufferedImage data;
 
 
-    public Texture(final String name, final InputStream input) {
+    public Texture(final IScene scene, final String name, final InputStream input) {
+        super(scene);
         this.name = name;
 
         try {

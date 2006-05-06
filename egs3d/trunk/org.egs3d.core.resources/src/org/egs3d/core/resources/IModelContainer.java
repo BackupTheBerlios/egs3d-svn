@@ -77,5 +77,6 @@ public interface IModelContainer extends Iterable<IModel>, ISceneObject {
     /**
      * Crée un modèle à partir d'un flux.
      */
-    IModel create(String name, Class<? extends Loader> loaderClass, InputStream input);
+    IModel create(String name, String extension, Class<? extends Loader> loaderClass,
+            InputStream input);
 }

@@ -33,7 +33,7 @@ import com.sun.j3d.loaders.Loader;
  * 
  * @author romale
  */
-public interface IModel {
+public interface IModel extends ISceneObject {
     /**
      * Retourne le nom du modèle.
      */
@@ -50,6 +50,12 @@ public interface IModel {
      * Retourne le modèle sous la forme de données binaires.
      */
     byte[] getBinaryData();
+
+
+    /**
+     * Retourne l'extension du modèle.
+     */
+    String getExtension();
 
 
     /**

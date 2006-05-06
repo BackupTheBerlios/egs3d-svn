@@ -31,7 +31,7 @@ import java.awt.image.BufferedImage;
  * 
  * @author romale
  */
-public interface ITexture {
+public interface ITexture extends ISceneObject {
     /**
      * Retourne le nom de la texture.
      */

@@ -80,6 +80,6 @@ public class TextureContainer extends AbstractSceneObject implements ITextureCon
 
 
     public ITexture create(String name, InputStream input) {
-        return new Texture(name, input);
+        return new Texture(getScene(), name, input);
     }
 }
