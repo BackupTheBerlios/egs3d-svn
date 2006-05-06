@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.FillLayout;
@@ -54,6 +55,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     private final Log log = LogFactory.getLog(getClass());
     private Label noPreviewLabel;
     private PageBook pageBook;
+    private ScrolledComposite imageComp;
     private CLabel imageLabel;
     private WeakReference<Object> selectionRef;
 
@@ -66,7 +68,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         noPreviewLabel = new Label(pageBook, SWT.NONE);
         noPreviewLabel.setText(Messages.PreviewView_noPreview);
 
-        imageLabel = new CLabel(pageBook, SWT.CENTER | SWT.H_SCROLL | SWT.V_SCROLL);
+        imageComp = new ScrolledComposite(pageBook, SWT.H_SCROLL | SWT.V_SCROLL);
+        imageLabel = new CLabel(imageComp, SWT.NONE);
+        imageComp.setContent(imageLabel);
 
         // l'élément sélectionné dans l'explorateur de scène est récupéré à
         // travers l'interface ISelectionListener
@@ -112,7 +116,10 @@ public class PreviewView extends ViewPart implements ISelectionListener {
                 .getDisplay(), imageData);
         imageLabel.setImage(image);
 
-        pageBook.showPage(imageLabel);
+        imageLabel.setSize(imageLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        imageLabel.layout();
+
+        pageBook.showPage(imageComp);
     }
 
 

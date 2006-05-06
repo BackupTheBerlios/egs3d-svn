@@ -26,6 +26,7 @@ package org.egs3d.ui.internal;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -55,7 +56,11 @@ public final class SWTUtils {
 
             ImageIO.write(bufferedImage, "PNG", tempFile);
 
-            return new ImageData(new FileInputStream(tempFile));
+            final InputStream input = new FileInputStream(tempFile);
+            final ImageData data = new ImageData(input);
+            input.close();
+            
+            return data;
         } catch (Exception e) {
             throw new IllegalStateException("Erreur lors de la conversion de l'image", e);
         }
