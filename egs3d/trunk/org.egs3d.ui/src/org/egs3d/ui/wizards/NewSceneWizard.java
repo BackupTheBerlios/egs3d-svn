@@ -54,18 +54,14 @@ import org.egs3d.ui.views.SceneExplorerLabelProvider;
  * @author romale
  */
 public class NewSceneWizard extends Wizard {
-    private IProject project;
+    private final IProject project;
     private String fileName;
 
 
-    public NewSceneWizard() {
+    public NewSceneWizard(final IProject project) {
         super();
+        this.project = project;
         setWindowTitle(Messages.NewSceneWizard_windowTitle);
-    }
-
-
-    public IProject getProject() {
-        return project;
     }
 
 
@@ -99,32 +95,6 @@ public class NewSceneWizard extends Wizard {
             comp.setLayout(new GridLayout(2, false));
             parent.setLayout(new FillLayout());
 
-            final Label projectLabel = new Label(comp, SWT.NONE);
-            projectLabel.setText(Messages.NewSceneWizard_Project);
-            projectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true,
-                    false, 2, 1));
-
-            final TreeViewer projectList = new TreeViewer(comp, SWT.BORDER | SWT.H_SCROLL
-                    | SWT.V_SCROLL);
-            projectList.setContentProvider(new ProjectContentProvider());
-            projectList.setLabelProvider(new SceneExplorerLabelProvider());
-            projectList.setInput(ResourcesPlugin.getWorkspace().getRoot());
-            GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-            gd.heightHint = 100;
-            projectList.getControl().setLayoutData(gd);
-            projectList.addSelectionChangedListener(new ISelectionChangedListener() {
-                public void selectionChanged(SelectionChangedEvent e) {
-                    if (!e.getSelection().isEmpty()) {
-                        final IStructuredSelection selection = (IStructuredSelection) e
-                                .getSelection();
-                        project = (IProject) selection.getFirstElement();
-                    } else {
-                        project = null;
-                    }
-                    validate();
-                }
-            });
-
             final Label fileNameLabel = new Label(comp, SWT.NONE);
             fileNameLabel.setText(Messages.NewSceneWizard_FileName);
             fileNameLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
@@ -145,7 +115,7 @@ public class NewSceneWizard extends Wizard {
 
 
         private void validate() {
-            if (project == null || fileName == null) {
+            if (fileName == null) {
                 setPageComplete(false);
                 return;
             }

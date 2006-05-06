@@ -130,7 +130,14 @@
                label="%Action_NewScene"
                menubarPath="org.egs3d.ui.menus.file/org.egs3d.ui.menus.fileNew/new"
                style="push"
-               toolbarPath="org.egs3d.ui.menus.fileNew/newScene"/>
+               toolbarPath="org.egs3d.ui.menus.fileNew/newScene">
+            <enablement>
+               <or>
+                  <objectClass name="org.egs3d.core.resources.ISceneObject"/>
+                  <objectClass name="org.eclipse.core.resources.IResource"/>
+               </or>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.NewProjectAction"
                icon="icons/etool16/new_wiz.gif"
@@ -183,7 +190,19 @@
                id="org.egs3d.ui.actions.import"
                label="%Action_Import"
                menubarPath="org.egs3d.ui.menus.file/import"
-               style="push"/>
+               style="push">
+            <enablement>
+               <and>
+                  <not>
+                     <objectClass name="org.eclipse.core.resources.IProject"/>
+                  </not>
+                  <or>
+                     <objectClass name="org.eclipse.core.resources.IResource"/>
+                     <objectClass name="org.egs3d.core.resources.ISceneObject"/>
+                  </or>
+               </and>
+            </enablement>
+         </action>
       </actionSet>
    </extension>
 

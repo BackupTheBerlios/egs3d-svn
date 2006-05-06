@@ -23,23 +23,22 @@
 package org.egs3d.ui.actions;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ISceneObject;
 import org.egs3d.core.resources.ResourcesPlugin;
-import org.egs3d.core.resources.SceneConstants;
+import org.egs3d.ui.views.SceneExplorerView;
 import org.egs3d.ui.wizards.NewSceneWizard;
 
 
@@ -66,7 +65,32 @@ public class NewSceneAction implements IWorkbenchWindowActionDelegate {
     public void run(IAction action) {
         log.debug("Ouverture de la fenêtre de création d'une scène"); //$NON-NLS-1$
 
-        final NewSceneWizard wizard = new NewSceneWizard();
+        // récupération de la sélection dans l'explorateur de scène
+        // afin de déterminer le projet dans lequel la scène doit être ajoutée
+        final IStructuredSelection sel = (IStructuredSelection) window
+                .getSelectionService().getSelection(SceneExplorerView.VIEW_ID);
+        if (sel == null || sel.isEmpty()) {
+            return;
+        }
+        final Object selectedObj = sel.getFirstElement();
+        if (selectedObj == null) {
+            return;
+        }
+
+        IProject project = null;
+        if (selectedObj instanceof ISceneObject) {
+            project = ((ISceneObject) selectedObj).getScene().getProject();
+        } else if (selectedObj instanceof IResource) {
+            project = ((IResource) selectedObj).getProject();
+        }
+
+        if (project == null) {
+            log.info("La ressource sélectionnée ne permet pas "
+                    + "la création d'une nouvelle scène : " + selectedObj);
+            return;
+        }
+
+        final NewSceneWizard wizard = new NewSceneWizard(project);
         final WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
         dialog.setBlockOnOpen(true);
 
@@ -74,7 +98,6 @@ public class NewSceneAction implements IWorkbenchWindowActionDelegate {
             return;
         }
 
-        final IProject project = wizard.getProject();
         final String fileName = wizard.getFileName();
         final IFile file = project.getFile(fileName);
         final String path = file.getLocation().toOSString();
@@ -85,15 +108,7 @@ public class NewSceneAction implements IWorkbenchWindowActionDelegate {
         scene.setName(fileName);
 
         try {
-            final File tempFile = File.createTempFile("scene-", //$NON-NLS-1$
-                    "." + SceneConstants.SCENE_FILE_EXTENSION); //$NON-NLS-1$
-            tempFile.deleteOnExit();
-
-            ResourcesPlugin.createSceneWriter().write(tempFile, scene);
-            final InputStream input = new FileInputStream(tempFile);
-            file.create(input, true, null);
-
-            tempFile.delete();
+            ResourcesPlugin.getScene(file);
         } catch (Exception e) {
             log.warn("Erreur durant la création du fichier : " + path, e); //$NON-NLS-1$
         }

@@ -38,6 +38,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.IScene;
 import org.egs3d.core.resources.ITexture;
+import org.egs3d.ui.internal.UIPlugin;
 import org.egs3d.ui.wizards.ImportWizard;
 
 import com.sun.j3d.loaders.Loader;
@@ -64,6 +65,11 @@ public class ImportAction implements IWorkbenchWindowActionDelegate {
 
 
     public void run(IAction action) {
+        final IScene scene = UIPlugin.getDefault().getSelectedScene();
+        if (scene == null) {
+            return;
+        }
+
         final ImportWizard wizard = new ImportWizard();
         final WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
         dialog.setBlockOnOpen(true);
@@ -73,7 +79,6 @@ public class ImportAction implements IWorkbenchWindowActionDelegate {
         }
 
         final ImportWizard.ImportType type = wizard.getImportType();
-        final IScene scene = wizard.getScene();
         final Class<? extends Loader> modelLoaderClass = wizard.getModelLoaderClass();
         final String resourceName = wizard.getResourceName();
         final String resourcePath = wizard.getResourcePath();

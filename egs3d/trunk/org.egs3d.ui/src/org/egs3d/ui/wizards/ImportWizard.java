@@ -25,8 +25,6 @@ package org.egs3d.ui.wizards;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -34,7 +32,6 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
@@ -54,9 +51,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.egs3d.core.StringUtils;
-import org.egs3d.core.resources.IScene;
-import org.egs3d.core.resources.SceneConstants;
-import org.egs3d.ui.views.SceneExplorerLabelProvider;
 
 import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.loaders.lw3d.Lw3dLoader;
@@ -76,7 +70,6 @@ public class ImportWizard extends Wizard {
     private final Log log = LogFactory.getLog(getClass());
 
     private ImportType importType;
-    private IScene scene;
     private Class<? extends Loader> modelLoaderClass;
     private String resourceName;
     private String resourcePath;
@@ -86,11 +79,6 @@ public class ImportWizard extends Wizard {
 
     public ImportType getImportType() {
         return importType;
-    }
-
-
-    public IScene getScene() {
-        return scene;
     }
 
 
@@ -117,7 +105,6 @@ public class ImportWizard extends Wizard {
 
     @Override
     public void addPages() {
-        addPage(new ImportToScenePage());
         addPage(new ImportTypePage());
         addPage(new ImportResourcePage());
     }
@@ -340,76 +327,6 @@ public class ImportWizard extends Wizard {
                 ok = modelLoaderClass != null;
             }
             setPageComplete(ok);
-        }
-    }
-
-
-    private class ImportToScenePage extends WizardPage {
-        public ImportToScenePage() {
-            super("importToScenePage");
-            setTitle("Importer une ressource");
-            setMessage("Sélectionner la scène dans laquelle "
-                    + "la ressource sera importée");
-        }
-
-
-        public void createControl(Composite parent) {
-            final Composite comp = new Composite(parent, SWT.NONE);
-            comp.setLayout(new GridLayout(1, false));
-
-            final Label label = new Label(comp, SWT.NONE);
-            label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-            label.setText("&Scène :");
-
-            final TreeViewer tree = new TreeViewer(comp, SWT.BORDER | SWT.H_SCROLL
-                    | SWT.V_SCROLL);
-            tree.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
-            tree.setContentProvider(new ProjectContentProvider(true));
-            tree.setLabelProvider(new SceneExplorerLabelProvider());
-            tree.setInput(ResourcesPlugin.getWorkspace().getRoot());
-            tree.addSelectionChangedListener(new ISelectionChangedListener() {
-                public void selectionChanged(SelectionChangedEvent event) {
-                    scene = null;
-
-                    final IStructuredSelection sel = (IStructuredSelection) event
-                            .getSelection();
-                    if (!sel.isEmpty()) {
-                        final Object selectedObj = sel.getFirstElement();
-                        if (selectedObj instanceof IResource) {
-                            final IResource rsc = (IResource) selectedObj;
-                            if (SceneConstants.SCENE_FILE_EXTENSION.equals(rsc
-                                    .getFileExtension())) {
-                                try {
-                                    scene = (IScene) rsc
-                                            .getSessionProperty(SceneConstants.SCENE_SESSION_RESOURCE_NAME);
-                                    if (scene == null) {
-                                        scene = org.egs3d.core.resources.ResourcesPlugin
-                                                .createSceneReader().read(
-                                                        rsc.getLocation().toFile());
-                                        scene.setProject(rsc.getProject());
-                                        rsc
-                                                .setSessionProperty(
-                                                        SceneConstants.SCENE_SESSION_RESOURCE_NAME,
-                                                        scene);
-                                    }
-                                } catch (Exception e) {
-                                    log.error("Erreur durant la "
-                                            + "sélection d'une scène", e);
-                                }
-                            }
-                        }
-                    }
-                    validate();
-                }
-            });
-
-            validate();
-            setControl(comp);
-        }
-
-
-        private void validate() {
-            setPageComplete(scene != null);
         }
     }
 }
