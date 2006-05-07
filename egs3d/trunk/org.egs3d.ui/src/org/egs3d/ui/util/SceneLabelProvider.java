@@ -60,15 +60,15 @@ public class SceneLabelProvider extends LabelProvider {
         }
         if (e instanceof IBranchGroupContainer) {
             // TODO image pour IBranchGroupContainer
-            return UIPlugin.getDefault().getImage(ImageType.FOLDER);
+            return UIPlugin.getDefault().getImage(ImageType.BRANCHGROUP);
         }
         if (e instanceof IModelContainer) {
             // TODO image pour IModelContainer
-            return UIPlugin.getDefault().getImage(ImageType.FOLDER);
+            return UIPlugin.getDefault().getImage(ImageType.MODELE);
         }
         if (e instanceof ITextureContainer) {
             // TODO image pour ITextureContainer
-            return UIPlugin.getDefault().getImage(ImageType.FOLDER);
+            return UIPlugin.getDefault().getImage(ImageType.TEXTURE);
         }
         // image par défaut
         return UIPlugin.getDefault().getImage(ImageType.FILE);
