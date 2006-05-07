@@ -114,7 +114,7 @@ public class SceneWriter implements ISceneWriter {
         SceneGraphFileWriter writer = null;
         try {
             final SimpleUniverse su = new SimpleUniverse(new Canvas3D(SimpleUniverse
-                    .getPreferredConfiguration()));
+                    .getPreferredConfiguration(), true));
             for (final BranchGroup bg : scene.getBranchGroupContainer()) {
                 su.addBranchGraph(bg);
             }
