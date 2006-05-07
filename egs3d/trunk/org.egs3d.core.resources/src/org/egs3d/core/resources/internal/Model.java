@@ -46,7 +46,6 @@ public class Model extends AbstractSceneObject implements IModel {
     private final String name;
     private final Class<? extends Loader> loaderClass;
     private final String extension;
-    private BranchGroup data;
     private final byte[] binaryData;
 
 
@@ -83,22 +82,22 @@ public class Model extends AbstractSceneObject implements IModel {
 
 
     public BranchGroup getBranchGroup() {
-        if (data == null) {
-            try {
-                final File tempFile = File.createTempFile("model-", ".tmp");
-                tempFile.deleteOnExit();
-                IOUtils.copy(new ByteArrayInputStream(binaryData), new FileOutputStream(
-                        tempFile));
+        BranchGroup data = null;
 
-                final Loader loader = loaderClass.newInstance();
-                loader.setFlags(Loader.LOAD_ALL);
-                data = loader.load(tempFile.toURI().toURL()).getSceneGroup();
-                tempFile.delete();
-            } catch (Exception e) {
-                throw new IllegalStateException("Erreur durant le chargement du modèle",
-                        e);
-            }
+        try {
+            final File tempFile = File.createTempFile("model-", ".tmp");
+            tempFile.deleteOnExit();
+            IOUtils.copy(new ByteArrayInputStream(binaryData), new FileOutputStream(
+                    tempFile));
+
+            final Loader loader = loaderClass.newInstance();
+            loader.setFlags(Loader.LOAD_ALL);
+            data = loader.load(tempFile.toURI().toURL()).getSceneGroup();
+            tempFile.delete();
+        } catch (Exception e) {
+            throw new IllegalStateException("Erreur durant le chargement du modèle", e);
         }
+
         return data;
     }
 
