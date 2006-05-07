@@ -31,7 +31,7 @@ package org.egs3d.core.resources.internal;
 public final class SceneIOConstants {
     public static final String VERSION = "1.0";
     public static final String DESCRIPTOR_NAME = "content.xml";
-    public static final String SCENE_NAME = "scene.j3d";
+    public static final String SCENE_NAME = "scene.j3f";
     public static final String TEXTURES_NAME = "textures/";
     public static final String MODELS_NAME = "models/";
 
