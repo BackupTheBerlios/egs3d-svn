@@ -106,23 +106,47 @@
             <separator name="views"/>
          </menu>
          <menu
+               id="org.egs3d.ui.menus.insert"
+               label="%Menu_Insert">
+            <separator name="light"/>
+         </menu>
+         <menu
                id="org.egs3d.ui.menus.edit"
                label="%Menu_Edit">
+            <separator name="cut"/>
             <separator name="delete"/>
          </menu>
          <menu
                id="org.egs3d.ui.menus.file"
                label="%Menu_File">
-            <separator name="fileNew"/>
-            <separator name="close"/>
-            <separator name="save"/>
+            <separator name="closeAll"/>
+            <separator name="saveAs"/>
+            <separator name="export"/>
             <separator name="import"/>
             <separator name="quit"/>
          </menu>
+         <action
+               class="org.egs3d.ui.actions.CloseAllAction"
+               id="org.egs3d.ui.actions.closeAll"
+               label="%Action_CloseAll"
+               menubarPath="org.egs3d.ui.menus.file/closeAll"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.CloseAction"
+               id="org.egs3d.ui.actions.close"
+               label="%Action_Close"
+               menubarPath="org.egs3d.ui.menus.file/closeAll"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.OpenAction"
+               id="org.egs3d.ui.actions.open"
+               label="%Action_Open"
+               menubarPath="org.egs3d.ui.menus.file/closeAll"
+               style="push"/>
          <menu
                id="org.egs3d.ui.menus.fileNew"
                label="%Action_New"
-               path="org.egs3d.ui.menus.file/fileNew">
+               path="org.egs3d.ui.menus.file/closeAll">
          </menu>
          <action
                class="org.egs3d.ui.actions.NewSceneAction"
@@ -148,16 +172,11 @@
                style="push"
                />
          <action
-               class="org.egs3d.ui.actions.CloseAllAction"
-               id="org.egs3d.ui.actions.closeAll"
-               label="%Action_CloseAll"
-               menubarPath="org.egs3d.ui.menus.file/close"
-               style="push"/>
-         <action
-               class="org.egs3d.ui.actions.QuitAction"
-               id="org.egs3d.ui.actions.quit"
-               label="%Action_Quit"
-               menubarPath="org.egs3d.ui.menus.file/quit"
+               class="org.egs3d.ui.actions.SaveAs"
+               icon="icons/etool16/saveas_edit.gif"
+               id="org.egs3d.ui.actions.saveAs"
+               label="%Action_SaveAs"
+               menubarPath="org.egs3d.ui.menus.file/saveAs"
                style="push"/>
          <action
                class="org.egs3d.ui.actions.SaveAction"
@@ -175,25 +194,19 @@
             </enablement>
          </action>
          <action
-               class="org.egs3d.ui.actions.ShowViewAction"
-               id="org.egs3d.ui.actions.showView"
-               label="%Action_ShowViewMenu"
-               menubarPath="org.egs3d.ui.menus.window/views"
+               class="org.egs3d.ui.actions.ExportAction"
+               icon="icons/etool16/export_wiz.gif"
+               id="org.egs3d.ui.actions.export"
+               label="%Action_Export"
+               menubarPath="org.egs3d.ui.menus.file/export"
                style="push"/>
-         <action
-               class="org.egs3d.ui.actions.DeleteResourceAction"
-               enablesFor="+"
-               id="org.egs3d.ui.actions.delete"
-               label="%Action_Delete"
-               menubarPath="org.egs3d.ui.menus.edit/delete"
-               style="push">
-            <selection class="org.eclipse.core.resources.IResource"/>
-         </action>
+
          <action
                class="org.egs3d.ui.actions.ImportAction"
+               icon="icons/etool16/import_wiz.gif"
                id="org.egs3d.ui.actions.import"
                label="%Action_Import"
-               menubarPath="org.egs3d.ui.menus.file/import"
+               menubarPath="org.egs3d.ui.menus.file/export"
                style="push">
             <enablement>
                <and>
@@ -208,16 +221,74 @@
             </enablement>
          </action>
          <action
-               class="org.egs3d.ui.actions.ImportAction"
-               id="org.egs3d.ui.actions.close"
-               label="%Action_Close"
-               menubarPath="org.egs3d.ui.menus.file/close"
+               class="org.egs3d.ui.actions.QuitAction"
+               id="org.egs3d.ui.actions.quit"
+               label="%Action_Quit"
+               menubarPath="org.egs3d.ui.menus.file/quit"
                style="push"/>
          <action
-               class="org.egs3d.ui.actions.SaveAction"
-               id="org.egs3d.ui.actions.save"
-               label="%Action_Save"
-               menubarPath="org.egs3d.ui.menus.file/quit"
+               class="org.egs3d.ui.actions.AboutAction"
+               id="org.egs3d.ui.actions.about"
+               label="%Action_About"
+               menubarPath="org.egs3d.ui.menus.help/about"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.ShowViewAction"
+               id="org.egs3d.ui.actions.showView"
+               label="%Action_ShowViewMenu"
+               menubarPath="org.egs3d.ui.menus.window/views"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.DeleteResourceAction"
+               enablesFor="+"
+               icon="icons/etool16/delete_edit.gif"
+               id="org.egs3d.ui.actions.delete"
+               label="%Action_Delete"
+               menubarPath="org.egs3d.ui.menus.edit/delete"
+               style="push">
+            <selection class="org.eclipse.core.resources.IResource"/>
+         </action>
+         <action
+               class="org.egs3d.ui.actions.PasteAction"
+               icon="icons/etool16/paste_edit.gif"
+               id="org.egs3d.ui.actions.paste"
+               label="%Action_Paste"
+               menubarPath="org.egs3d.ui.menus.edit/cut"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.CopyAction"
+               icon="icons/etool16/copy_edit.gif"
+               id="org.egs3d.ui.actions.copy"
+               label="%Action_Copy"
+               menubarPath="org.egs3d.ui.menus.edit/cut"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.CutAction"
+               icon="icons/etool16/cut_edit.gif"
+               id="org.egs3d.ui.actions.cut"
+               label="%Action_Cut"
+               menubarPath="org.egs3d.ui.menus.edit/cut"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.LightAction"
+               icon="icons/obj16/lgt_obj.gif"
+               id="org.egs3d.ui.actions.light"
+               label="%Action_Light"
+               menubarPath="org.egs3d.ui.menus.insert/light"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.GeometryAction"
+               icon="icons/obj16/shp_obj.gif"
+               id="org.egs3d.ui.actions.geometry"
+               label="%Action_Geometry"
+               menubarPath="org.egs3d.ui.menus.insert/light"
+               style="push"/>
+         <action
+               class="org.egs3d.ui.actions.BackgroundAction"
+               icon="icons/obj16/bgd_obj.gif"
+               id="org.egs3d.ui.actions.background"
+               label="%Action_Background"
+               menubarPath="org.egs3d.ui.menus.insert/light"
                style="push"/>
       </actionSet>
    </extension>
