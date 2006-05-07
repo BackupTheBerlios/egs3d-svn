@@ -23,24 +23,19 @@
 package org.egs3d.ui.views;
 
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-
 import javax.media.j3d.Alpha;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Canvas3D;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.TransformGroup;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.egs3d.ui.util.SWTCanvas3D;
 
 import com.sun.j3d.utils.geometry.ColorCube;
-import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 /**
@@ -50,56 +45,32 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
  */
 public class SceneRenderView extends ViewPart {
     public static final String VIEW_ID = "org.egs3d.ui.views.sceneRender"; //$NON-NLS-1$
-    private Composite awtComponent;
-    private Canvas3D canvas3D;
-
-
-    /**
-     * Retourne le {@link Canvas3D} utilisé pour le rendu de la scène.
-     */
-    public Canvas3D getCanvas3D() {
-        return canvas3D;
-    }
+    private SWTCanvas3D canvas3D;
 
 
     @Override
     public void createPartControl(Composite parent) {
-        // création d'un composant SWT pouvant accueillir un élément AWT
-        awtComponent = new Composite(parent, SWT.EMBEDDED);
-        // le composant est "étalé" sur toute la vue
+        canvas3D = new SWTCanvas3D(parent, SWT.NONE);
+        canvas3D.setSceneGraph(createSceneGraph());
+
         parent.setLayout(new FillLayout());
-
-        // création du composant 3D
-        canvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
-        final SimpleUniverse universe = new SimpleUniverse(canvas3D);
-        universe.addBranchGraph(createSceneGraph());
-        universe.getViewingPlatform().setNominalViewingTransform();
-
-        // création d'un pont entre SWT et AWT
-        final Frame frame = SWT_AWT.new_Frame(awtComponent);
-        frame.setLayout(new BorderLayout());
-        frame.add(canvas3D, BorderLayout.CENTER);
-
-        // TODO connecter la vue à l'élément sélectionné dans l'explorateur de
-        // scène pour adapter le rendu 3D
     }
 
 
     @Override
     public void setFocus() {
-        if (awtComponent != null) {
-            awtComponent.setFocus();
+        if (canvas3D != null) {
+            canvas3D.setFocus();
         }
     }
 
 
     @Override
     public void dispose() {
-        if (awtComponent != null) {
-            awtComponent.dispose();
-            awtComponent = null;
+        if (canvas3D != null) {
+            canvas3D.dispose();
+            canvas3D = null;
         }
-        canvas3D = null;
         super.dispose();
     }
 
