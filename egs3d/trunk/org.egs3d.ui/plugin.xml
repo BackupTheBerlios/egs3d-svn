@@ -183,7 +183,7 @@
                icon="icons/etool16/save_edit.gif"
                id="org.egs3d.ui.actions.save"
                label="%Action_Save"
-               menubarPath="org.egs3d.ui.menus.file/save"
+               menubarPath="org.egs3d.ui.menus.file/saveAs"
                style="push"
                toolbarPath="org.egs3d.ui.menus.file/save">
             <enablement>
