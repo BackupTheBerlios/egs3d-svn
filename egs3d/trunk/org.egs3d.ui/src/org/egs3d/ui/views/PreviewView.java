@@ -30,6 +30,7 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Node;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
@@ -89,8 +90,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
         // l'élément sélectionné dans l'explorateur de scène est récupéré à
         // travers l'interface ISelectionListener
-        getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(
-                SceneExplorerView.VIEW_ID, this);
+        getSite().getWorkbenchWindow().getSelectionService()
+                .addPostSelectionListener(SceneExplorerView.VIEW_ID, this);
 
         showNoPreview();
     }
@@ -106,7 +107,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     public void dispose() {
         if (pageBook != null) {
             getSite().getWorkbenchWindow().getSelectionService()
-                    .removePostSelectionListener(SceneExplorerView.VIEW_ID, this);
+                    .removePostSelectionListener(SceneExplorerView.VIEW_ID,
+                            this);
 
             pageBook.dispose();
             pageBook = null;
@@ -155,35 +157,53 @@ public class PreviewView extends ViewPart implements ISelectionListener {
             return;
         }
 
+        canvas3D.setSceneGraph(createSceneGraphWithLights(sceneGraph
+                .cloneTree()));
+
+        pageBook.showPage(canvas3D);
+    }
+
+
+    private void showNode(Node node) {
+        if (node == null) {
+            showNoPreview();
+            return;
+        }
+
+        canvas3D.setSceneGraph(createSceneGraphWithLights(node.cloneTree()));
+
+        pageBook.showPage(canvas3D);
+    }
+
+
+    private BranchGroup createSceneGraphWithLights(Node node) {
         final Bounds bounds = new BoundingSphere(new Point3d(), 100000);
         final BranchGroup root = new BranchGroup();
 
         final BranchGroup lights = new BranchGroup();
 
-        final AmbientLight ambientLightNode = new AmbientLight(new Color3f(0.1f, 0.1f,
-                0.1f));
+        final AmbientLight ambientLightNode = new AmbientLight(new Color3f(
+                0.1f, 0.1f, 0.1f));
         ambientLightNode.setInfluencingBounds(bounds);
         lights.addChild(ambientLightNode);
 
         final Vector3f light1Direction = new Vector3f(1.0f, 1.0f, 1.0f);
-        final DirectionalLight light1 = new DirectionalLight(
-                new Color3f(1.0f, 1.0f, 0.9f), light1Direction);
+        final DirectionalLight light1 = new DirectionalLight(new Color3f(1.0f,
+                1.0f, 0.9f), light1Direction);
         light1.setInfluencingBounds(bounds);
         lights.addChild(light1);
 
         final Vector3f light2Direction = new Vector3f(-1.0f, -1.0f, -1.0f);
-        final DirectionalLight light2 = new DirectionalLight(
-                new Color3f(1.0f, 1.0f, 0.9f), light2Direction);
+        final DirectionalLight light2 = new DirectionalLight(new Color3f(1.0f,
+                1.0f, 0.9f), light2Direction);
         light2.setInfluencingBounds(bounds);
         lights.addChild(light2);
 
         root.addChild(lights);
-        root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils.scale(sceneGraph, 0.01),
-                bounds));
+        root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils
+                .scale(node, 0.01), bounds));
 
-        canvas3D.setSceneGraph(root);
-
-        pageBook.showPage(canvas3D);
+        return root;
     }
 
 
@@ -217,6 +237,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
             showTexture((ITexture) selectedObj);
         } else if (selectedObj instanceof IModel) {
             showModel((IModel) selectedObj);
+        } else if (selectedObj instanceof Node) {
+            showNode((Node) selectedObj);
         } else {
             // pas d'aperçu pour l'élément sélectionné
             showNoPreview();
