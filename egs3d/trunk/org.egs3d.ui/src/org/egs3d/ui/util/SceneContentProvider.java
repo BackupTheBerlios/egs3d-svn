@@ -28,6 +28,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.media.j3d.Group;
+import javax.media.j3d.Node;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IContainer;
@@ -43,6 +46,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.egs3d.core.resources.IBranchGroupContainer;
 import org.egs3d.core.resources.IModelContainer;
 import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ISceneObject;
 import org.egs3d.core.resources.ITextureContainer;
 import org.egs3d.core.resources.ResourcesPlugin;
 import org.egs3d.core.resources.SceneConstants;
@@ -96,6 +100,14 @@ public class SceneContentProvider implements ITreeContentProvider,
             final ITextureContainer container = (ITextureContainer) parent;
             return container.toArray();
         }
+        if (parent instanceof Group) {
+            final Group group = (Group) parent;
+            final Node[] children = new Node[group.numChildren()];
+            for (int i = 0; i < children.length; ++i) {
+                children[i] = group.getChild(i);
+            }
+            return children;
+        }
         return EMPTY_ARRAY;
     }
 
@@ -104,6 +116,12 @@ public class SceneContentProvider implements ITreeContentProvider,
         if (e instanceof IResource) {
             final IResource rsc = (IResource) e;
             return rsc.getParent();
+        }
+        if (e instanceof ISceneObject) {
+            return ((ISceneObject) e).getScene();
+        }
+        if (e instanceof Node) {
+            return ((Node) e).getParent();
         }
         return null;
     }
@@ -133,6 +151,9 @@ public class SceneContentProvider implements ITreeContentProvider,
         if (e instanceof ITextureContainer) {
             final ITextureContainer container = (ITextureContainer) e;
             return container.getSize() > 0;
+        }
+        if (e instanceof Group) {
+            return ((Group) e).numChildren() > 0;
         }
 
         return false;

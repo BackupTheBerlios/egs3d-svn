@@ -23,12 +23,20 @@
 package org.egs3d.ui.util;
 
 
+import javax.media.j3d.Background;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Light;
+import javax.media.j3d.SceneGraphObject;
+import javax.media.j3d.Shape3D;
+import javax.media.j3d.TransformGroup;
+
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.egs3d.core.StringUtils;
 import org.egs3d.core.resources.IBranchGroupContainer;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.IModelContainer;
@@ -59,16 +67,28 @@ public class SceneLabelProvider extends LabelProvider {
             return UIPlugin.getDefault().getImage(ImageType.FOLDER);
         }
         if (e instanceof IBranchGroupContainer) {
-            // TODO image pour IBranchGroupContainer
-            return UIPlugin.getDefault().getImage(ImageType.BRANCHGROUP);
+            return UIPlugin.getDefault().getImage(ImageType.BRANCH_GROUP);
         }
         if (e instanceof IModelContainer) {
-            // TODO image pour IModelContainer
-            return UIPlugin.getDefault().getImage(ImageType.MODELE);
+            return UIPlugin.getDefault().getImage(ImageType.MODEL);
         }
         if (e instanceof ITextureContainer) {
-            // TODO image pour ITextureContainer
             return UIPlugin.getDefault().getImage(ImageType.TEXTURE);
+        }
+        if (e instanceof Shape3D) {
+            return UIPlugin.getDefault().getImage(ImageType.SHAPE);
+        }
+        if (e instanceof Light) {
+            return UIPlugin.getDefault().getImage(ImageType.LIGHT);
+        }
+        if (e instanceof Background) {
+            return UIPlugin.getDefault().getImage(ImageType.BACKGROUND);
+        }
+        if (e instanceof BranchGroup) {
+            return UIPlugin.getDefault().getImage(ImageType.BRANCH_GROUP);
+        }
+        if (e instanceof TransformGroup) {
+            return UIPlugin.getDefault().getImage(ImageType.TRANSFORM_GROUP);
         }
         // image par défaut
         return UIPlugin.getDefault().getImage(ImageType.FILE);
@@ -90,11 +110,20 @@ public class SceneLabelProvider extends LabelProvider {
         if (e instanceof ITextureContainer) {
             return Messages.Scene_Textures;
         }
-        if(e instanceof IModel) {
+        if (e instanceof IModel) {
             return ((IModel) e).getName();
         }
-        if(e instanceof ITexture) {
+        if (e instanceof ITexture) {
             return ((ITexture) e).getName();
+        }
+        if (e instanceof SceneGraphObject) {
+            final SceneGraphObject sgo = (SceneGraphObject) e;
+            final StringBuilder buf = new StringBuilder(sgo.getClass().getSimpleName());
+            final String name = StringUtils.trimToNull(sgo.getName());
+            if (name != null) {
+                buf.append(" [").append(name).append(']');
+            }
+            return buf.toString();
         }
         // texte par défaut
         return e.toString();
