@@ -27,10 +27,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Node;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Plugin;
+import org.egs3d.core.Java3DUtils;
 import org.egs3d.core.resources.internal.Scene;
 import org.egs3d.core.resources.internal.SceneReader;
 import org.egs3d.core.resources.internal.SceneWriter;
@@ -83,8 +88,10 @@ public class ResourcesPlugin extends Plugin {
      * créé, une nouvelle scène sera initialisée. Si le fichier n'a pas
      * l'extension d'une scène, la valeur <code>null</code> est retournée.
      */
-    public static synchronized IScene getScene(IFile file) throws IOException, CoreException {
-        if (!SceneConstants.SCENE_FILE_EXTENSION.equals(file.getFileExtension())) {
+    public static synchronized IScene getScene(IFile file) throws IOException,
+            CoreException {
+        if (!SceneConstants.SCENE_FILE_EXTENSION
+                .equals(file.getFileExtension())) {
             return null;
         }
 
@@ -108,7 +115,8 @@ public class ResourcesPlugin extends Plugin {
             scene.setProject(file.getProject());
             scene.setFile(file);
             scene.setName(file.getName());
-            file.setSessionProperty(SceneConstants.SCENE_SESSION_RESOURCE_NAME, scene);
+            file.setSessionProperty(SceneConstants.SCENE_SESSION_RESOURCE_NAME,
+                    scene);
         }
 
         return scene;
@@ -123,6 +131,36 @@ public class ResourcesPlugin extends Plugin {
             try {
                 return getScene((IFile) obj);
             } catch (Exception e) {
+            }
+        }
+        if (obj instanceof Node) {
+            final Node root = Java3DUtils.getRootNode((Node) obj);
+
+            try {
+                final IResource[] projects = org.eclipse.core.resources.ResourcesPlugin
+                        .getWorkspace().getRoot().members();
+                for (int i = 0; i < projects.length; ++i) {
+                    final IProject project = (IProject) projects[i];
+
+                    final IResource[] projectMembers = project.members();
+                    for (int j = 0; j < projectMembers.length; ++j) {
+                        final IResource member = projectMembers[j];
+                        if (member instanceof IFile) {
+                            final IScene scene = getScene(member);
+                            if (scene == null) {
+                                continue;
+                            }
+                            for (final BranchGroup bg : scene
+                                    .getBranchGroupContainer()) {
+                                if (bg.equals(root)) {
+                                    return scene;
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (CoreException e) {
+                e.printStackTrace();
             }
         }
         return null;
