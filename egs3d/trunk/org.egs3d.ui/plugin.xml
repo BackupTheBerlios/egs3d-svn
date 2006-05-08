@@ -245,7 +245,8 @@
                id="org.egs3d.ui.actions.delete"
                label="%Action_Delete"
                menubarPath="org.egs3d.ui.menus.edit/delete"
-               style="push">
+               style="push"
+               toolbarPath="org.egs3d.ui.menus.fileNew/save">
             <selection class="org.eclipse.core.resources.IResource"/>
          </action>
          <action
