@@ -24,6 +24,9 @@ package org.egs3d.ui.views;
 
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -35,8 +38,8 @@ import org.egs3d.ui.util.SceneLabelProvider;
 
 /**
  * Explorateur de scène 3D. L'implémentation de cette vue et des objets
- * {@link SceneContentProvider} et {@link SceneLabelProvider}
- * est inspirée de l'article : <a
+ * {@link SceneContentProvider} et {@link SceneLabelProvider} est inspirée de
+ * l'article : <a
  * href="http://www.eclipse.org/articles/treeviewer-cg/TreeViewerArticle.htm">http://www.eclipse.org/articles/treeviewer-cg/TreeViewerArticle.htm</a>.
  * 
  * @author romale
@@ -65,6 +68,21 @@ public class SceneExplorerView extends ViewPart {
 
         // enregistrement auprès de l'espace de travail de l'élément sélectionné
         getSite().setSelectionProvider(treeViewer);
+
+        // navigation simplifiée dans l'arbre avec la gestion du double-clic
+        treeViewer.addDoubleClickListener(new IDoubleClickListener() {
+            public void doubleClick(DoubleClickEvent event) {
+                final IStructuredSelection sel = (IStructuredSelection) event
+                        .getSelection();
+                if (sel.isEmpty()) {
+                    return;
+                }
+
+                final Object obj = sel.getFirstElement();
+                treeViewer.setExpandedState(obj, !treeViewer
+                        .getExpandedState(obj));
+            }
+        });
     }
 
 
