@@ -66,4 +66,5 @@ public class Messages extends NLS {
     public static String NewSceneWizard_Project;
     public static String NewSceneWizard_FileName;
     public static String Error_sceneNameExists;
+    public static String SceneRenderView_refresh;
 }
