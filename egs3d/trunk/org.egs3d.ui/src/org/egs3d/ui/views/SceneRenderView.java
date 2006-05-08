@@ -111,7 +111,6 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
             return;
         }
 
-        lastSceneRef = new WeakReference<IScene>(scene);
         renderScene(scene);
     }
 
@@ -119,6 +118,7 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
     private void renderScene(IScene scene) {
         if (scene == null || scene.getBranchGroupContainer().getSize() < 1) {
             canvas3D.setSceneGraph(new BranchGroup());
+            lastSceneRef = null;
         } else {
             // reconstruction de la scène complète
             final BranchGroup completeSceneGraph = new BranchGroup();
@@ -135,6 +135,7 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
                     completeSceneGraph, scale), bounds));
 
             canvas3D.setSceneGraph(root);
+            lastSceneRef = new WeakReference<IScene>(scene);
         }
     }
 
