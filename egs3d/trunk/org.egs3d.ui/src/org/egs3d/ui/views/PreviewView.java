@@ -23,17 +23,13 @@
 package org.egs3d.ui.views;
 
 
-import java.awt.Color;
 import java.lang.ref.WeakReference;
 
 import javax.media.j3d.AmbientLight;
-import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.Bounds;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.DirectionalLight;
-import javax.media.j3d.Transform3D;
-import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
@@ -54,15 +50,12 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
+import org.egs3d.core.Java3DUtils;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.ITexture;
 import org.egs3d.ui.internal.Messages;
 import org.egs3d.ui.internal.SWTUtils;
 import org.egs3d.ui.util.SWTCanvas3D;
-
-import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
-import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
-import com.sun.j3d.utils.behaviors.mouse.MouseWheelZoom;
 
 
 /**
@@ -96,7 +89,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
         // l'élément sélectionné dans l'explorateur de scène est récupéré à
         // travers l'interface ISelectionListener
-        getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(
+        getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(
                 SceneExplorerView.VIEW_ID, this);
 
         showNoPreview();
@@ -112,8 +105,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     @Override
     public void dispose() {
         if (pageBook != null) {
-            getSite().getWorkbenchWindow().getSelectionService().removeSelectionListener(
-                    SceneExplorerView.VIEW_ID, this);
+            getSite().getWorkbenchWindow().getSelectionService()
+                    .removePostSelectionListener(SceneExplorerView.VIEW_ID, this);
 
             pageBook.dispose();
             pageBook = null;
@@ -146,64 +139,48 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
 
     private void showModel(IModel model) {
-        if (model == null || model.getBranchGroup() == null) {
+        if (model == null) {
+            showNoPreview();
+            return;
+        }
+
+        BranchGroup sceneGraph = null;
+        try {
+            sceneGraph = model.getBranchGroup();
+        } catch (Exception e) {
+            log.error("Erreur lors du chargement du modèle : " + model, e);
+        }
+        if (sceneGraph == null) {
             showNoPreview();
             return;
         }
 
         final Bounds bounds = new BoundingSphere(new Point3d(), 100000);
         final BranchGroup root = new BranchGroup();
-        root.setCapability(BranchGroup.ALLOW_DETACH);
 
-        final Background bg = new Background(new Color3f(Color.WHITE));
-        bg.setApplicationBounds(bounds);
-        root.addChild(bg);
-
-        final BranchGroup sceneGraph = model.getBranchGroup();
-        final Transform3D scale3D = new Transform3D();
-        scale3D.setScale(0.7);
-        final TransformGroup scaleGroup = new TransformGroup(scale3D);
-        scaleGroup.addChild(sceneGraph);
-
-        final TransformGroup mouseRotateTG = new TransformGroup();
-        mouseRotateTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        final MouseRotate mouseRotate = new MouseRotate(mouseRotateTG);
-        mouseRotate.setSchedulingBounds(bounds);
-        mouseRotateTG.addChild(mouseRotate);
-        mouseRotateTG.addChild(scaleGroup);
-
-        final TransformGroup mouseZoomTG = new TransformGroup();
-        mouseZoomTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        final MouseWheelZoom mouseWheelZoom = new MouseWheelZoom(mouseZoomTG);
-        mouseWheelZoom.setSchedulingBounds(bounds);
-        mouseZoomTG.addChild(mouseWheelZoom);
-        mouseZoomTG.addChild(mouseRotateTG);
-
-        final TransformGroup keyNavigatorTG = new TransformGroup();
-        keyNavigatorTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        final KeyNavigatorBehavior keyNavigator = new KeyNavigatorBehavior(keyNavigatorTG);
-        keyNavigator.setSchedulingBounds(bounds);
-        keyNavigatorTG.addChild(keyNavigator);
-        keyNavigatorTG.addChild(mouseZoomTG);
+        final BranchGroup lights = new BranchGroup();
 
         final AmbientLight ambientLightNode = new AmbientLight(new Color3f(0.1f, 0.1f,
                 0.1f));
         ambientLightNode.setInfluencingBounds(bounds);
-        root.addChild(ambientLightNode);
+        lights.addChild(ambientLightNode);
 
         final Vector3f light1Direction = new Vector3f(1.0f, 1.0f, 1.0f);
         final DirectionalLight light1 = new DirectionalLight(
                 new Color3f(1.0f, 1.0f, 0.9f), light1Direction);
         light1.setInfluencingBounds(bounds);
-        root.addChild(light1);
+        lights.addChild(light1);
 
         final Vector3f light2Direction = new Vector3f(-1.0f, -1.0f, -1.0f);
         final DirectionalLight light2 = new DirectionalLight(
                 new Color3f(1.0f, 1.0f, 0.9f), light2Direction);
         light2.setInfluencingBounds(bounds);
-        root.addChild(light2);
+        lights.addChild(light2);
 
-        root.addChild(keyNavigatorTG);
+        root.addChild(lights);
+        root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils.scale(sceneGraph, 0.01),
+                bounds));
+
         canvas3D.setSceneGraph(root);
 
         pageBook.showPage(canvas3D);
