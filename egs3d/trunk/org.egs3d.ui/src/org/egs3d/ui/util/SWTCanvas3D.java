@@ -97,9 +97,12 @@ public class SWTCanvas3D extends Composite {
     /**
      * Affiche un arbre scénique 3D.
      */
-    public synchronized void setSceneGraph(final BranchGroup sceneGraph) {
+    public synchronized void setSceneGraph(BranchGroup node) {
+        // la capacité ALLOW_DETACH est requise pour détacher le noeud plus tard
+        node.setCapability(BranchGroup.ALLOW_DETACH);
+
         branchGroup.removeAllChildren();
-        branchGroup.addChild(sceneGraph);
+        branchGroup.addChild(node);
         canvas3D.repaint();
     }
 }
