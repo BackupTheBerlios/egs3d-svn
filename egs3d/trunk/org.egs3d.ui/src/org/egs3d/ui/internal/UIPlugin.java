@@ -84,10 +84,26 @@ public class UIPlugin extends AbstractUIPlugin {
     }
 
 
-	/**
-	 * Retourne la scène sélectionnée dans l'explorateur de scène,
+    public ImageDescriptor getIcon(IconType type) {
+        ImageDescriptor desc = getImageRegistry().getDescriptor(type.name());
+        if (desc == null) {
+            final URL url = getBundle().getEntry(type.path());
+            if (url == null) {
+                log.warn("Icône non trouvée : " + type.path()); //$NON-NLS-1$
+                return null;
+            }
+            desc = ImageDescriptor.createFromURL(url);
+            getImageRegistry().put(type.name(), desc);
+        }
+
+        return desc;
+    }
+
+
+    /**
+     * Retourne la scène sélectionnée dans l'explorateur de scène,
      * <code>null</code>.
-	 */
+     */
     public IScene getSelectedScene() {
         final IStructuredSelection sel = (IStructuredSelection) getWorkbench()
                 .getActiveWorkbenchWindow().getSelectionService().getSelection(
