@@ -70,8 +70,8 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
                 .getToolBarManager();
         toolBarManager.add(new RefreshAction());
 
-        getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(
-                SceneExplorerView.VIEW_ID, this);
+        getSite().getWorkbenchWindow().getSelectionService()
+                .addPostSelectionListener(SceneExplorerView.VIEW_ID, this);
     }
 
 
@@ -90,8 +90,8 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
             canvas3D = null;
         }
         lastSceneRef = null;
-        getSite().getWorkbenchWindow().getSelectionService().removePostSelectionListener(
-                SceneExplorerView.VIEW_ID, this);
+        getSite().getWorkbenchWindow().getSelectionService()
+                .removePostSelectionListener(SceneExplorerView.VIEW_ID, this);
         super.dispose();
     }
 
@@ -142,7 +142,9 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
 
     private class RefreshAction extends Action {
         public RefreshAction() {
-            super(Messages.SceneRenderView_refresh, UIPlugin.getDefault().getIcon(IconType.REFRESH));
+            super(Messages.SceneRenderView_refresh, UIPlugin.getDefault()
+                    .getIcon(IconType.REFRESH));
+            setToolTipText(getText());
         }
 
 
