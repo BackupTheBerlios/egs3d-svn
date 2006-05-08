@@ -68,4 +68,5 @@ public class Messages extends NLS {
     public static String Error_sceneNameExists;
     public static String SceneRenderView_refresh;
     public static String PreviewView_refresh;
+    public static String PreviewView_synchronizePreview;
 }

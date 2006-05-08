@@ -38,6 +38,7 @@ import javax.vecmath.Vector3f;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -75,6 +76,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     private CLabel imageLabel;
     private SWTCanvas3D canvas3D;
     private WeakReference<Object> selectionRef;
+    private boolean syncPreview = true;
 
 
     @Override
@@ -96,8 +98,10 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         getSite().getWorkbenchWindow().getSelectionService()
                 .addPostSelectionListener(SceneExplorerView.VIEW_ID, this);
 
-        getViewSite().getActionBars().getToolBarManager().add(
-                new RefreshAction());
+        final IToolBarManager toolBarManager = getViewSite().getActionBars()
+                .getToolBarManager();
+        toolBarManager.add(new RefreshAction());
+        toolBarManager.add(new SynchronizePreviewAction());
 
         showNoPreview();
     }
@@ -214,6 +218,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
 
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+        if (!syncPreview) {
+            return;
+        }
         if (this == part || selection.isEmpty()
                 || !(selection instanceof IStructuredSelection)) {
             showNoPreview();
@@ -265,6 +272,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         public RefreshAction() {
             super(Messages.PreviewView_refresh, UIPlugin.getDefault().getIcon(
                     IconType.REFRESH));
+            setToolTipText(getText());
         }
 
 
@@ -272,6 +280,32 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         public void run() {
             if (selectionRef != null) {
                 show(selectionRef.get(), true);
+            }
+        }
+    }
+
+
+    private class SynchronizePreviewAction extends Action {
+        public SynchronizePreviewAction() {
+            super(Messages.PreviewView_synchronizePreview, Action.AS_CHECK_BOX);
+            setToolTipText(getText());
+            setImageDescriptor(UIPlugin.getDefault().getIcon(IconType.SYNC));
+            setChecked(syncPreview);
+        }
+
+
+        @Override
+        public void run() {
+            syncPreview = !syncPreview;
+            setChecked(syncPreview);
+
+            if (syncPreview) {
+                final IStructuredSelection sel = (IStructuredSelection) getSite()
+                        .getWorkbenchWindow().getSelectionService()
+                        .getSelection(SceneExplorerView.VIEW_ID);
+                if (sel != null && !sel.isEmpty()) {
+                    show(sel.getFirstElement(), true);
+                }
             }
         }
     }
