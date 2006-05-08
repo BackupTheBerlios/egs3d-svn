@@ -26,6 +26,11 @@
             class="org.egs3d.ui.views.PreviewView"
             id="org.egs3d.ui.views.preview"
             name="%View_Preview"/>
+      <view
+            category="org.egs3d.ui.categories.3d"
+            class="org.egs3d.ui.views.CodeGenerationView"
+            id="org.egs3d.ui.views.codeGeneration"
+            name="%View_CodeGeneration"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
