@@ -37,6 +37,7 @@ import javax.vecmath.Vector3f;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -54,8 +55,10 @@ import org.eclipse.ui.part.ViewPart;
 import org.egs3d.core.Java3DUtils;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.ITexture;
+import org.egs3d.ui.internal.IconType;
 import org.egs3d.ui.internal.Messages;
 import org.egs3d.ui.internal.SWTUtils;
+import org.egs3d.ui.internal.UIPlugin;
 import org.egs3d.ui.util.SWTCanvas3D;
 
 
@@ -92,6 +95,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         // travers l'interface ISelectionListener
         getSite().getWorkbenchWindow().getSelectionService()
                 .addPostSelectionListener(SceneExplorerView.VIEW_ID, this);
+
+        getViewSite().getActionBars().getToolBarManager().add(
+                new RefreshAction());
 
         showNoPreview();
     }
@@ -150,7 +156,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         try {
             sceneGraph = model.getBranchGroup();
         } catch (Exception e) {
-            log.error("Erreur lors du chargement du modèle : " + model, e);
+            log.error("Erreur lors du chargement du modèle : " + model, e); //$NON-NLS-1$
         }
         if (sceneGraph == null) {
             showNoPreview();
@@ -221,9 +227,16 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         }
         log.debug("Elément sélectionné : " + selectedObj); //$NON-NLS-1$
 
-        if (selectionRef != null && selectedObj.equals(selectionRef.get())) {
-            log.debug("Pas de changement dans la sélection");
-            return;
+        show(selectedObj, false);
+    }
+
+
+    private void show(Object selectedObj, boolean force) {
+        if (selectionRef != null) {
+            if (!force && selectedObj.equals(selectionRef.get())) {
+                log.debug("Pas de changement dans la sélection"); //$NON-NLS-1$
+                return;
+            }
         }
 
         if (imageLabel.getImage() != null) {
@@ -245,5 +258,21 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         }
 
         selectionRef = new WeakReference<Object>(selectedObj);
+    }
+
+
+    private class RefreshAction extends Action {
+        public RefreshAction() {
+            super(Messages.PreviewView_refresh, UIPlugin.getDefault().getIcon(
+                    IconType.REFRESH));
+        }
+
+
+        @Override
+        public void run() {
+            if (selectionRef != null) {
+                show(selectionRef.get(), true);
+            }
+        }
     }
 }
