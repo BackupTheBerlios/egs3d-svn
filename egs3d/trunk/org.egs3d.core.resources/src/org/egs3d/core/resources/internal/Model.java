@@ -91,7 +91,6 @@ public class Model extends AbstractSceneObject implements IModel {
                     tempFile));
 
             final Loader loader = loaderClass.newInstance();
-            loader.setFlags(Loader.LOAD_ALL);
             data = loader.load(tempFile.toURI().toURL()).getSceneGroup();
             tempFile.delete();
         } catch (Exception e) {
