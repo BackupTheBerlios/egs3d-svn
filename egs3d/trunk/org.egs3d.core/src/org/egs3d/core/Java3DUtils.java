@@ -42,7 +42,8 @@ import com.sun.j3d.utils.behaviors.mouse.MouseWheelZoom;
  * @author romale
  */
 public final class Java3DUtils {
-    private static final Logger log = LoggerFactory.getLogger(Java3DUtils.class);
+    private static final Logger log = LoggerFactory
+            .getLogger(Java3DUtils.class);
 
 
     private Java3DUtils() {
@@ -53,7 +54,8 @@ public final class Java3DUtils {
      * Retourne <code>true</code> si Java3D est installé sur le système.
      */
     public static boolean isJava3DInstalled() {
-        final String[] classNames = { "javax.media.j3d.Bounds", "javax.vecmath.Vector3f",
+        final String[] classNames = { "javax.media.j3d.Bounds",
+                "javax.vecmath.Vector3f",
                 "com.sun.j3d.utils.universe.SimpleUniverse", };
         try {
             for (final String className : classNames) {
@@ -110,5 +112,22 @@ public final class Java3DUtils {
         zoomTG.addChild(translateTG);
 
         return zoomTG;
+    }
+
+
+    /**
+     * Retourne le noeud racine.
+     */
+    public static Node getRootNode(Node node) {
+        if (node == null) {
+            return null;
+        }
+        final Node parent = node.getParent();
+        if (parent == null) {
+            // nous venons de trouver le noeud racine
+            // (celui qui n'a pas de père)
+            return node;
+        }
+        return getRootNode(parent);
     }
 }
