@@ -83,7 +83,7 @@ public class ResourcesPlugin extends Plugin {
      * créé, une nouvelle scène sera initialisée. Si le fichier n'a pas
      * l'extension d'une scène, la valeur <code>null</code> est retournée.
      */
-    public static IScene getScene(IFile file) throws IOException, CoreException {
+    public static synchronized IScene getScene(IFile file) throws IOException, CoreException {
         if (!SceneConstants.SCENE_FILE_EXTENSION.equals(file.getFileExtension())) {
             return null;
         }
@@ -115,7 +115,7 @@ public class ResourcesPlugin extends Plugin {
     }
 
 
-    public static IScene getScene(Object obj) {
+    public static synchronized IScene getScene(Object obj) {
         if (obj instanceof ISceneObject) {
             return ((ISceneObject) obj).getScene();
         }
