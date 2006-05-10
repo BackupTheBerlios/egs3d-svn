@@ -30,6 +30,8 @@ import java.util.List;
 
 import javax.media.j3d.BranchGroup;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.egs3d.core.resources.IBranchGroupContainer;
 import org.egs3d.core.resources.IScene;
 
@@ -78,5 +80,17 @@ public class BranchGroupContainer extends AbstractSceneObject implements
 
     public BranchGroup[] toArray() {
         return branchGroups.toArray(new BranchGroup[branchGroups.size()]);
+    }
+
+
+    public void refresh() {
+        final IProject project = getScene().getProject();
+        if (project == null) {
+            return;
+        }
+        try {
+            getScene().getFile().touch(null);
+        } catch (CoreException e) {
+        }
     }
 }

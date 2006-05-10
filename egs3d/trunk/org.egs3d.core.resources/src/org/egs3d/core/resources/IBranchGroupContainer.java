@@ -68,4 +68,10 @@ public interface IBranchGroupContainer extends Iterable<BranchGroup>, ISceneObje
      * Retourne un tableau avec les éléments contenus.
      */
     BranchGroup[] toArray();
+
+
+    /**
+     * Rafraîchit le conteneur suite à une modification structurelle.
+     */
+    void refresh();
 }
