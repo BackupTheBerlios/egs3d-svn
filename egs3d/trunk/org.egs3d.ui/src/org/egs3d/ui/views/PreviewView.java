@@ -24,6 +24,7 @@ package org.egs3d.ui.views;
 
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
 
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.BoundingSphere;
@@ -39,21 +40,36 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.egs3d.core.Java3DUtils;
+import org.egs3d.core.StringUtils;
 import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.ITexture;
 import org.egs3d.ui.internal.IconType;
@@ -77,6 +93,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     private SWTCanvas3D canvas3D;
     private WeakReference<Object> selectionRef;
     private boolean syncPreview = true;
+    private boolean addLights = true;
+    private BigDecimal scaleFactor = new BigDecimal("0.01"); //$NON-NLS-1$
 
 
     @Override
@@ -95,13 +113,14 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
         // l'élément sélectionné dans l'explorateur de scène est récupéré à
         // travers l'interface ISelectionListener
-        getSite().getWorkbenchWindow().getSelectionService()
-                .addPostSelectionListener(SceneExplorerView.VIEW_ID, this);
+        getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(
+                SceneExplorerView.VIEW_ID, this);
 
         final IToolBarManager toolBarManager = getViewSite().getActionBars()
                 .getToolBarManager();
         toolBarManager.add(new RefreshAction());
         toolBarManager.add(new SynchronizePreviewAction());
+        toolBarManager.add(new ShowOptionsDialog());
 
         showNoPreview();
     }
@@ -117,13 +136,19 @@ public class PreviewView extends ViewPart implements ISelectionListener {
     public void dispose() {
         if (pageBook != null) {
             getSite().getWorkbenchWindow().getSelectionService()
-                    .removePostSelectionListener(SceneExplorerView.VIEW_ID,
-                            this);
+                    .removePostSelectionListener(SceneExplorerView.VIEW_ID, this);
 
             pageBook.dispose();
             pageBook = null;
         }
         super.dispose();
+    }
+
+
+    private void refresh() {
+        if (selectionRef != null) {
+            show(selectionRef.get(), true);
+        }
     }
 
 
@@ -167,8 +192,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
             return;
         }
 
-        canvas3D.setSceneGraph(createSceneGraphWithLights(sceneGraph
-                .cloneTree()));
+        canvas3D.setSceneGraph(createSceneGraphWithLights(sceneGraph.cloneTree()));
 
         pageBook.showPage(canvas3D);
     }
@@ -190,28 +214,31 @@ public class PreviewView extends ViewPart implements ISelectionListener {
         final Bounds bounds = new BoundingSphere(new Point3d(), 100000);
         final BranchGroup root = new BranchGroup();
 
-        final BranchGroup lights = new BranchGroup();
+        if (addLights) {
+            final BranchGroup lights = new BranchGroup();
 
-        final AmbientLight ambientLightNode = new AmbientLight(new Color3f(
-                0.1f, 0.1f, 0.1f));
-        ambientLightNode.setInfluencingBounds(bounds);
-        lights.addChild(ambientLightNode);
+            final AmbientLight ambientLightNode = new AmbientLight(new Color3f(0.1f,
+                    0.1f, 0.1f));
+            ambientLightNode.setInfluencingBounds(bounds);
+            lights.addChild(ambientLightNode);
 
-        final Vector3f light1Direction = new Vector3f(1.0f, 1.0f, 1.0f);
-        final DirectionalLight light1 = new DirectionalLight(new Color3f(1.0f,
-                1.0f, 0.9f), light1Direction);
-        light1.setInfluencingBounds(bounds);
-        lights.addChild(light1);
+            final Vector3f light1Direction = new Vector3f(1.0f, 1.0f, 1.0f);
+            final DirectionalLight light1 = new DirectionalLight(new Color3f(1.0f, 1.0f,
+                    0.9f), light1Direction);
+            light1.setInfluencingBounds(bounds);
+            lights.addChild(light1);
 
-        final Vector3f light2Direction = new Vector3f(-1.0f, -1.0f, -1.0f);
-        final DirectionalLight light2 = new DirectionalLight(new Color3f(1.0f,
-                1.0f, 0.9f), light2Direction);
-        light2.setInfluencingBounds(bounds);
-        lights.addChild(light2);
+            final Vector3f light2Direction = new Vector3f(-1.0f, -1.0f, -1.0f);
+            final DirectionalLight light2 = new DirectionalLight(new Color3f(1.0f, 1.0f,
+                    0.9f), light2Direction);
+            light2.setInfluencingBounds(bounds);
+            lights.addChild(light2);
 
-        root.addChild(lights);
-        root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils
-                .scale(node, 0.01), bounds));
+            root.addChild(lights);
+        }
+
+        root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils.scale(node, scaleFactor
+                .doubleValue()), bounds));
 
         return root;
     }
@@ -278,9 +305,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
         @Override
         public void run() {
-            if (selectionRef != null) {
-                show(selectionRef.get(), true);
-            }
+            refresh();
         }
     }
 
@@ -301,12 +326,103 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
             if (syncPreview) {
                 final IStructuredSelection sel = (IStructuredSelection) getSite()
-                        .getWorkbenchWindow().getSelectionService()
-                        .getSelection(SceneExplorerView.VIEW_ID);
+                        .getWorkbenchWindow().getSelectionService().getSelection(
+                                SceneExplorerView.VIEW_ID);
                 if (sel != null && !sel.isEmpty()) {
                     show(sel.getFirstElement(), true);
                 }
             }
+        }
+    }
+
+
+    private class ShowOptionsDialog extends Action {
+        public ShowOptionsDialog() {
+            super(Messages.PreviewView_showOptions, UIPlugin.getDefault().getIcon(
+                    IconType.CONFIG));
+            setToolTipText(getText());
+        }
+
+
+        @Override
+        public void run() {
+            new OptionsDialog(getViewSite()).open();
+        }
+    }
+
+
+    private class OptionsDialog extends Dialog {
+        public OptionsDialog(IShellProvider parentShell) {
+            super(parentShell);
+        }
+
+
+        @Override
+        protected Control createDialogArea(Composite parent) {
+            final Composite comp = (Composite) super.createDialogArea(parent);
+
+            final Group group3D = new Group(comp, SWT.SHADOW_ETCHED_IN);
+            group3D.setText(Messages.PreviewView_options_3dOptions);
+            group3D.setLayout(new GridLayout(2, false));
+
+            final Label scaleLabel = new Label(group3D, SWT.NONE);
+            scaleLabel.setText(Messages.PreviewView_options_scaleFactor);
+            scaleLabel
+                    .setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+
+            final Text scaleField = new Text(group3D, SWT.BORDER);
+            scaleField.setText(scaleFactor.toPlainString());
+            scaleField.setTextLimit(6);
+            GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            data.widthHint = 50;
+            scaleField.setLayoutData(data);
+            scaleField.addModifyListener(new ModifyListener() {
+                public void modifyText(ModifyEvent e) {
+                    final String text = StringUtils.trimToNull(scaleField.getText());
+                    if (text == null) {
+                        getButton(IDialogConstants.OK_ID).setEnabled(false);
+                        return;
+                    }
+                    try {
+                        scaleFactor = new BigDecimal(text);
+                        getButton(IDialogConstants.OK_ID).setEnabled(true);
+                    } catch (NumberFormatException exc) {
+                        getButton(IDialogConstants.OK_ID).setEnabled(false);
+                    }
+                }
+            });
+
+            final Button addLightsButton = new Button(group3D, SWT.CHECK);
+            addLightsButton.setSelection(addLights);
+            addLightsButton.setText(Messages.PreviewView_options_addLights);
+            addLightsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+                    2, 1));
+            addLightsButton.addSelectionListener(new SelectionListener() {
+                public void widgetDefaultSelected(SelectionEvent e) {
+                    widgetSelected(e);
+                }
+
+
+                public void widgetSelected(SelectionEvent e) {
+                    addLights = addLightsButton.getSelection();
+                }
+            });
+
+            return comp;
+        }
+
+
+        @Override
+        protected void configureShell(Shell newShell) {
+            super.configureShell(newShell);
+            newShell.setText(Messages.PreviewView_options_title);
+        }
+
+
+        @Override
+        protected void okPressed() {
+            super.okPressed();
+            refresh();
         }
     }
 }

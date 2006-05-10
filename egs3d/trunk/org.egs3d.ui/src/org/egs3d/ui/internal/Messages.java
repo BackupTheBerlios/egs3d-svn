@@ -69,4 +69,9 @@ public class Messages extends NLS {
     public static String SceneRenderView_refresh;
     public static String PreviewView_refresh;
     public static String PreviewView_synchronizePreview;
+    public static String PreviewView_showOptions;
+    public static String PreviewView_options_3dOptions;
+    public static String PreviewView_options_scaleFactor;
+    public static String PreviewView_options_addLights;
+    public static String PreviewView_options_title;
 }
