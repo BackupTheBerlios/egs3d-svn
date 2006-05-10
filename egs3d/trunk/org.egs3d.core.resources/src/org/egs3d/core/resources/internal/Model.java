@@ -23,11 +23,12 @@
 package org.egs3d.core.resources.internal;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
 
 import javax.media.j3d.BranchGroup;
 
@@ -46,7 +47,7 @@ public class Model extends AbstractSceneObject implements IModel {
     private final String name;
     private final Class<? extends Loader> loaderClass;
     private final String extension;
-    private final byte[] binaryData;
+    private final ByteBuffer binaryData;
 
 
     public Model(final IScene scene, final String name, final String extension,
@@ -57,9 +58,7 @@ public class Model extends AbstractSceneObject implements IModel {
         this.loaderClass = loaderClass;
 
         try {
-            final ByteArrayOutputStream buf = new ByteArrayOutputStream();
-            IOUtils.copy(input, buf);
-            binaryData = buf.toByteArray();
+            binaryData = IOUtils.read(Channels.newChannel(input));
         } catch (Exception e) {
             throw new IllegalStateException("Erreur durant le chargement du modèle", e);
         }
@@ -87,21 +86,25 @@ public class Model extends AbstractSceneObject implements IModel {
         try {
             final File tempFile = File.createTempFile("model-", ".tmp");
             tempFile.deleteOnExit();
-            IOUtils.copy(new ByteArrayInputStream(binaryData), new FileOutputStream(
-                    tempFile));
+            final FileChannel channel = new FileOutputStream(tempFile).getChannel();
+            binaryData.position(0);
+
+            IOUtils.write(channel, binaryData);
 
             final Loader loader = loaderClass.newInstance();
             data = loader.load(tempFile.toURI().toURL()).getSceneGroup();
             tempFile.delete();
         } catch (Exception e) {
             throw new IllegalStateException("Erreur durant le chargement du modèle", e);
+        } finally {
+            binaryData.position(0);
         }
 
         return data;
     }
 
 
-    public byte[] getBinaryData() {
+    public ByteBuffer getBinaryData() {
         return binaryData;
     }
 }

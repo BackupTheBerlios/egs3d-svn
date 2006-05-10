@@ -28,6 +28,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.WritableByteChannel;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -83,7 +86,10 @@ public class SceneWriter implements ISceneWriter {
             for (final IModel model : scene.getModelContainer()) {
                 zipOutput.putNextEntry(new ZipEntry(SceneIOConstants.MODELS_NAME
                         + model.getName() + "." + model.getExtension()));
-                zipOutput.write(model.getBinaryData());
+                final ByteBuffer buf = model.getBinaryData().duplicate();
+                buf.position(0);
+                final WritableByteChannel channel = Channels.newChannel(zipOutput);
+                IOUtils.write(channel, buf);
             }
             zipOutput.flush();
 

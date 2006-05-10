@@ -23,6 +23,8 @@
 package org.egs3d.core.resources;
 
 
+import java.nio.ByteBuffer;
+
 import javax.media.j3d.BranchGroup;
 
 import com.sun.j3d.loaders.Loader;
@@ -49,7 +51,7 @@ public interface IModel extends ISceneObject {
     /**
      * Retourne le modèle sous la forme de données binaires.
      */
-    byte[] getBinaryData();
+    ByteBuffer getBinaryData();
 
 
     /**
