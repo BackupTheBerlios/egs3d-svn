@@ -88,10 +88,10 @@ public class SceneWriter implements ISceneWriter {
                         + model.getName() + "." + model.getExtension()));
                 final ByteBuffer buf = model.getBinaryData().duplicate();
                 buf.position(0);
-                final WritableByteChannel channel = Channels.newChannel(zipOutput);
+                final WritableByteChannel channel = Channels.newChannel(proxyOutput);
                 IOUtils.write(channel, buf);
+                proxyOutput.flush();
             }
-            zipOutput.flush();
 
             // écriture des textures
             for (final ITexture texture : scene.getTextureContainer()) {
@@ -100,8 +100,8 @@ public class SceneWriter implements ISceneWriter {
                 // les images sont écrites au format PNG pour conserver la même
                 // qualité au fur et à mesure des enregistrements
                 ImageIO.write(texture.getImage(), "PNG", proxyOutput);
+                proxyOutput.flush();
             }
-            proxyOutput.flush();
         } catch (Exception e) {
             final IOException exc = new IOException(
                     "Erreur durant l'enregistrement de la scène : " + scene.getName());
@@ -118,11 +118,15 @@ public class SceneWriter implements ISceneWriter {
         tempFile.deleteOnExit();
 
         SceneGraphFileWriter writer = null;
+        SimpleUniverse su = null;
         try {
-            final SimpleUniverse su = new SimpleUniverse(new Canvas3D(SimpleUniverse
+            su = new SimpleUniverse(new Canvas3D(SimpleUniverse
                     .getPreferredConfiguration()));
             for (final BranchGroup bg : scene.getBranchGroupContainer()) {
-                su.addBranchGraph(bg);
+                // il faut cloner chaque BranchGroup car ils ont peut-être été
+                // déjà rattachés à un autre SimpleUniverse : dans ce cas, on a
+                // une MultipleParentException
+                su.addBranchGraph((BranchGroup) bg.cloneTree());
             }
             writer = new SceneGraphFileWriter(tempFile, su, true, "EGS3D", null);
         } catch (UnsupportedUniverseException e) {
@@ -130,6 +134,9 @@ public class SceneWriter implements ISceneWriter {
             exc.initCause(e);
             throw exc;
         } finally {
+            if (su != null) {
+                su.cleanup();
+            }
             if (writer != null) {
                 try {
                     writer.close();
