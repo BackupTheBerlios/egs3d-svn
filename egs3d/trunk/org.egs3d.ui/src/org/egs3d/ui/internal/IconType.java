@@ -29,7 +29,7 @@ package org.egs3d.ui.internal;
  * @author romale
  */
 public enum IconType {
-    REFRESH("refresh_nav.gif"), SYNC("synced.gif");
+    REFRESH("refresh_nav.gif"), SYNC("synced.gif"), CONFIG("configs.gif");
 
     private static final String PREFIX_PATH = "/icons/etool16/"; //$NON-NLS-1$
     private final String path;
