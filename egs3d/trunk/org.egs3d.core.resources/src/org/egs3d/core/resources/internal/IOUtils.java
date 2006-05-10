@@ -27,6 +27,9 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 
 
 /**
@@ -68,6 +71,38 @@ public final class IOUtils {
         try {
             closeable.close();
         } catch (IOException ignore) {
+        }
+    }
+
+
+    public static ByteBuffer read(ReadableByteChannel channel) throws IOException {
+        final ByteAccumulator buf = new ByteAccumulator(ByteBuffer.allocateDirect(2048));
+        final ByteBuffer tempBuf = ByteBuffer.allocate(1024);
+
+        try {
+            while (channel.read(tempBuf) != -1) {
+                tempBuf.flip();
+                buf.append(tempBuf);
+                tempBuf.clear();
+            }
+        } finally {
+            IOUtils.close(channel);
+        }
+
+        final ByteBuffer finalBuf = buf.get();
+        finalBuf.flip();
+        return finalBuf;
+    }
+
+
+    public static void write(WritableByteChannel channel, ByteBuffer buf)
+            throws IOException {
+        try {
+            while (buf.hasRemaining()) {
+                channel.write(buf);
+            }
+        } finally {
+            IOUtils.close(channel);
         }
     }
 }
