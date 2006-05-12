@@ -38,6 +38,10 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.egs3d.core.resources.IModel;
+import org.egs3d.core.resources.IScene;
+import org.egs3d.core.resources.ISceneObject;
+import org.egs3d.core.resources.ITexture;
 import org.egs3d.ui.internal.Messages;
 
 
@@ -65,6 +69,7 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
 
     public void run(IAction action) {
         final Set<IResource> resourcesToDelete = new HashSet<IResource>();
+        final Set<ISceneObject> sceneObjectsToDelete = new HashSet<ISceneObject>();
 
         if (selection instanceof IStructuredSelection) {
             final IStructuredSelection ss = (IStructuredSelection) selection;
@@ -73,10 +78,13 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
                 if (current instanceof IResource) {
                     resourcesToDelete.add((IResource) current);
                 }
+                if(current instanceof ISceneObject) {
+                	sceneObjectsToDelete.add((ISceneObject) current);
+                }
             }
         }
 
-        if (resourcesToDelete.isEmpty()) {
+        if (resourcesToDelete.isEmpty() && sceneObjectsToDelete.isEmpty()) {
             return;
         }
         if (!MessageDialog.openQuestion(window.getShell(),
@@ -95,6 +103,16 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
             ResourcesPlugin.getWorkspace().delete(resourcesToDeleteArray, true, null);
         } catch (CoreException e) {
             log.error("Erreur lors de la suppression de la ressource", e); //$NON-NLS-1$
+        }
+        
+        for(final ISceneObject so : sceneObjectsToDelete) {
+        	final IScene scene = so.getScene();
+        	if(so instanceof ITexture) {
+        		scene.getTextureContainer().remove((ITexture) so);
+        	}
+        	if(so instanceof IModel) {
+        		scene.getModelContainer().remove((IModel) so);
+        	}
         }
     }
 
