@@ -7,8 +7,14 @@
 package org.egs3d.ui.views;
 
 //import org.eclipse.jface.viewers.
+import org.eclipse.jface.resource.FontRegistry;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.TextViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.egs3d.ui.internal.UIPlugin;
 
 
 /**
@@ -17,22 +23,28 @@ import org.eclipse.ui.part.ViewPart;
  * @author brachet
  */
 public class CodeGenerationView extends ViewPart {
+	private TextViewer textViewer;
     
-	public CodeGenerationView() {
-		super();
-		// TODO Raccord de constructeur auto-généré
-	}
-
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO Raccord de méthode auto-généré
+		textViewer = new TextViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		parent.setLayout(new FillLayout());
 
+		textViewer.setEditable(false);
+		textViewer.setDocument(new Document("Hello world!"));
 	}
 
 	@Override
 	public void setFocus() {
-		// TODO Raccord de méthode auto-généré
-
+		textViewer.getControl().setFocus();
 	}
 
+	@Override
+	public void dispose() {
+		if(textViewer != null) {
+			textViewer.getControl().dispose();
+			textViewer = null;
+		}
+		super.dispose();
+	}
 }
