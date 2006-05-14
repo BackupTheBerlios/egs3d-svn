@@ -70,8 +70,8 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
                 .getToolBarManager();
         toolBarManager.add(new RefreshAction());
 
-        getSite().getWorkbenchWindow().getSelectionService()
-                .addPostSelectionListener(SceneExplorerView.VIEW_ID, this);
+        getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(
+                SceneExplorerView.VIEW_ID, this);
     }
 
 
@@ -90,8 +90,8 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
             canvas3D = null;
         }
         lastSceneRef = null;
-        getSite().getWorkbenchWindow().getSelectionService()
-                .removePostSelectionListener(SceneExplorerView.VIEW_ID, this);
+        getSite().getWorkbenchWindow().getSelectionService().removePostSelectionListener(
+                SceneExplorerView.VIEW_ID, this);
         super.dispose();
     }
 
@@ -121,18 +121,11 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
             lastSceneRef = null;
         } else {
             // reconstruction de la scène complète
-            final BranchGroup completeSceneGraph = new BranchGroup();
-            for (final BranchGroup sceneGraph : scene.getBranchGroupContainer()) {
-                // chaque sous-scène est clonée pour ne pas interférer avec
-                // la scène originale
-                completeSceneGraph.addChild(sceneGraph.cloneTree());
-            }
-
             final Bounds bounds = new BoundingSphere(new Point3d(), 100000);
 
             final BranchGroup root = new BranchGroup();
-            root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils.scale(
-                    completeSceneGraph, scale), bounds));
+            root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils.scale(scene
+                    .getBranchGroupContainer().getBranchGraph(), scale), bounds));
 
             canvas3D.setSceneGraph(root);
             lastSceneRef = new WeakReference<IScene>(scene);
@@ -142,8 +135,8 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
 
     private class RefreshAction extends Action {
         public RefreshAction() {
-            super(Messages.SceneRenderView_refresh, UIPlugin.getDefault()
-                    .getIcon(IconType.REFRESH));
+            super(Messages.SceneRenderView_refresh, UIPlugin.getDefault().getIcon(
+                    IconType.REFRESH));
             setToolTipText(getText());
         }
 
