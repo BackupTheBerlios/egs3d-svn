@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Code Generator
+Bundle-SymbolicName: org.egs3d.codegen
+Bundle-Version: 0.0.0.dev
+Bundle-Activator: org.egs3d.codegen.CodeGenPlugin
+Bundle-Vendor: EGS3D
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.egs3d.core,
+ org.egs3d.core.resources,
+ org.egs3d.log
+Eclipse-AutoStart: true
+Eclipse-BuddyPolicy: app
+Export-Package: org.egs3d.codegen
