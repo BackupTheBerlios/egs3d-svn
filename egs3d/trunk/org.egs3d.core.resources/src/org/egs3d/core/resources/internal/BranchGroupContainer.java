@@ -93,4 +93,14 @@ public class BranchGroupContainer extends AbstractSceneObject implements
         } catch (CoreException e) {
         }
     }
+
+
+    public BranchGroup getBranchGraph() {
+        final BranchGroup root = new BranchGroup();
+        for (final BranchGroup group : branchGroups) {
+            root.addChild(group.cloneTree(true));
+        }
+
+        return root;
+    }
 }

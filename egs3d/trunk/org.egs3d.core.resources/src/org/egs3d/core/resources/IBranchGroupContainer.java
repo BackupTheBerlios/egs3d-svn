@@ -74,4 +74,10 @@ public interface IBranchGroupContainer extends Iterable<BranchGroup>, ISceneObje
      * Rafraîchit le conteneur suite à une modification structurelle.
      */
     void refresh();
+
+
+    /**
+     * Retourne une copie de la scène complète. Tous les noeuds sont clonés.
+     */
+    BranchGroup getBranchGraph();
 }
