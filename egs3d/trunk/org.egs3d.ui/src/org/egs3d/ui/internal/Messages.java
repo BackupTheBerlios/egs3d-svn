@@ -74,4 +74,9 @@ public class Messages extends NLS {
     public static String PreviewView_options_scaleFactor;
     public static String PreviewView_options_addLights;
     public static String PreviewView_options_title;
+    public static String InsertGeometryWizard_windowTitle;
+    public static String InsertGeometryWizard_title;
+    public static String InsertGeometryWizard_description;
+    public static String InsertGeometryWizard_ShapeName;
+    
 }
