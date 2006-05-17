@@ -63,8 +63,8 @@ public abstract class AbstractInsertAction implements IWorkbenchWindowActionDele
                     + "l'ajout d'une nouvelle géométrie : " + selectedObj);
             return;
         }
-        
-        final Node node = createNode();
+
+        final Node node = createNode(window);
         if(node == null) {
         	return;
         }
@@ -83,5 +83,5 @@ public abstract class AbstractInsertAction implements IWorkbenchWindowActionDele
 	 * Crée un noeud à insérer dans le groupe courant. Si la valeur renvoyée est
 	 * <code>null</code>, aucune insertion n'est effectuée.
 	 */
-	protected abstract Node createNode();
+	protected abstract Node createNode(IWorkbenchWindow window);
 }

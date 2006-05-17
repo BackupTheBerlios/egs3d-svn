@@ -8,17 +8,46 @@ package org.egs3d.ui.actions;
 
 import javax.media.j3d.Node;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.egs3d.ui.wizards.InsertGeometryWizard;
+import org.eclipse.jface.window.Window;
+
+import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.geometry.ColorCube;
 
 
 /**
- * Ajoute une forme
+ * Ouvre une fenêtre de dialogue pour l'insertion d'une nouvelle géométrie.
  * 
  * @author brachet
  */
 public class InsertGeometryAction extends AbstractInsertAction {
+    private final Log log = LogFactory.getLog(getClass());
+    
 	@Override
-	protected Node createNode() {
-		return new ColorCube();
+	protected Node createNode(IWorkbenchWindow window) {
+        log.info("Ouverture de la fenêtre d'insertion de géométrie"); //$NON-NLS-1$
+        
+        final InsertGeometryWizard wizard = new InsertGeometryWizard();
+        final WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
+        dialog.setBlockOnOpen(true);
+
+        if (Window.OK != dialog.open()) {
+            return null;
+        }
+
+        //final String geometryType = wizard.getGeometryType();
+        final InsertGeometryWizard.GeometryType type = wizard.getGeometryType();
+        
+        if (type.equals(InsertGeometryWizard.GeometryType.CUBE)) {
+        	ColorCube colorCube = new ColorCube(10f);
+        	return colorCube;
+        } else {
+        	Sphere sphere = new Sphere(10f);
+        	return sphere;
+        }
 	}
 }

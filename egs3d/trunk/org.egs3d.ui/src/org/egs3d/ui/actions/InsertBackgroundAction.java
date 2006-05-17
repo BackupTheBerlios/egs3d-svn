@@ -9,6 +9,8 @@ package org.egs3d.ui.actions;
 import javax.media.j3d.Background;
 import javax.media.j3d.Node;
 
+import org.eclipse.ui.IWorkbenchWindow;
+
 
 /**
  * Ajoute un arrière-plan
@@ -17,7 +19,7 @@ import javax.media.j3d.Node;
  */
 public class InsertBackgroundAction extends AbstractInsertAction {
 	@Override
-	protected Node createNode() {
+	protected Node createNode(IWorkbenchWindow window) {
 		// TODO choisir l'image de fond
 		return new Background();
 	}
