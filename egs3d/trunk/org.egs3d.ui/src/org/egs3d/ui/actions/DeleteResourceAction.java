@@ -138,7 +138,7 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
                     final Group parentGroup = (Group) parent;
                     parentGroup.removeChild(node);
                 }
-            } else {
+            } else if(scene != null) {
                 scene.getBranchGroupContainer().remove((BranchGroup) node);
             }
         }
