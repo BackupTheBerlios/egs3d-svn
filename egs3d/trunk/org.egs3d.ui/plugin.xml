@@ -259,6 +259,7 @@
                   <objectClass name="org.eclipse.core.resources.IResource"/>
                   <objectClass name="org.egs3d.core.resources.ITexture"/>
                   <objectClass name="org.egs3d.core.resources.IModel"/>
+                  <objectClass name="javax.media.j3d.Node"/>
                </or>
             </enablement>
          </action>

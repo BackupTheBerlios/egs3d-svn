@@ -27,10 +27,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Group;
+import javax.media.j3d.Node;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -42,6 +45,7 @@ import org.egs3d.core.resources.IModel;
 import org.egs3d.core.resources.IScene;
 import org.egs3d.core.resources.ISceneObject;
 import org.egs3d.core.resources.ITexture;
+import org.egs3d.core.resources.ResourcesPlugin;
 import org.egs3d.ui.internal.Messages;
 
 
@@ -70,6 +74,7 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
     public void run(IAction action) {
         final Set<IResource> resourcesToDelete = new HashSet<IResource>();
         final Set<ISceneObject> sceneObjectsToDelete = new HashSet<ISceneObject>();
+        final Set<Node> nodesToDelete = new HashSet<Node>();
 
         if (selection instanceof IStructuredSelection) {
             final IStructuredSelection ss = (IStructuredSelection) selection;
@@ -78,13 +83,17 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
                 if (current instanceof IResource) {
                     resourcesToDelete.add((IResource) current);
                 }
-                if(current instanceof ISceneObject) {
-                	sceneObjectsToDelete.add((ISceneObject) current);
+                if (current instanceof ISceneObject) {
+                    sceneObjectsToDelete.add((ISceneObject) current);
+                }
+                if (current instanceof Node) {
+                    nodesToDelete.add((Node) current);
                 }
             }
         }
 
-        if (resourcesToDelete.isEmpty() && sceneObjectsToDelete.isEmpty()) {
+        if (resourcesToDelete.isEmpty() && sceneObjectsToDelete.isEmpty()
+                && nodesToDelete.isEmpty()) {
             return;
         }
         if (!MessageDialog.openQuestion(window.getShell(),
@@ -100,19 +109,42 @@ public class DeleteResourceAction implements IWorkbenchWindowActionDelegate {
         final IResource[] resourcesToDeleteArray = resourcesToDelete
                 .toArray(new IResource[resourcesToDelete.size()]);
         try {
-            ResourcesPlugin.getWorkspace().delete(resourcesToDeleteArray, true, null);
+            org.eclipse.core.resources.ResourcesPlugin.getWorkspace().delete(
+                    resourcesToDeleteArray, true, null);
         } catch (CoreException e) {
             log.error("Erreur lors de la suppression de la ressource", e); //$NON-NLS-1$
         }
-        
-        for(final ISceneObject so : sceneObjectsToDelete) {
-        	final IScene scene = so.getScene();
-        	if(so instanceof ITexture) {
-        		scene.getTextureContainer().remove((ITexture) so);
-        	}
-        	if(so instanceof IModel) {
-        		scene.getModelContainer().remove((IModel) so);
-        	}
+
+        for (final ISceneObject so : sceneObjectsToDelete) {
+            final IScene scene = so.getScene();
+            if (so instanceof ITexture) {
+                scene.getTextureContainer().remove((ITexture) so);
+            }
+            if (so instanceof IModel) {
+                scene.getModelContainer().remove((IModel) so);
+            }
+        }
+
+        final Set<IScene> scenesToRefresh = new HashSet<IScene>();
+        for (final Node node : nodesToDelete) {
+            final IScene scene = ResourcesPlugin.getScene(node);
+            if (scene != null) {
+                scenesToRefresh.add(scene);
+            }
+
+            final Node parent = node.getParent();
+            if (parent != null) {
+                if (parent instanceof Group) {
+                    final Group parentGroup = (Group) parent;
+                    parentGroup.removeChild(node);
+                }
+            } else {
+                scene.getBranchGroupContainer().remove((BranchGroup) node);
+            }
+        }
+
+        for (final IScene scene : scenesToRefresh) {
+            scene.getBranchGroupContainer().refresh();
         }
     }
 
