@@ -77,6 +77,7 @@ public class Messages extends NLS {
     public static String InsertGeometryWizard_windowTitle;
     public static String InsertGeometryWizard_title;
     public static String InsertGeometryWizard_description;
-    public static String InsertGeometryWizard_ShapeName;
+    public static String InsertGeometryWizard_GeometryName;
+    public static String InsertGeometryWizard_GeometryType;
     
 }
