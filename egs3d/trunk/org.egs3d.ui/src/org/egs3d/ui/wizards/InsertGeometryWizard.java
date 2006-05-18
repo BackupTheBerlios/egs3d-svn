@@ -83,7 +83,7 @@ public class InsertGeometryWizard extends Wizard {
 
         public void createControl(Composite parent) {
             final Composite comp = new Composite(parent, SWT.NONE);
-            comp.setLayout(new GridLayout(1, false));
+            comp.setLayout(new GridLayout(2, false));
             parent.setLayout(new FillLayout());
 
             final Label geometryNameLabel = new Label(comp, SWT.NONE);
@@ -181,6 +181,11 @@ public class InsertGeometryWizard extends Wizard {
 
         private void validate() {
             if (geometryName == null) {
+                setPageComplete(false);
+                return;
+            }
+            
+            if (geometryType == null) {
                 setPageComplete(false);
                 return;
             }
