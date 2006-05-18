@@ -122,12 +122,9 @@ public class SceneWriter implements ISceneWriter {
         try {
             su = new SimpleUniverse(new Canvas3D(SimpleUniverse
                     .getPreferredConfiguration()));
-            for (final BranchGroup bg : scene.getBranchGroupContainer()) {
-                // il faut cloner chaque BranchGroup car ils ont peut-être été
-                // déjà rattachés à un autre SimpleUniverse : dans ce cas, on a
-                // une MultipleParentException
-                su.addBranchGraph((BranchGroup) bg.cloneTree());
-            }
+            final BranchGroup root = scene.getBranchGroupContainer().getBranchGraph();
+            root.setCapability(BranchGroup.ALLOW_DETACH);
+            su.addBranchGraph(root);
             writer = new SceneGraphFileWriter(tempFile, su, true, "EGS3D", null);
         } catch (UnsupportedUniverseException e) {
             final IOException exc = new IOException("Univers non supporté");
