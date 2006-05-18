@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Geometry;
 import javax.media.j3d.Group;
 import javax.media.j3d.Shape3D;
