@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Core
 Bundle-SymbolicName: org.egs3d.core; singleton:=true
-Bundle-Version: 0.0.0.dev
+Bundle-Version: 1.0.0
 Bundle-Vendor: EGS3D
 Bundle-Localization: plugin
 Require-Bundle: org.egs3d.log

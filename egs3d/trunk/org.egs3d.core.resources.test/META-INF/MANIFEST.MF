@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Core Resources Test
 Bundle-SymbolicName: org.egs3d.core.resources.test
-Bundle-Version: 0.0.0.dev
+Bundle-Version: 1.0.0
 Bundle-Localization: plugin
 Bundle-Vendor: EGS3D
 Eclipse-BuddyPolicy: app

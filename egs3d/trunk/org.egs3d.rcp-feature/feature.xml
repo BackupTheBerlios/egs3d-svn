@@ -2,7 +2,7 @@
 <feature
       id="org.egs3d.rcp"
       label="org.egs3d.rcp-feature"
-      version="0.0.0.dev"
+      version="1.0.0"
       provider-name="EGS3D"
       plugin="org.egs3d.rcp">
 
