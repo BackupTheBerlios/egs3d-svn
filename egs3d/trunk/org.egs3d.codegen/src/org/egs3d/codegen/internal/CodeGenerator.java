@@ -99,8 +99,8 @@ public class CodeGenerator implements ICodeGenerator {
         public String generate(Object obj) throws Exception {
             if (obj instanceof IScene) {
                 return handleScene((IScene) obj);
-            } else if (obj instanceof BranchGroup) {
-                return handleGroup((BranchGroup) obj);
+            } else if (obj instanceof Group) {
+                return handleGroup((Group) obj);
             } else if (obj instanceof Shape3D) {
                 return handleShape3D((Shape3D) obj);
             }
@@ -235,7 +235,7 @@ public class CodeGenerator implements ICodeGenerator {
 
                     Object propValue = getter.invoke(obj);
                     if (propValue != null) {
-                        if (propClass.isPrimitive()) {
+                        if (propClass.isPrimitive() || String.class.equals(propClass)) {
                             propValue = formatPrimitiveValue(propValue);
                             textBuffer.newLine(name + ".set" + prop + "(" + propValue
                                     + ");");
@@ -280,6 +280,12 @@ public class CodeGenerator implements ICodeGenerator {
             if (Double.POSITIVE_INFINITY == dValue) {
                 return "Double.POSITIVE_INFINITY";
             }
+        }
+        if (String.class.equals(clazz)) {
+            return '"' + value.toString() + '"';
+        }
+        if (Character.class.equals(clazz)) {
+            return "'" + value.toString() + "'";
         }
 
         return value.toString();

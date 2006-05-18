@@ -20,6 +20,9 @@
          <property
                name="aboutText"
                value="%About_text"/>
+         <property
+               name="windowImages"
+               value="egs16.gif,egs32.gif"/>
       </product>
    </extension>
 

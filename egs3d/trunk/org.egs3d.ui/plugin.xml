@@ -80,6 +80,10 @@
                id="org.egs3d.ui.views.diagnostic"
                relationship="stack"
                relative="org.eclipse.ui.console.ConsoleView"/>
+         <view
+               id="org.egs3d.ui.views.codeGeneration"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"/>
       </perspectiveExtension>
       <perspectiveExtension targetID="org.egs3d.ui.perspectives.sceneRender">
          <view
@@ -125,7 +129,7 @@
                id="org.egs3d.ui.menus.file"
                label="%Menu_File">
             <separator name="new"/>
-            <groupMarker name="open"/>
+            <separator name="open"/>
             <separator name="closeAll"/>
             <separator name="saveAs"/>
             <separator name="export"/>
@@ -136,25 +140,43 @@
                class="org.egs3d.ui.actions.OpenAction"
                id="org.egs3d.ui.actions.open"
                label="%Action_Open"
-               menubarPath="org.egs3d.ui.menus.file/new"
-               style="push"/>
-         <action
-               class="org.egs3d.ui.actions.CloseAction"
-               id="org.egs3d.ui.actions.close"
-               label="%Action_Close"
                menubarPath="org.egs3d.ui.menus.file/open"
-               style="push"/>
-         <action
-               class="org.egs3d.ui.actions.CloseAllAction"
-               id="org.egs3d.ui.actions.closeAll"
-               label="%Action_CloseAll"
-               menubarPath="org.egs3d.ui.menus.file/closeAll"
-               style="push"/>
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
          <menu
                id="org.egs3d.ui.menus.fileNew"
                label="%Action_New"
                path="org.egs3d.ui.menus.file/new">
          </menu>
+         <action
+               class="org.egs3d.ui.actions.CloseAllAction"
+               id="org.egs3d.ui.actions.closeAll"
+               label="%Action_CloseAll"
+               menubarPath="org.egs3d.ui.menus.file/closeAll"
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
+         <action
+               class="org.egs3d.ui.actions.CloseAction"
+               id="org.egs3d.ui.actions.close"
+               label="%Action_Close"
+               menubarPath="org.egs3d.ui.menus.file/closeAll"
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.NewSceneAction"
                icon="icons/etool16/newfile_wiz.gif"
@@ -167,6 +189,7 @@
                <or>
                   <objectClass name="org.egs3d.core.resources.ISceneObject"/>
                   <objectClass name="org.eclipse.core.resources.IResource"/>
+                  <objectClass name="javax.media.j3d.Node"/>
                </or>
             </enablement>
          </action>
@@ -184,7 +207,13 @@
                id="org.egs3d.ui.actions.saveAs"
                label="%Action_SaveAs"
                menubarPath="org.egs3d.ui.menus.file/saveAs"
-               style="push"/>
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.SaveAction"
                icon="icons/etool16/save_edit.gif"
@@ -197,6 +226,7 @@
                <or>
                   <objectClass name="org.eclipse.core.resources.IResource"/>
                   <objectClass name="org.egs3d.core.resources.ISceneObject"/>
+                  <objectClass name="javax.media.j3d.Node"/>
                </or>
             </enablement>
          </action>
@@ -206,7 +236,13 @@
                id="org.egs3d.ui.actions.export"
                label="%Action_Export"
                menubarPath="org.egs3d.ui.menus.file/export"
-               style="push"/>
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
 
          <action
                class="org.egs3d.ui.actions.ImportAction"
@@ -269,42 +305,123 @@
                id="org.egs3d.ui.actions.paste"
                label="%Action_Paste"
                menubarPath="org.egs3d.ui.menus.edit/cut"
-               style="push"/>
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.CopyAction"
                icon="icons/etool16/copy_edit.gif"
                id="org.egs3d.ui.actions.copy"
                label="%Action_Copy"
                menubarPath="org.egs3d.ui.menus.edit/cut"
-               style="push"/>
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.CutAction"
                icon="icons/etool16/cut_edit.gif"
                id="org.egs3d.ui.actions.cut"
                label="%Action_Cut"
                menubarPath="org.egs3d.ui.menus.edit/cut"
-               style="push"/>
+               style="push">
+            <enablement>
+               <systemProperty
+                     name="disabled"
+                     value="disabled"/>
+            </enablement>
+         </action>
+         <action
+               class="org.egs3d.ui.actions.InsertTransformGroup"
+               icon="icons/obj16/tgrp_obj.gif"
+               id="org.egs3d.ui.actions.transformGroup"
+               label="%Action_TransformGroup"
+               menubarPath="org.egs3d.ui.menus.insert/light"
+               style="push">
+            <enablement>
+               <or>
+                  <objectClass name="org.egs3d.core.resources.IBranchGroupContainer"/>
+                  <objectClass name="javax.media.j3d.Group"/>
+               </or>
+            </enablement>
+         </action>
+         <action
+               class="org.egs3d.ui.actions.InsertGroup"
+               icon="icons/obj16/grp_obj.gif"
+               id="org.egs3d.ui.actions.group"
+               label="%Action_Group"
+               menubarPath="org.egs3d.ui.menus.insert/light"
+               style="push">
+            <enablement>
+               <or>
+                  <objectClass name="org.egs3d.core.resources.IBranchGroupContainer"/>
+                  <objectClass name="javax.media.j3d.Group"/>
+               </or>
+            </enablement>
+         </action>
+         <action
+               class="org.egs3d.ui.actions.InsertBranchGroup"
+               icon="icons/obj16/bgrp_obj.gif"
+               id="org.egs3d.ui.actions.branchGroup"
+               label="%Action_BranchGroup"
+               menubarPath="org.egs3d.ui.menus.insert/light"
+               style="push">
+            <enablement>
+               <or>
+                  <objectClass name="org.egs3d.core.resources.IBranchGroupContainer"/>
+                  <objectClass name="javax.media.j3d.Group"/>
+               </or>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.InsertLightAction"
                icon="icons/obj16/lgt_obj.gif"
                id="org.egs3d.ui.actions.light"
                label="%Action_Light"
                menubarPath="org.egs3d.ui.menus.insert/light"
-               style="push"/>
+               style="push">
+            <enablement>
+               <or>
+                  <objectClass name="org.egs3d.core.resources.IBranchGroupContainer"/>
+                  <objectClass name="javax.media.j3d.Group"/>
+               </or>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.InsertGeometryAction"
                icon="icons/obj16/shp_obj.gif"
                id="org.egs3d.ui.actions.geometry"
                label="%Action_Geometry"
                menubarPath="org.egs3d.ui.menus.insert/light"
-               style="push"/>
+               style="push">
+            <enablement>
+               <or>
+                  <objectClass name="org.egs3d.core.resources.IBranchGroupContainer"/>
+                  <objectClass name="javax.media.j3d.Group"/>
+               </or>
+            </enablement>
+         </action>
          <action
                class="org.egs3d.ui.actions.InsertBackgroundAction"
                icon="icons/obj16/bgd_obj.gif"
                id="org.egs3d.ui.actions.background"
                label="%Action_Background"
                menubarPath="org.egs3d.ui.menus.insert/light"
-               style="push"/>
+               style="push">
+            <enablement>
+               <or>
+                  <objectClass name="org.egs3d.core.resources.IBranchGroupContainer"/>
+                  <objectClass name="javax.media.j3d.Group"/>
+               </or>
+            </enablement>
+         </action>
       </actionSet>
    </extension>
 

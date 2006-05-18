@@ -101,7 +101,7 @@ public class UIPlugin extends AbstractUIPlugin {
 
 
     /**
-     * Retourne la scène sélectionnée dans l'explorateur de scène,
+     * Retourne la scène sélectionnée dans l'explorateur de scène, ou
      * <code>null</code>.
      */
     public IScene getSelectedScene() {

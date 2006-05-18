@@ -55,6 +55,7 @@ import org.egs3d.ui.internal.UIPlugin;
  * @author romale
  */
 public class CodeGenerationView extends ViewPart implements ISelectionListener {
+    public static final String VIEW_ID = "org.egs3d.ui.views.codeGeneration";
     private final Log log = LogFactory.getLog(getClass());
     private TextViewer textViewer;
     private Font font;

@@ -25,6 +25,7 @@ package org.egs3d.ui.util;
 
 import javax.media.j3d.Background;
 import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Group;
 import javax.media.j3d.Light;
 import javax.media.j3d.SceneGraphObject;
 import javax.media.j3d.Shape3D;
@@ -53,6 +54,7 @@ import org.egs3d.ui.views.SceneExplorerView;
  * scène {@link SceneExplorerView}.
  * 
  * @author romale
+ * @author brachet
  */
 public class SceneLabelProvider extends LabelProvider {
     @Override
@@ -89,6 +91,9 @@ public class SceneLabelProvider extends LabelProvider {
         }
         if (e instanceof TransformGroup) {
             return UIPlugin.getDefault().getImage(ImageType.TRANSFORM_GROUP);
+        }
+        if (e instanceof Group) {
+            return UIPlugin.getDefault().getImage(ImageType.GROUP);
         }
         // image par défaut
         return UIPlugin.getDefault().getImage(ImageType.FILE);

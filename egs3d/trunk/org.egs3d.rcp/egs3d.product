@@ -14,10 +14,12 @@
    <launcherArgs>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages small="/org.egs3d.rcp/egs16.gif" large="/org.egs3d.rcp/egs32.gif"/>
 
+   <splash location="org.egs3d.rcp"/>
 
    <launcher name="egs3d">
+      <linux icon="/org.egs3d.rcp/egs32.xpm"/>
       <solaris/>
       <win useIco="false">
          <bmp/>
@@ -43,6 +45,7 @@
 
    <features>
       <feature id="org.eclipse.rcp" version="3.1.2"/>
+      <feature id="org.eclipse.rcp.nls1" version="3.1.1"/>
       <feature id="org.egs3d.rcp" version="0.0.0.dev"/>
    </features>
 

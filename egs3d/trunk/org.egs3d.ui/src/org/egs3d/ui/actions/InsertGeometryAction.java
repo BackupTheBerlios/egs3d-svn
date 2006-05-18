@@ -39,14 +39,16 @@ public class InsertGeometryAction extends AbstractInsertAction {
             return null;
         }
 
-        //final String geometryType = wizard.getGeometryType();
         final InsertGeometryWizard.GeometryType type = wizard.getGeometryType();
+        final String name = wizard.getGeometryName();
         
         if (type.equals(InsertGeometryWizard.GeometryType.CUBE)) {
-        	ColorCube colorCube = new ColorCube(10f);
+        	final ColorCube colorCube = new ColorCube(10f);
+            colorCube.setName(name);
         	return colorCube;
         } else {
-        	Sphere sphere = new Sphere(10f);
+        	final Sphere sphere = new Sphere(10f);
+            sphere.setName(name);
         	return sphere;
         }
 	}

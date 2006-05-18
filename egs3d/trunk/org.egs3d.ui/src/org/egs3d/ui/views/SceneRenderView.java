@@ -121,7 +121,8 @@ public class SceneRenderView extends ViewPart implements ISelectionListener {
             lastSceneRef = null;
         } else {
             // reconstruction de la scène complète
-            final Bounds bounds = new BoundingSphere(new Point3d(), 100000);
+            final Bounds bounds = new BoundingSphere(new Point3d(),
+                    Double.POSITIVE_INFINITY);
 
             final BranchGroup root = new BranchGroup();
             root.addChild(Java3DUtils.addMouseBehavior(Java3DUtils.scale(scene

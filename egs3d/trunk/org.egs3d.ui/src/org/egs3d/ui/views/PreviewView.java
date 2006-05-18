@@ -211,7 +211,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
 
     private BranchGroup createSceneGraphWithLights(Node node) {
-        final Bounds bounds = new BoundingSphere(new Point3d(), 100000);
+        final Bounds bounds = new BoundingSphere(new Point3d(), Double.POSITIVE_INFINITY);
         final BranchGroup root = new BranchGroup();
 
         if (addLights) {

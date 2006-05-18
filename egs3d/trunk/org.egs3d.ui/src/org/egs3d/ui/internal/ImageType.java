@@ -27,12 +27,13 @@ package org.egs3d.ui.internal;
  * Types d'image utilisée dans le plugin.
  * 
  * @author romale
+ * @author brachet
  */
 public enum ImageType {
     OPENED_PROJECT("prj_obj.gif"), CLOSED_PROJECT("cprj_obj.gif"), FILE("file_obj.gif"), FOLDER(
             "fldr_obj.gif"), BRANCH_GROUP("bgrp_obj.gif"), TRANSFORM_GROUP("tgrp_obj.gif"), TEXTURE(
             "txtr_obj.gif"), MODEL("mdl_obj.gif"), LOCALE("lcl_obj.gif"), SHAPE(
-            "shp_obj.gif"), LIGHT("lgt_obj.gif"), BACKGROUND("bgd_obj.gif"), ;
+            "shp_obj.gif"), LIGHT("lgt_obj.gif"), BACKGROUND("bgd_obj.gif"), GROUP("grp_obj.gif");
 
     private static final String PREFIX_PATH = "/icons/obj16/"; //$NON-NLS-1$
     private final String path;
